@@ -17,54 +17,50 @@ export const antiSpamSchema = z.object({
   turnstileToken: z.string().optional().default(""),
 });
 
-export const propertyTypes = [
-  "Independent house / villa",
-  "Apartment / housing society",
-  "Commercial building",
-  "Industrial facility",
-  "Institution (school, hospital, etc.)",
-  "Open land",
-  "Other",
+/** What the visitor needs. Values double as quote form types (?type=). */
+export const requirementTypes = [
+  { value: "panels", label: "LT / control panels", hint: "PCC, MCC, APFC, AMF, PLC panels" },
+  { value: "distribution", label: "Substation or bus duct", hint: "Compact substations, bus ducts, rising mains" },
+  { value: "cable-management", label: "Cable trays & raceways", hint: "Trays, raceways, fittings, accessories" },
+  { value: "earthing", label: "Earthing", hint: "Electrodes, compound, strips" },
+  { value: "power-conditioning", label: "Stabilizers & transformers", hint: "Servo, transformers, UPS, CVT" },
+  { value: "contracting", label: "Installation / contracting", hint: "Substations, SITC, O&M contracts" },
+  { value: "other", label: "Something else", hint: "Tell us what you need" },
 ] as const;
+
+type RequirementValue = (typeof requirementTypes)[number]["value"];
+const requirementValues = requirementTypes.map((t) => t.value) as [RequirementValue, ...RequirementValue[]];
 
 export const enquirySchema = z.object({
   name,
+  company: optionalText(120),
   phone,
   email,
   location: z.string().trim().min(2, "Please enter your city or project location").max(120),
-  propertyType: z.enum(propertyTypes, { message: "Please choose a property or project type" }),
-  energyRequirement: optionalText(120),
+  requirement: z.enum(requirementValues, { message: "Please choose what you need" }),
   details: optionalText(2000),
   consent,
 });
 
 export type EnquiryInput = z.infer<typeof enquirySchema>;
 
-export const projectTypes = [
-  { value: "residential", label: "Residential" },
-  { value: "commercial", label: "Commercial" },
-  { value: "industrial", label: "Industrial" },
-  { value: "manufacturing", label: "Manufacturing / Bulk Procurement" },
-  { value: "other", label: "Other" },
-] as const;
-
+export const timelines = ["Immediately", "Within 1 month", "1–3 months", "3+ months / planning stage"] as const;
 export const contactMethods = ["Phone call", "WhatsApp", "Email"] as const;
 
 export const quoteStep1Schema = z.object({
-  projectType: z.enum(["residential", "commercial", "industrial", "manufacturing", "other"], {
-    message: "Please choose a project type",
-  }),
+  requirement: z.enum(requirementValues, { message: "Please choose what you need" }),
 });
 
 export const quoteStep2Schema = z.object({
+  product: optionalText(160),
+  rating: optionalText(200),
   location: z.string().trim().min(2, "Please enter the project location").max(120),
-  propertyType: z.enum(propertyTypes, { message: "Please choose a property type" }),
-  area: optionalText(60),
-  capacity: optionalText(120),
+  timeline: z.enum(timelines, { message: "Please choose a timeline" }),
 });
 
 export const quoteStep3Schema = z.object({
   name,
+  company: optionalText(120),
   phone,
   email,
   contactMethod: z.enum(contactMethods, { message: "Please choose how we should contact you" }),
@@ -81,7 +77,7 @@ export const quoteSchema = z.object({
 export type QuoteInput = z.infer<typeof quoteSchema>;
 
 export const quoteStepFields = [
-  ["projectType"],
-  ["location", "propertyType", "area", "capacity"],
-  ["name", "phone", "email", "contactMethod", "requirements", "consent"],
+  ["requirement"],
+  ["product", "rating", "location", "timeline"],
+  ["name", "company", "phone", "email", "contactMethod", "requirements", "consent"],
 ] as const;

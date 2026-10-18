@@ -5,12 +5,14 @@ type PageMeta = {
   title: string;
   description: string;
   path: string;
-  /** Exclude utility pages (thank-you, coming-soon) from search. */
+  /** Exclude utility pages (thank-you) from search. */
   noIndex?: boolean;
-  type?: "website" | "article";
+  /** Path under /public for a page-specific social image; defaults to the site's opengraph-image. */
+  image?: string;
 };
 
-export function pageMetadata({ title, description, path, noIndex, type = "website" }: PageMeta): Metadata {
+export function pageMetadata({ title, description, path, noIndex, image }: PageMeta): Metadata {
+  const images = image ? [{ url: image }] : undefined;
   return {
     title,
     description,
@@ -20,13 +22,15 @@ export function pageMetadata({ title, description, path, noIndex, type = "websit
       description,
       url: path,
       siteName: company.name,
-      type,
+      type: "website",
       locale: "en_IN",
+      ...(images ? { images } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${company.name}`,
       description,
+      ...(images ? { images } : {}),
     },
     robots: noIndex ? { index: false, follow: true } : undefined,
   };

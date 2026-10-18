@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 type Variant = "success" | "error" | "info" | "warning";
 
 const styles: Record<Variant, { box: string; icon: typeof Info }> = {
-  success: { box: "border-primary/25 bg-mint text-evergreen", icon: CircleCheck },
+  success: { box: "border-primary/25 bg-tint text-navy", icon: CircleCheck },
   error: { box: "border-danger/30 bg-red-50 text-danger", icon: CircleAlert },
   info: { box: "border-line bg-canvas text-ink", icon: Info },
   warning: { box: "border-amber-300 bg-amber-50 text-amber-950", icon: ShieldAlert },

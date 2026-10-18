@@ -1,78 +1,43 @@
 import type { Faq } from "./types";
 
-// TODO: have Trident Core Energy review answers; add warranty and timeline
-// specifics only once verified.
+/** Answers are limited to facts stated in the company catalogue. */
 export const faqs: Faq[] = [
   {
-    category: "General",
-    question: "What services does Trident Core Energy offer?",
+    question: "Can panels be customised to our requirements?",
     answer:
-      "We manufacture solar panels and provide end-to-end solar solutions: system design and engineering, solar EPC, residential, commercial and industrial installation, and operations and maintenance.",
+      "Yes. Our panels are custom-built to each project's requirements. They are designed in AutoCAD to the latest Indian electrical and panel standards, and the MCC range is designed to IEC and Indian standards.",
   },
   {
-    category: "General",
-    question: "How do I get a quote?",
+    question: "What enclosure protection ratings do you offer?",
     answer:
-      "Use the Request a Quote form with your project type, location and approximate electricity consumption. Our team reviews the details and contacts you to arrange a consultation and, where needed, a site assessment.",
+      "LT panel enclosures are available with IP42, IP54 and IP65 protection. Compact substations are offered with IP23 or IP54 protection to IEC 60529.",
   },
   {
-    category: "General",
-    question: "How can I confirm I am dealing with Trident Core Energy?",
+    question: "Are panels tested before dispatch?",
     answer:
-      "Only rely on contact details published on this website. Before making any payment, confirm bank details and communications directly with us through the official phone number listed here.",
+      "Yes. Every panel is inspected and tested at our plant: insulation testing up to 1000 megohms, a 2.5 kV high-voltage test, functional testing, primary injection up to 4000 A, secondary injection, switchgear operation and powder coating inspection.",
   },
   {
-    category: "Residential",
-    question: "How do I know what system size my home needs?",
+    question: "Is your design independently tested?",
     answer:
-      "System size depends on your electricity consumption, usable shadow-free roof area and local net-metering rules. We review your recent electricity bills and assess your roof before recommending a size.",
+      "A Trident PCC panel rated 415 V, 4000 A was short-circuit tested at CPRI Bhopal to IS 8623 (Part 1). It withstood 50 kA for 1 second with no abnormality and then passed a 2.5 kV high-voltage test.",
   },
   {
-    category: "Residential",
-    question: "Will my rooftop solar system work during a power cut?",
+    question: "Which compact substation ratings are available?",
     answer:
-      "Standard on-grid systems shut down during grid outages for safety. If you need backup power, ask us whether a battery or hybrid option is suitable for your home.",
+      "Our compact substations are factory-assembled units with MV switchgear, a distribution transformer and an LV panel, for 11 kV or 33 kV, 50 Hz, rated up to 4000 kVA.",
   },
   {
-    category: "Residential",
-    question: "Am I eligible for a government rooftop solar subsidy?",
-    answer:
-      "Eligibility and subsidy amounts are set by the government and can change. Please check the official national rooftop solar portal for current terms. Our Subsidy Guide links to official sources.",
+    question: "What ratings do your bus ducts cover?",
+    answer: "We manufacture bus ducts and rising mains in aluminium or copper, rated from 100 A to 6000 A.",
   },
   {
-    category: "Commercial & Industrial",
-    question: "Can solar be installed without disrupting our operations?",
+    question: "Do you install and commission on site?",
     answer:
-      "In most cases, yes. We plan installation in phases, coordinate shutdown windows for electrical integration and follow site safety procedures agreed with your facility team.",
+      "Yes. Our contracting team handles 33 kV / 11 kV substations, HT/LT panel installation, cable laying, bus duct and cable tray installation, transformer, VCB and RMU SITC, external lighting and O&M contracts.",
   },
   {
-    category: "Commercial & Industrial",
-    question: "What information do you need for a commercial or industrial proposal?",
-    answer:
-      "Recent electricity bills, sanctioned load and connection details, roof or land drawings if available, and any structural information. A site visit completes the assessment.",
-  },
-  {
-    category: "Manufacturing",
-    question: "Do you supply solar modules for bulk procurement?",
-    answer:
-      "Yes, we accept enquiries for project and bulk module supply. Select Manufacturing/Bulk Procurement in the quote form and share your required quantity and specifications.",
-  },
-  {
-    category: "Manufacturing",
-    question: "Where can I find product datasheets?",
-    answer:
-      "Published datasheets are available on our Products and Downloads pages. If you need a document that is not listed, request it through the contact form.",
-  },
-  {
-    category: "Maintenance",
-    question: "How often should solar panels be cleaned?",
-    answer:
-      "It depends on local dust, pollution and rainfall. Many sites benefit from regular cleaning, with more frequent cleaning in dry, dusty periods. Watching your generation data helps you spot when cleaning is due.",
-  },
-  {
-    category: "Maintenance",
-    question: "Do you offer maintenance for systems you did not install?",
-    answer:
-      "Contact us with details of your existing system. We will review its condition and let you know what maintenance support we can provide.",
+    question: "Where is your factory?",
+    answer: "Our plant and admin block are at Plot No. 456, Udyog Kendra-2, Ecotech-3, Greater Noida, Uttar Pradesh 201306.",
   },
 ];

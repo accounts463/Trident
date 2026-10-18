@@ -63,7 +63,7 @@ export function MobileNav({ items, contactHref }: { items: NavItem[]; contactHre
       <button
         ref={triggerRef}
         type="button"
-        className="inline-flex size-11 items-center justify-center rounded-full text-evergreen hover:bg-canvas"
+        className="inline-flex size-11 items-center justify-center rounded-full text-navy hover:bg-canvas"
         aria-expanded={open}
         aria-controls="mobile-drawer"
         onClick={() => setOpen(true)}
@@ -74,7 +74,7 @@ export function MobileNav({ items, contactHref }: { items: NavItem[]; contactHre
 
       {open && (
         <div className="fixed inset-0 z-[60]">
-          <div className="absolute inset-0 bg-evergreen/50 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden />
+          <div className="absolute inset-0 bg-navy/50 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden />
           <div
             ref={panelRef}
             id="mobile-drawer"
@@ -84,7 +84,7 @@ export function MobileNav({ items, contactHref }: { items: NavItem[]; contactHre
             className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col overflow-y-auto bg-white shadow-2xl"
           >
             <div className="flex items-center justify-between border-b border-line px-5 py-4">
-              <span className="font-display font-bold text-evergreen">Menu</span>
+              <span className="font-display font-bold text-navy">Menu</span>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -101,7 +101,7 @@ export function MobileNav({ items, contactHref }: { items: NavItem[]; contactHre
                     <li key={item.label}>
                       <button
                         type="button"
-                        className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-base font-semibold text-evergreen hover:bg-canvas"
+                        className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-base font-semibold text-navy hover:bg-canvas"
                         aria-expanded={expanded === item.label}
                         onClick={() => setExpanded(expanded === item.label ? null : item.label)}
                       >
@@ -124,7 +124,7 @@ export function MobileNav({ items, contactHref }: { items: NavItem[]; contactHre
                     <li key={item.label}>
                       <Link
                         href={item.href}
-                        className="block rounded-xl px-4 py-3 text-base font-semibold text-evergreen hover:bg-canvas"
+                        className="block rounded-xl px-4 py-3 text-base font-semibold text-navy hover:bg-canvas"
                         aria-current={pathname === item.href ? "page" : undefined}
                       >
                         {item.label}
@@ -136,7 +136,7 @@ export function MobileNav({ items, contactHref }: { items: NavItem[]; contactHre
             </nav>
             <div className="space-y-3 border-t border-line p-5">
               <Link href="/request-quote" className={buttonClasses("cta", "lg", "w-full")}>
-                Get a Solar Quote
+                Request a Quote
               </Link>
               {contactHref && (
                 <a href={contactHref} className={buttonClasses("secondary", "lg", "w-full")}>

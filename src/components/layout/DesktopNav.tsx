@@ -61,7 +61,7 @@ export function DesktopNav({ items }: { items: NavItem[] }) {
         {items.map((item) => {
           const active = isActive(pathname, item.href) || item.children?.some((c) => isActive(pathname, c.href));
           const linkClass = cn(
-            "inline-flex h-10 items-center gap-1 rounded-full px-3.5 text-sm font-medium transition-colors",
+            "inline-flex h-10 items-center gap-1 rounded-lg px-3 text-sm font-semibold transition-colors",
             active ? "text-primary" : "text-ink hover:bg-canvas hover:text-primary",
           );
 
@@ -111,7 +111,7 @@ export function DesktopNav({ items }: { items: NavItem[] }) {
                         className="block rounded-xl px-4 py-3 transition-colors hover:bg-canvas"
                         aria-current={pathname === child.href ? "page" : undefined}
                       >
-                        <span className="block text-sm font-semibold text-evergreen">{child.label}</span>
+                        <span className="block text-sm font-semibold text-navy">{child.label}</span>
                         {child.description && <span className="mt-0.5 block text-xs text-muted">{child.description}</span>}
                       </Link>
                     </li>

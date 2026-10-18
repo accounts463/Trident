@@ -1,25 +1,25 @@
-import { Calculator, FileText, MessageCircle, Phone } from "lucide-react";
+import { FileText, Mail, MessageCircle, Phone } from "lucide-react";
 import Link from "next/link";
-import { calculatorLive, getContact } from "@/lib/content";
+import { getContact } from "@/lib/content";
 import { cn } from "@/lib/cn";
 
 type Item = { label: string; href: string; icon: typeof Phone; external?: boolean; primary?: boolean };
 
 /**
  * Bottom bar on mobile, floating stack on desktop. Each action appears only
- * when its real value exists (phone, WhatsApp number, live calculator).
+ * when its real value exists (phone, WhatsApp number, email).
  */
 export function ContactStrip() {
   const contact = getContact();
   const items: Item[] = [
     ...(contact.phoneHref ? [{ label: "Call", href: contact.phoneHref, icon: Phone, external: true }] : []),
     ...(contact.whatsappHref ? [{ label: "WhatsApp", href: contact.whatsappHref, icon: MessageCircle, external: true }] : []),
+    ...(contact.email ? [{ label: "Email", href: `mailto:${contact.email}`, icon: Mail, external: true }] : []),
     { label: "Get a Quote", href: "/request-quote", icon: FileText, primary: true },
-    ...(calculatorLive ? [{ label: "Calculator", href: "/solar-calculator", icon: Calculator }] : []),
   ];
 
-  // With only the quote action available, the header CTA already covers desktop.
-  const desktopItems = items.length > 1 ? items : [];
+  // On desktop the header already shows the quote CTA, phone and email; only WhatsApp adds something.
+  const desktopItems = items.filter((i) => i.label === "WhatsApp");
 
   return (
     <>
@@ -34,7 +34,7 @@ export function ContactStrip() {
                 item={item}
                 className={cn(
                   "flex h-16 flex-col items-center justify-center gap-1 text-xs font-semibold",
-                  item.primary ? "bg-sun text-evergreen" : "text-evergreen",
+                  item.primary ? "bg-accent text-white" : "text-navy",
                 )}
               />
             </li>
@@ -48,10 +48,7 @@ export function ContactStrip() {
               <li key={item.label}>
                 <StripLink
                   item={item}
-                  className={cn(
-                    "flex h-12 items-center gap-2 rounded-full px-5 text-sm font-semibold shadow-lg transition-colors",
-                    item.primary ? "bg-sun text-evergreen hover:bg-sun-hover" : "bg-primary text-white hover:bg-primary-hover",
-                  )}
+                  className="flex h-12 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-primary-hover"
                 />
               </li>
             ))}

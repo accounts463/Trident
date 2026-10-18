@@ -2,40 +2,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { company } from "@/content/company";
 import { cn } from "@/lib/cn";
+import markDark from "@/assets/logo-mark.png";
+import markLight from "@/assets/logo-mark-light.png";
 
 /**
- * Uses the supplied logo from company.ts when available. Otherwise renders a
- * neutral wordmark with a simple mark (placeholder, not a final brand asset).
+ * Horizontal lockup: the Trident mark (from the official logo) beside a live-text
+ * wordmark, so it stays crisp at header size and works on light and dark backgrounds.
  */
-export function Logo({ tone = "dark", className }: { tone?: "dark" | "light"; className?: string }) {
+export function Logo({ tone = "dark", className, priority }: { tone?: "dark" | "light"; className?: string; priority?: boolean }) {
   const light = tone === "light";
   return (
     <Link href="/" className={cn("inline-flex items-center gap-2.5", className)} aria-label={`${company.name}, home`}>
-      {company.logo?.src ? (
-        <Image src={company.logo.src} alt="" width={company.logo.width ?? 160} height={company.logo.height ?? 40} priority />
-      ) : (
-        <>
-          <svg viewBox="0 0 40 40" className="size-9 shrink-0" aria-hidden>
-            <rect width="40" height="40" rx="11" fill={light ? "#ffffff" : "#14532d"} />
-            <circle cx="20" cy="15" r="5" fill="#facc15" />
-            <path
-              d="M11 22v4a9 9 0 0 0 18 0v-4M20 22v11"
-              stroke={light ? "#14532d" : "#ffffff"}
-              strokeWidth="2.6"
-              strokeLinecap="round"
-              fill="none"
-            />
-          </svg>
-          <span className="flex flex-col leading-none">
-            <span className={cn("font-display text-[1.05rem] font-extrabold tracking-tight", light ? "text-white" : "text-evergreen")}>
-              Trident Core
-            </span>
-            <span className={cn("mt-1 text-[0.62rem] font-bold uppercase tracking-[0.28em]", light ? "text-renew" : "text-primary")}>
-              Energy
-            </span>
-          </span>
-        </>
-      )}
+      <Image src={light ? markLight : markDark} alt="" className="h-10 w-auto" priority={priority} sizes="56px" />
+      <span className="flex flex-col leading-none">
+        <span
+          className={cn(
+            "font-display text-[1.45rem] font-black uppercase tracking-[-0.01em]",
+            light ? "text-white" : "text-primary",
+          )}
+        >
+          Trident
+        </span>
+        <span className={cn("mt-1 text-[0.58rem] font-bold uppercase tracking-[0.34em]", light ? "text-white/70" : "text-ink")}>
+          Core Energy
+        </span>
+      </span>
     </Link>
   );
 }

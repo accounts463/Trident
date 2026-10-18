@@ -4,16 +4,16 @@ import { PageHero } from "@/components/sections/PageHero";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Request a Solar Quote",
-  description: "Request a solar quote for residential, commercial or industrial solar, or bulk solar module procurement.",
+  title: "Request a Quote",
+  description: "Request a quote for LT panels, compact substations, bus ducts, cable trays, earthing, stabilizers or electrical contracting from Trident Core Energy.",
   path: "/request-quote",
 });
 
 const next = [
-  "We review your project details.",
-  "Our team contacts you by your preferred method.",
-  "Where needed, we arrange a site assessment.",
-  "You receive a clear, itemised proposal.",
+  "Our engineers review your requirement.",
+  "We contact you by your preferred method to confirm ratings and scope.",
+  "Where needed, we review drawings or visit the site.",
+  "You receive a clear, itemised quotation.",
 ];
 
 export default function RequestQuotePage() {
@@ -21,8 +21,8 @@ export default function RequestQuotePage() {
     <>
       <PageHero
         eyebrow="Get a Quote"
-        title="Request a Solar Quote"
-        description="Three short steps. Share what you can; our team will follow up to understand the details."
+        title="Request a Quote"
+        description="Three short steps. Share what you can, such as ratings, quantities or an SLD reference, and our engineers will follow up on the details."
         breadcrumbs={[{ name: "Request a Quote", href: "/request-quote" }]}
       />
       <section className="section">
@@ -32,7 +32,7 @@ export default function RequestQuotePage() {
           </div>
           <aside className="lg:col-span-4">
             <div className="card sticky top-28 p-6 md:p-8">
-              <h2 className="font-display text-lg font-bold text-evergreen">What happens next</h2>
+              <h2 className="font-display text-lg font-bold text-navy">What happens next</h2>
               <ol className="mt-5 space-y-4">
                 {next.map((n) => (
                   <li key={n} className="flex gap-3 text-sm text-ink">
@@ -42,8 +42,8 @@ export default function RequestQuotePage() {
                 ))}
               </ol>
               <p className="mt-6 border-t border-line pt-5 text-xs leading-relaxed text-muted">
-                Quotes are prepared after reviewing your requirements and site. We don&apos;t quote guaranteed prices or
-                savings before an assessment.
+                Quotations are prepared after reviewing your requirement, drawings and site conditions. Have an SLD or
+                BOQ? Mention it in the form and we&apos;ll ask you to share it.
               </p>
             </div>
           </aside>

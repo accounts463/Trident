@@ -1,27 +1,48 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, ArrowRight, Building2, Check, Factory, House, Lock, Package, Shapes } from "lucide-react";
+import { ArrowLeft, ArrowRight, Cable, Check, Gauge, HardHat, Layers, Shapes, ShieldCheck, Zap } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
+import { products } from "@/content/products";
+import type { ProductCategorySlug } from "@/content/types";
 import { Alert } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
 import { Checkbox, describedBy, Field, Honeypot, Input, Select, Textarea } from "@/components/ui/fields";
 import {
   contactMethods,
-  projectTypes,
-  propertyTypes,
   quoteSchema,
   quoteStepFields,
+  requirementTypes,
+  timelines,
   type QuoteInput,
 } from "@/lib/schemas";
 import { cn } from "@/lib/cn";
 import { Turnstile } from "./Turnstile";
 import { honeypotValue, useLeadSubmit } from "./useLeadSubmit";
 
-const steps = ["Project type", "Project details", "Contact"];
-const typeIcons = { residential: House, commercial: Building2, industrial: Factory, manufacturing: Package, other: Shapes };
+const steps = ["Requirement", "Details", "Contact"];
+const typeIcons = {
+  panels: Layers,
+  distribution: Zap,
+  "cable-management": Cable,
+  earthing: ShieldCheck,
+  "power-conditioning": Gauge,
+  contracting: HardHat,
+  other: Shapes,
+};
+
+const requirementForCategory: Record<ProductCategorySlug, QuoteInput["requirement"]> = {
+  "lt-panels": "panels",
+  "power-quality": "panels",
+  "automation-panels": "panels",
+  "power-distribution": "distribution",
+  "cable-management": "cable-management",
+  accessories: "cable-management",
+  earthing: "earthing",
+  "power-conditioning": "power-conditioning",
+};
 
 export function QuoteForm() {
   const [step, setStep] = useState(0);
@@ -40,10 +61,11 @@ export function QuoteForm() {
     resolver: zodResolver(quoteSchema),
     mode: "onTouched",
     defaultValues: {
+      product: "",
+      rating: "",
       location: "",
-      area: "",
-      capacity: "",
       name: "",
+      company: "",
       phone: "",
       email: "",
       requirements: "",
@@ -55,13 +77,19 @@ export function QuoteForm() {
     const target = quoteStepFields.findIndex((stepFields) => stepFields.some((f) => fields.includes(f)));
     if (target >= 0) setStep(target);
   });
-  const projectType = useWatch({ control, name: "projectType" });
+  const requirement = useWatch({ control, name: "requirement" });
 
-  // Preselect from ?type= links (e.g. Bulk Procurement in the nav). Read on mount so the form stays prerendered.
+  // Preselect from ?type= or ?product= links. Read on mount so the form stays prerendered.
   useEffect(() => {
-    const type = new URLSearchParams(window.location.search).get("type");
-    const match = projectTypes.find((t) => t.value === type);
-    if (match) setValue("projectType", match.value);
+    const params = new URLSearchParams(window.location.search);
+    const product = products.find((p) => p.slug === params.get("product"));
+    if (product) {
+      setValue("product", product.name);
+      setValue("requirement", requirementForCategory[product.category]);
+      return;
+    }
+    const match = requirementTypes.find((t) => t.value === params.get("type"));
+    if (match) setValue("requirement", match.value);
   }, [setValue]);
 
   // Move focus to the new step's heading for keyboard and screen-reader users.
@@ -84,12 +112,17 @@ export function QuoteForm() {
     "aria-describedby": describedBy(`q-${name}`, errors[name]?.message, hint),
   });
 
+  const ratingHint =
+    requirement === "contracting"
+      ? "Scope, e.g. 11 kV substation with 2 × 1000 kVA transformers"
+      : "Rating and quantity, e.g. 1600 A PCC × 1, or 500 m of 300 mm tray";
+
   return (
     <div className="card p-6 md:p-10">
       <ol className="mb-10 grid grid-cols-3 gap-3" aria-label="Quote request progress">
         {steps.map((label, i) => (
           <li key={label} aria-current={i === step ? "step" : undefined} className="flex flex-col gap-2">
-            <span className={cn("h-1.5 rounded-full transition-colors", i <= step ? "bg-primary" : "bg-line")} aria-hidden />
+            <span className={cn("h-1.5 rounded-full transition-colors", i <= step ? "bg-accent" : "bg-line")} aria-hidden />
             <span className={cn("text-xs font-semibold md:text-sm", i === step ? "text-primary" : "text-muted")}>
               <span className="sr-only">{i < step ? "Completed: " : i === step ? "Current: " : ""}</span>
               {i + 1}. {label}
@@ -100,7 +133,7 @@ export function QuoteForm() {
 
       <form
         noValidate
-        aria-label="Request a solar quote"
+        aria-label="Request a quote"
         onSubmit={handleSubmit(
           (values, event) => submit(values, honeypotValue(event)),
           (errs) => {
@@ -126,38 +159,48 @@ export function QuoteForm() {
           </div>
         )}
 
-        <h2 ref={headingRef} tabIndex={-1} className="font-display text-2xl font-bold text-evergreen focus:outline-none">
-          {step === 0 && "What kind of project is this?"}
-          {step === 1 && "Tell us about the project"}
+        <h2 ref={headingRef} tabIndex={-1} className="font-display text-2xl font-bold text-navy focus:outline-none">
+          {step === 0 && "What do you need?"}
+          {step === 1 && "Tell us about the requirement"}
           {step === 2 && "How can we reach you?"}
         </h2>
 
         {step === 0 && (
-          <fieldset aria-describedby={errors.projectType ? "q-projectType-error" : undefined}>
-            <legend className="sr-only">Project type</legend>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {projectTypes.map((t) => {
+          <fieldset aria-describedby={errors.requirement ? "q-requirement-error" : undefined}>
+            <legend className="sr-only">Requirement type</legend>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {requirementTypes.map((t) => {
                 const IconComponent = typeIcons[t.value];
-                const selected = projectType === t.value;
+                const selected = requirement === t.value;
                 return (
                   <label
                     key={t.value}
                     className={cn(
-                      "relative flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary",
-                      selected ? "border-primary bg-mint" : "border-line hover:border-primary/40",
+                      "relative flex cursor-pointer items-center gap-4 rounded-lg border p-4 transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary",
+                      selected ? "border-primary bg-tint" : "border-line hover:border-primary/40",
                     )}
                   >
-                    <input type="radio" value={t.value} className="sr-only" {...register("projectType")} />
-                    <IconComponent className="size-6 text-primary" aria-hidden />
-                    <span className="font-semibold text-evergreen">{t.label}</span>
-                    {selected && <Check className="ml-auto size-5 text-primary" aria-hidden />}
+                    <input type="radio" value={t.value} className="sr-only" {...register("requirement")} />
+                    <span
+                      className={cn(
+                        "inline-flex size-10 shrink-0 items-center justify-center rounded-lg",
+                        selected ? "bg-primary text-white" : "bg-canvas text-primary",
+                      )}
+                    >
+                      <IconComponent className="size-5" aria-hidden />
+                    </span>
+                    <span>
+                      <span className="block font-semibold text-navy">{t.label}</span>
+                      <span className="block text-xs text-muted">{t.hint}</span>
+                    </span>
+                    {selected && <Check className="ml-auto size-5 shrink-0 text-primary" aria-hidden />}
                   </label>
                 );
               })}
             </div>
-            {errors.projectType && (
-              <p id="q-projectType-error" className="mt-3 text-sm font-medium text-danger">
-                {errors.projectType.message}
+            {errors.requirement && (
+              <p id="q-requirement-error" className="mt-3 text-sm font-medium text-danger">
+                {errors.requirement.message}
               </p>
             )}
           </fieldset>
@@ -165,32 +208,29 @@ export function QuoteForm() {
 
         {step === 1 && (
           <div className="grid gap-5 md:grid-cols-2">
+            <Field id="q-product" label="Product or service" error={errors.product?.message} className="md:col-span-2">
+              <Input list="q-product-options" placeholder="e.g. APFC Panel" {...register("product")} {...aria("product")} />
+              <datalist id="q-product-options">
+                {products.map((p) => (
+                  <option key={p.slug} value={p.name} />
+                ))}
+              </datalist>
+            </Field>
+            <Field id="q-rating" label="Rating, quantity or scope" hint={ratingHint} error={errors.rating?.message} className="md:col-span-2">
+              <Input {...register("rating")} {...aria("rating", ratingHint)} />
+            </Field>
             <Field id="q-location" label="Project location" error={errors.location?.message} required>
               <Input autoComplete="address-level2" placeholder="City, State" {...register("location")} {...aria("location")} />
             </Field>
-            <Field id="q-propertyType" label="Property type" error={errors.propertyType?.message} required>
-              <Select defaultValue="" {...register("propertyType")} {...aria("propertyType")}>
+            <Field id="q-timeline" label="When do you need it?" error={errors.timeline?.message} required>
+              <Select defaultValue="" {...register("timeline")} {...aria("timeline")}>
                 <option value="" disabled>
                   Select an option
                 </option>
-                {propertyTypes.map((t) => (
+                {timelines.map((t) => (
                   <option key={t}>{t}</option>
                 ))}
               </Select>
-            </Field>
-            <Field id="q-area" label="Roof or land area" hint="Approximate, e.g. 800 sq ft" error={errors.area?.message}>
-              <Input {...register("area")} {...aria("area", "Approximate, e.g. 800 sq ft")} />
-            </Field>
-            <Field
-              id="q-capacity"
-              label="Consumption or desired capacity"
-              hint={projectType === "manufacturing" ? "Module quantity, wattage or project size" : "e.g. 450 units/month or 5 kW"}
-              error={errors.capacity?.message}
-            >
-              <Input
-                {...register("capacity")}
-                {...aria("capacity", projectType === "manufacturing" ? "Module quantity, wattage or project size" : "e.g. 450 units/month or 5 kW")}
-              />
             </Field>
           </div>
         )}
@@ -200,6 +240,9 @@ export function QuoteForm() {
             <div className="grid gap-5 md:grid-cols-2">
               <Field id="q-name" label="Full name" error={errors.name?.message} required>
                 <Input autoComplete="name" {...register("name")} {...aria("name")} />
+              </Field>
+              <Field id="q-company" label="Company" error={errors.company?.message}>
+                <Input autoComplete="organization" {...register("company")} {...aria("company")} />
               </Field>
               <Field id="q-phone" label="Phone" error={errors.phone?.message} required>
                 <Input type="tel" inputMode="tel" autoComplete="tel" {...register("phone")} {...aria("phone")} />
@@ -218,8 +261,8 @@ export function QuoteForm() {
                 </Select>
               </Field>
             </div>
-            <Field id="q-requirements" label="Additional requirements" error={errors.requirements?.message}>
-              <Textarea rows={4} {...register("requirements")} {...aria("requirements")} />
+            <Field id="q-requirements" label="Anything else we should know?" error={errors.requirements?.message}>
+              <Textarea rows={4} placeholder="Site conditions, standards to follow, preferred switchgear makes…" {...register("requirements")} {...aria("requirements")} />
             </Field>
             <Checkbox
               id="q-consent"
@@ -237,10 +280,6 @@ export function QuoteForm() {
             />
             <Honeypot name="website" />
             <Turnstile onToken={setTurnstileToken} resetKey={turnstileReset} />
-            <p className="flex items-start gap-2 text-xs text-muted">
-              <Lock className="mt-0.5 size-3.5 shrink-0" aria-hidden />
-              Your details are used only to prepare and discuss your quote. We never sell your information.
-            </p>
           </div>
         )}
 

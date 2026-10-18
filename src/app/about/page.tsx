@@ -1,166 +1,101 @@
 import { Compass, Target } from "lucide-react";
 import { company } from "@/content/company";
-import { principles } from "@/content/services";
+import { images } from "@/content/images";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { PageHero } from "@/components/sections/PageHero";
-import { SolarProcess, WhyChooseUs } from "@/components/sections/shared-sections";
-import { IconFeature } from "@/components/ui/IconFeature";
+import { CertificationsSection, DeliveryProcess, ValuesSection } from "@/components/sections/shared-sections";
 import { Media } from "@/components/ui/Media";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { pageMetadata } from "@/lib/seo";
-import { images } from "@/content/images";
 
 export const metadata = pageMetadata({
   title: "About Us",
   description:
-    "Learn about Trident Core Energy: our vision, mission and commitment to clean energy through solar panel manufacturing, solar EPC and installation.",
+    "Trident Core Energy has manufactured electrical panels in Greater Noida since 2010. Meet the company, our mission and vision, values and the engineers behind it.",
   path: "/about",
 });
-
-const capabilities = [
-  {
-    icon: "factory" as const,
-    title: "Manufacturing",
-    description: "In-house solar module manufacturing with controlled processes and staged quality inspection.",
-  },
-  {
-    icon: "ruler" as const,
-    title: "Engineering",
-    description: "System design, structural assessment and electrical engineering tailored to each site.",
-  },
-  {
-    icon: "hardhat" as const,
-    title: "Delivery",
-    description: "Project execution from procurement to installation, commissioning and handover.",
-  },
-  {
-    icon: "wrench" as const,
-    title: "Long-term support",
-    description: "Monitoring, cleaning and maintenance that keep systems performing as designed.",
-  },
-];
 
 export default function AboutPage() {
   return (
     <>
       <PageHero
         eyebrow="About Us"
-        title="Engineering Clean Energy for a Sustainable Future"
-        description={company.coreMessage}
+        title="Panel manufacturing since 2010, built on honesty"
+        description={company.whoWeAre}
         breadcrumbs={[{ name: "About Us", href: "/about" }]}
-        image={images.engineerVest}
+        image={images.adminOffice}
       />
 
       <section className="section">
-        <div className="container-site grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <SectionHeading eyebrow="Who We Are" title="Manufacturing and delivery, under one roof" />
+        <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <SectionHeading eyebrow="Our Story" title="A growing panel manufacturer with engineering at its core" />
+            <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted">
+              {company.story.map((p) => (
+                <p key={p.slice(0, 32)}>{p}</p>
+              ))}
+            </div>
           </div>
-          <div className="space-y-5 text-lg leading-relaxed text-muted lg:col-span-7" data-reveal>
-            <p>{company.description}</p>
-            <p>
-              By combining module manufacturing with engineering and project delivery, we stay accountable for quality from
-              the production line to the rooftop, and for the years of service that follow.
-            </p>
+          <div className="space-y-6 lg:col-span-5">
+            <Media image={images.adminBlock} className="aspect-[4/5] rounded-card" sizes="(min-width: 1024px) 40vw, 100vw" />
+            <div className="rounded-card bg-navy p-6 text-white">
+              <p className="eyebrow text-accent-soft">Leadership</p>
+              <p className="mt-3 font-display text-xl font-bold">{company.director.name}</p>
+              <p className="text-sm text-white/70">Director</p>
+              <p className="mt-4 text-sm leading-relaxed text-white/80">{company.director.note}</p>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="section bg-canvas">
-        <div className="container-site grid gap-6 md:grid-cols-2">
-          <article className="card p-8 md:p-10" data-reveal>
-            <Compass className="size-10 text-primary" aria-hidden strokeWidth={1.5} />
-            <h2 className="mt-6 font-display text-2xl font-bold text-evergreen">Our Vision</h2>
-            <p className="mt-4 text-lg leading-relaxed text-muted">{company.vision}</p>
-          </article>
-          <article className="card p-8 md:p-10" data-reveal>
-            <Target className="size-10 text-primary" aria-hidden strokeWidth={1.5} />
-            <h2 className="mt-6 font-display text-2xl font-bold text-evergreen">Our Mission</h2>
-            <p className="mt-4 text-lg leading-relaxed text-muted">{company.mission}</p>
-          </article>
+        <div className="container-site grid gap-6 lg:grid-cols-2">
+          {[
+            { title: "Our Mission", text: company.mission, icon: Target, tone: "bg-accent" },
+            { title: "Our Vision", text: company.vision, icon: Compass, tone: "bg-primary" },
+          ].map(({ title, text, icon: IconComponent, tone }) => (
+            <article key={title} className="card p-8 md:p-10" data-reveal>
+              <span className={`inline-flex size-12 items-center justify-center rounded-lg text-white ${tone}`}>
+                <IconComponent className="size-6" aria-hidden />
+              </span>
+              <h2 className="mt-6 font-display text-2xl font-extrabold text-navy">{title}</h2>
+              <p className="mt-4 leading-relaxed text-muted">{text}</p>
+            </article>
+          ))}
         </div>
       </section>
+
+      <ValuesSection />
 
       <section className="section">
-        <div className="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          <Media
-            image={images.technicianOnPanels}
-            className="aspect-[4/3] rounded-card"
-          />
+        <div className="container-site grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <SectionHeading
-              eyebrow="Our Commitment"
-              title="A lasting commitment to clean energy"
-              description="We believe the shift to solar should be simple, safe and dependable. That shapes how we build, how we communicate and how we support every system."
+              eyebrow="Industries"
+              title="Engineering services for a wide range of industries"
+              description="Design, manufacturing, erection, commissioning and installation for:"
             />
-            <ul className="mt-10 space-y-6">
-              {principles.map((p) => (
-                <li key={p.title} data-reveal>
-                  <h3 className="font-display text-lg font-bold text-evergreen">{p.title}</h3>
-                  <p className="mt-1 leading-relaxed text-muted">{p.description}</p>
+            <ul className="mt-8 flex flex-wrap gap-2">
+              {company.industriesServed.map((i) => (
+                <li key={i} className="rounded-lg border border-line bg-canvas px-4 py-2 text-sm font-semibold text-navy">
+                  {i}
                 </li>
               ))}
             </ul>
           </div>
-        </div>
-      </section>
-
-      <section className="section bg-canvas">
-        <div className="container-site">
-          <SectionHeading
-            eyebrow="Expertise"
-            title="Manufacturing and delivery capabilities"
-            description="Integrated capabilities that cover the full life of a solar system."
-          />
-          <div className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-            {capabilities.map((c) => (
-              <IconFeature key={c.title} {...c} />
+          <ul className="grid gap-4 sm:grid-cols-2" aria-label="Our principles">
+            {company.principles.map((p, i) => (
+              <li key={p} className="card flex gap-4 p-5" data-reveal>
+                <span className="font-display text-2xl font-black text-accent">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-semibold leading-snug text-navy">{p}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      <section className="on-dark section bg-evergreen">
-        <div className="container-site grid gap-12 lg:grid-cols-2">
-          <SectionHeading
-            tone="dark"
-            eyebrow="Quality & Safety"
-            title="Quality and safety are designed in, not inspected in"
-          />
-          <div className="space-y-5 text-lg leading-relaxed text-white/75" data-reveal>
-            <p>
-              We follow documented processes in manufacturing and on site: incoming material checks, staged inspection,
-              careful system design and safe installation practices.
-            </p>
-            <p>
-              On every project, we prioritise the safety of our teams and customers, and we communicate clearly at each
-              stage, from survey and design to commissioning.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {company.team.length > 0 && (
-        <section className="section">
-          <div className="container-site">
-            <SectionHeading eyebrow="Leadership" title="The people behind Trident Core Energy" />
-            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {company.team.map((m) => (
-                <li key={m.name} className="card overflow-hidden" data-reveal>
-                  {m.image && <Media image={m.image} className="aspect-square" sizes="(min-width: 1024px) 25vw, 50vw" />}
-                  <div className="p-5">
-                    <p className="font-display font-bold text-evergreen">{m.name}</p>
-                    <p className="text-sm text-muted">{m.role}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
-
-      <SolarProcess />
-      <WhyChooseUs />
+      <DeliveryProcess tone="dark" />
+      <CertificationsSection />
       <CtaBanner />
     </>
   );

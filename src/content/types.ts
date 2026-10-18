@@ -2,27 +2,18 @@
  * Content model. Shapes are deliberately CMS-friendly (flat, slug-keyed,
  * serialisable) so /content can later be replaced by Sanity or Strapi queries
  * without touching components.
+ *
+ * All copy and figures come from the Trident Core Energy company catalogue.
+ * Don't add specifications, ratings or client names that aren't in a
+ * company-supplied document.
  */
-
-/**
- * - "verified": confirmed by Trident Core Energy; always rendered.
- * - "sample": illustrative placeholder; rendered only in development or when
- *   NEXT_PUBLIC_SHOW_SAMPLE_CONTENT=true, always with a visible "Sample" badge.
- */
-export type ContentStatus = "verified" | "sample";
 
 export type ImageAsset = {
-  /** Path under /public or a remote URL allowed in next.config. Omit until real photography exists. */
+  /** Path under /public. Omit to render a neutral placeholder. */
   src?: string;
   alt: string;
   width?: number;
   height?: number;
-  /** Visual tone for the placeholder shown while src is missing. */
-  tone?: "panels" | "factory" | "rooftop" | "people" | "landscape";
-  /** Interim stock photo; must not be used where the image claims to show the company itself. */
-  stock?: boolean;
-  /** Where a stock photo came from, for licence records. */
-  sourceUrl?: string;
 };
 
 export type PostalAddress = {
@@ -35,83 +26,61 @@ export type PostalAddress = {
 
 export type SocialLink = { label: string; href: string };
 
-export type ImpactMetric = {
-  label: string;
-  value: number;
-  unit: string;
-  /** How the number was derived, shown under the metric. */
-  basis: string;
-};
-
-export type Impact = {
-  metrics: ImpactMetric[];
-  reportingPeriod: string;
-  assumptions: string;
-};
+export type IconKey =
+  | "award"
+  | "blocks"
+  | "bolt"
+  | "building"
+  | "cable"
+  | "cog"
+  | "cpu"
+  | "factory"
+  | "gauge"
+  | "graduation"
+  | "handshake"
+  | "hardhat"
+  | "hospital"
+  | "layers"
+  | "leaf"
+  | "lightbulb"
+  | "plug"
+  | "scale"
+  | "shield"
+  | "sliders"
+  | "train"
+  | "users"
+  | "wrench"
+  | "zap";
 
 export type Certification = {
+  slug: string;
   name: string;
   issuer: string;
-  scope: string;
-  /** Link to a downloadable certificate, if published. */
-  href?: string;
+  /** What the document covers, in the words of the certificate or report. */
+  detail: string;
+  image: ImageAsset;
 };
 
-export type TeamMember = {
-  name: string;
-  role: string;
-  image?: ImageAsset;
-};
-
-export type CalculatorLocation = {
-  id: string;
-  label: string;
-  /** Average generation per installed kW per month (kWh). */
-  unitsPerKwPerMonth: number;
-};
-
-export type CalculatorAssumptions = {
-  /** Grid tariff used to convert a bill to units (currency per kWh). */
-  tariffPerUnit: number;
-  locations: CalculatorLocation[];
-  /** Shadow-free roof area needed per kW (sq ft). */
-  roofAreaPerKw: number;
-  /** Indicative installed cost per kW, low and high (currency). */
-  costPerKwRange: [number, number];
-  minSystemKw: number;
-  maxSystemKw: number;
-  /** Who validated these numbers and when, shown on the page. */
-  source: string;
-  reviewedOn: string;
-};
-
-export type FeatureFlags = {
-  residential: boolean;
-  commercial: boolean;
-  industrial: boolean;
-  manufacturing: boolean;
-  epc: boolean;
-  operationsMaintenance: boolean;
-  groundMount: boolean;
-  batteryStorage: boolean;
-  onGrid: boolean;
-  offGrid: boolean;
-  hybrid: boolean;
-  channelPartners: boolean;
-  careers: boolean;
-};
+export type Value = { title: string; description: string; icon: IconKey };
 
 export type Company = {
   name: string;
   legalName: string | null;
+  /** Primary line used across the site. */
   tagline: string;
-  coreMessage: string;
+  /** Secondary brand lines from the catalogue. */
+  slogans: string[];
   description: string;
-  announcement: string;
-  vision: string;
+  foundedYear: number;
+  director: { name: string; note: string };
+  story: string[];
+  whoWeAre: string;
   mission: string;
-  foundedYear: number | null;
-  logo: ImageAsset | null;
+  vision: string;
+  values: Value[];
+  principles: string[];
+  /** Industries named in the catalogue's About Us. */
+  industriesServed: string[];
   contact: {
     /** E.164 format, e.g. +919800000000 */
     phone: string | null;
@@ -124,101 +93,67 @@ export type Company = {
     /** Google Maps embed URL; loaded only after consent. */
     mapEmbedUrl: string | null;
   };
+  website: string;
   socials: SocialLink[];
   /** Cities/regions actually served. Used for location keywords only when filled. */
   serviceAreas: string[];
-  features: FeatureFlags;
-  impact: Impact | null;
   certifications: Certification[];
-  team: TeamMember[];
-  calculator: CalculatorAssumptions | null;
 };
 
-export type ServiceKey = keyof Pick<
-  FeatureFlags,
-  "residential" | "commercial" | "industrial" | "manufacturing" | "epc" | "operationsMaintenance"
->;
+export type ProductCategorySlug =
+  | "lt-panels"
+  | "power-quality"
+  | "automation-panels"
+  | "power-distribution"
+  | "cable-management"
+  | "earthing"
+  | "power-conditioning"
+  | "accessories";
 
-export type Solution = {
-  key: ServiceKey;
-  title: string;
+export type ProductCategory = {
+  slug: ProductCategorySlug;
+  name: string;
   summary: string;
-  bullets: string[];
-  href: string;
   image: ImageAsset;
+  icon: IconKey;
 };
-
-export type ProductCategory = "Solar Modules" | "Balance of System" | "Inverters" | "Mounting Structures";
 
 export type ProductSpec = { label: string; value: string };
 
 export type Product = {
   slug: string;
-  status: ContentStatus;
+  category: ProductCategorySlug;
   name: string;
-  category: ProductCategory;
   summary: string;
-  description: string;
-  applications: string[];
+  description: string[];
+  features: string[];
   specs: ProductSpec[];
-  /** Path under /public/documents; omit until the real datasheet exists. */
-  datasheet?: string;
+  /** Variants or items in the range, e.g. bends and reducers for cable trays. */
+  range?: { title: string; items: { name: string; image?: ImageAsset }[] };
+  applications: string[];
   image: ImageAsset;
+  /** The photo shows a Trident panel of a similar type, not this exact product. */
+  representativeImage?: boolean;
+  gallery?: ImageAsset[];
+  /** Featured on the home page. */
+  featured?: boolean;
 };
 
-export type ProjectCategory = "Residential" | "Commercial" | "Industrial" | "Utility-Scale";
+export type Service = { title: string; description: string; icon: IconKey };
 
-export type Project = {
+export type ProcessStep = { title: string; description: string };
+
+export type Sector = {
   slug: string;
-  status: ContentStatus;
-  name: string;
-  category: ProjectCategory;
-  location: string;
-  installationType: string;
-  /** Verified installed capacity, e.g. "120 kWp". Omit unless verified. */
-  capacity?: string;
-  completed?: string;
+  title: string;
   summary: string;
-  challenge: string;
-  solution: string;
-  outcome: string;
-  image: ImageAsset;
+  icon: IconKey;
+  /** Completed projects named in the catalogue. */
+  references: string[];
 };
 
-export type ArticleSection = {
-  heading: string;
-  paragraphs: string[];
-  bullets?: string[];
-};
+export type ClientGroup = { title: string; clients: string[] };
 
-export type ArticleCategory = "Solar Basics" | "Residential" | "Manufacturing" | "Planning" | "Maintenance";
+export type Facility = { title: string; description: string; image?: ImageAsset };
 
-export type Article = {
-  slug: string;
-  title: string;
-  category: ArticleCategory;
-  excerpt: string;
-  /** ISO date */
-  publishedAt: string;
-  readingMinutes: number;
-  image: ImageAsset;
-  sections: ArticleSection[];
-};
-
-export type FaqCategory = "General" | "Residential" | "Commercial & Industrial" | "Manufacturing" | "Maintenance";
-
-export type Faq = {
-  question: string;
-  answer: string;
-  category: FaqCategory;
-};
-
-export type Download = {
-  title: string;
-  description: string;
-  /** Path under /public/documents */
-  file: string;
-  fileType: "PDF" | "DOCX" | "XLSX";
-  sizeLabel: string;
-  category: "Brochure" | "Company Profile" | "Datasheet" | "Certificate";
-};
+export type Faq = { question: string; answer: string };

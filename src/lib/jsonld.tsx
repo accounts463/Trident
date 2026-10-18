@@ -1,5 +1,5 @@
 import { company } from "@/content/company";
-import type { Article, Faq, Product } from "@/content/types";
+import type { Faq, Product } from "@/content/types";
 import { getContact } from "@/lib/content";
 import { absoluteUrl, siteUrl } from "@/lib/site";
 
@@ -27,7 +27,8 @@ export function organizationJsonLd(): JsonLdObject[] {
     url: siteUrl,
     description: company.description,
     slogan: company.tagline,
-    ...(company.logo?.src ? { logo: absoluteUrl(company.logo.src) } : {}),
+    foundingDate: String(company.foundedYear),
+    logo: absoluteUrl("/images/logo.png"),
     ...(contact.email ? { email: contact.email } : {}),
     ...(contact.phone ? { telephone: contact.phone } : {}),
     ...(sameAs.length ? { sameAs } : {}),
@@ -44,8 +45,10 @@ export function organizationJsonLd(): JsonLdObject[] {
       "@id": `${siteUrl}/#localbusiness`,
       name: company.name,
       url: siteUrl,
+      image: absoluteUrl("/images/logo.png"),
       parentOrganization: { "@id": `${siteUrl}/#organization` },
       ...(contact.phone ? { telephone: contact.phone } : {}),
+      ...(contact.email ? { email: contact.email } : {}),
       address: {
         "@type": "PostalAddress",
         streetAddress: a.streetAddress,
@@ -84,30 +87,21 @@ export function faqJsonLd(faqs: Faq[]): JsonLdObject {
   };
 }
 
-export function articleJsonLd(article: Article): JsonLdObject {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: article.title,
-    description: article.excerpt,
-    datePublished: article.publishedAt,
-    mainEntityOfPage: absoluteUrl(`/resources/${article.slug}`),
-    author: { "@type": "Organization", name: company.name },
-    publisher: { "@id": `${siteUrl}/#organization` },
-    ...(article.image.src ? { image: absoluteUrl(article.image.src) } : {}),
-  };
-}
-
-export function productJsonLd(product: Product): JsonLdObject {
+export function productJsonLd(product: Product, categoryName: string): JsonLdObject {
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
     description: product.summary,
-    category: product.category,
+    category: categoryName,
     brand: { "@type": "Brand", name: company.name },
     manufacturer: { "@id": `${siteUrl}/#organization` },
     url: absoluteUrl(`/products/${product.slug}`),
     ...(product.image.src ? { image: absoluteUrl(product.image.src) } : {}),
+    ...(product.specs.length
+      ? {
+          additionalProperty: product.specs.map((s) => ({ "@type": "PropertyValue", name: s.label, value: s.value })),
+        }
+      : {}),
   };
 }

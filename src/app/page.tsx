@@ -2,21 +2,25 @@ import type { Metadata } from "next";
 import { company } from "@/content/company";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Hero } from "@/components/sections/Hero";
-import { AboutIntro, CalculatorTeaser, CapabilitiesStrip, ResourcesPreview } from "@/components/sections/home-sections";
 import {
-  ManufacturingShowcase,
-  ProjectsSection,
-  SolarProcess,
-  SolutionsGrid,
-  SustainabilitySection,
-  WhyChooseUs,
+  AboutIntro,
+  CategoriesSection,
+  CertificationsSection,
+  ClientMarquee,
+  DeliveryProcess,
+  FaqSection,
+  FeaturedProducts,
+  ManufacturingSection,
+  SectorsSection,
+  ServicesSection,
+  StrengthsSection,
+  SubstationSpotlight,
 } from "@/components/sections/shared-sections";
-import { calculatorLive } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: { absolute: `${company.name} | Solar Panel Manufacturer & Solar Installation Company` },
+  title: { absolute: `${company.name} | LT Panel, Compact Substation & Bus Duct Manufacturer` },
   description:
-    "Trident Core Energy is a solar panel manufacturer and solar installation company delivering residential rooftop solar, commercial solar solutions, industrial solar EPC and solar maintenance services.",
+    "ISO 9001:2015 certified manufacturer of LT panels, PCC, MCC, APFC and AMF panels, compact substations, bus ducts, cable trays and earthing in Greater Noida, with electrical contracting and O&M services.",
   alternates: { canonical: "/" },
 };
 
@@ -24,16 +28,18 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <CapabilitiesStrip />
+      <ClientMarquee />
       <AboutIntro />
-      <SolutionsGrid />
-      <ManufacturingShowcase />
-      <SolarProcess />
-      <ProjectsSection limit={6} />
-      <SustainabilitySection />
-      <WhyChooseUs />
-      {calculatorLive && <CalculatorTeaser />}
-      <ResourcesPreview />
+      <CategoriesSection />
+      <FeaturedProducts />
+      <SubstationSpotlight />
+      <ManufacturingSection />
+      <ServicesSection limit={8} />
+      <DeliveryProcess tone="dark" />
+      <StrengthsSection />
+      <SectorsSection showReferences={false} />
+      <CertificationsSection />
+      <FaqSection />
       <CtaBanner />
     </>
   );

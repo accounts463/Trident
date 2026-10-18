@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Contact Us",
-  description: "Contact Trident Core Energy about residential, commercial or industrial solar, module supply or maintenance.",
+  description: "Contact Trident Core Energy in Greater Noida about LT panels, compact substations, bus ducts, cable trays, earthing or electrical contracting.",
   path: "/contact",
 });
 
@@ -27,13 +27,13 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Talk to Our Team"
-        description="Tell us about your home, business or project. We'll get back to you to discuss the right solar solution."
+        description="Call, email or send an enquiry. Our engineers will get back to you about panels, substations or your electrical project."
         breadcrumbs={[{ name: "Contact", href: "/contact" }]}
       />
       <section className="section">
         <div className="container-site grid gap-12 lg:grid-cols-12">
           <div className="card p-6 md:p-10 lg:col-span-7">
-            <h2 className="mb-6 font-display text-2xl font-bold text-evergreen">Send us an enquiry</h2>
+            <h2 className="mb-6 font-display text-2xl font-extrabold text-navy">Send us an enquiry</h2>
             <EnquiryForm idPrefix="contact" />
           </div>
           <aside className="space-y-6 lg:col-span-5">
@@ -47,13 +47,13 @@ export default function ContactPage() {
                       {d.href ? (
                         <a
                           href={d.href}
-                          className="font-semibold text-evergreen hover:text-primary hover:underline"
+                          className="font-semibold text-navy hover:text-primary hover:underline"
                           {...(d.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                         >
                           {d.value}
                         </a>
                       ) : (
-                        <p className="font-semibold text-evergreen">{d.value}</p>
+                        <p className="font-semibold text-navy">{d.value}</p>
                       )}
                     </div>
                   </li>

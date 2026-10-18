@@ -3,31 +3,32 @@
  *
  * This is the only file that sets brand values. The base theme (theme.css)
  * reads these variables, so changing a value here restyles the whole site.
+ * Colours are sampled from the Trident logo.
  */
 
 :root {
-  --tc-primary: #14532d; /* Forest Green */
-  --tc-primary-hover: #0f4425;
-  --tc-evergreen: #0b2f24; /* Deep Evergreen */
-  --tc-renew: #22c55e; /* Renewable Green: accents, never small text on white */
-  --tc-sun: #facc15; /* Solar Yellow: highlights and CTAs, used sparingly */
-  --tc-sun-hover: #eab308;
-  --tc-canvas: #f4f8f3; /* Soft Background */
+  --tc-primary: #2d4e9e; /* Trident Blue (logo wordmark, deepened for AA text contrast) */
+  --tc-primary-hover: #213d82;
+  --tc-navy: #0d1730; /* Deep Navy: header bar, footer, dark sections */
+  --tc-navy-2: #15244a; /* Raised surfaces on navy */
+  --tc-accent: #e01f26; /* Signal Red (logo mark): CTAs and highlights */
+  --tc-accent-hover: #c0161c;
+  --tc-accent-soft: #ff6b70; /* Red tuned for small text on navy */
+  --tc-canvas: #f3f5f9;
   --tc-surface: #ffffff;
-  --tc-ink: #1f2937; /* Charcoal */
-  /* Muted Grey #64748B, darkened slightly so it passes WCAG AA on the soft background too. */
-  --tc-muted: #5b6779;
-  --tc-line: #e2e9e1;
-  --tc-mint: #e6f2e7;
+  --tc-ink: #161d2b; /* Charcoal */
+  --tc-muted: #566074;
+  --tc-line: #e1e5ee;
+  --tc-tint: #eaf0fb; /* Light blue wash */
   --tc-danger: #b42318;
-  --tc-focus: #15803d;
+  --tc-focus: #2d4e9e;
 
-  --tc-radius-card: 1.25rem;
-  --tc-shadow-card: 0 1px 2px rgb(11 47 36 / 0.04), 0 1px 1px rgb(11 47 36 / 0.03);
-  --tc-shadow-card-hover: 0 12px 32px -12px rgb(11 47 36 / 0.18);
+  --tc-radius-card: 0.875rem;
+  --tc-shadow-card: 0 1px 2px rgb(13 23 48 / 0.05), 0 1px 1px rgb(13 23 48 / 0.03);
+  --tc-shadow-card-hover: 0 18px 40px -18px rgb(13 23 48 / 0.28);
 }
 
-/* On dark sections, the focus ring switches to the solar accent for contrast. */
+/* On dark sections, the focus ring switches to the soft red for contrast. */
 .on-dark {
-  --tc-focus: #facc15;
+  --tc-focus: #ff6b70;
 }

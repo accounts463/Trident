@@ -2,7 +2,7 @@ import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 const control =
-  "block w-full rounded-xl border bg-white px-4 py-3 text-base text-ink placeholder:text-muted/70 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:bg-canvas aria-invalid:border-danger aria-invalid:ring-danger/15";
+  "block w-full rounded-lg border bg-white px-4 py-3 text-base text-ink placeholder:text-muted/70 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:bg-canvas aria-invalid:border-danger aria-invalid:ring-danger/15";
 
 type FieldProps = {
   id: string;
@@ -18,7 +18,7 @@ type FieldProps = {
 export function Field({ id, label, error, hint, required, children, className }: FieldProps) {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <label htmlFor={id} className="text-sm font-semibold text-evergreen">
+      <label htmlFor={id} className="text-sm font-semibold text-navy">
         {label}
         {required ? (
           <span className="text-danger" aria-hidden>
@@ -64,7 +64,7 @@ export function Select({ className, children, ...props }: ComponentProps<"select
       className={cn(
         control,
         "appearance-none border-line bg-[length:1rem] bg-[right_1rem_center] bg-no-repeat pr-10",
-        "bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2314532d' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")]",
+        "bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232d4e9e' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")]",
         className,
       )}
       {...props}

@@ -16,12 +16,12 @@ export default function TermsPage() {
       <h2>Information on this website</h2>
       <p>
         Content on this website is provided for general information. It is not a quotation, offer or guarantee. Product
-        details, specifications and services may change without notice. Any calculator results are indicative estimates
-        only.
+        details, specifications and services may change without notice. Specifications shown are typical and are
+        confirmed for each order in our quotation and drawings.
       </p>
       <h2>Quotes and contracts</h2>
       <p>
-        Prices, system performance, timelines and warranties apply only as stated in a written proposal or contract issued
+        Prices, ratings, specifications, timelines and warranties apply only as stated in a written proposal or contract issued
         by {company.legalName ?? company.name}.
       </p>
       <h2>Payments and fraud awareness</h2>

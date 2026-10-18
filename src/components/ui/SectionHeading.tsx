@@ -17,17 +17,23 @@ export function SectionHeading({ eyebrow, title, description, align = "left", as
   return (
     <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)} data-reveal>
       {eyebrow && (
-        <p className={cn("eyebrow mb-4 flex items-center gap-3", align === "center" && "justify-center", tone === "dark" ? "text-sun" : "text-primary")}>
-          <span className={cn("h-px w-8", tone === "dark" ? "bg-sun/60" : "bg-primary/40")} aria-hidden />
+        <p
+          className={cn(
+            "eyebrow mb-4 flex items-center gap-3",
+            align === "center" && "justify-center",
+            tone === "dark" ? "text-accent-soft" : "text-accent",
+          )}
+        >
+          <span className="slash text-[0.7rem]" aria-hidden />
           {eyebrow}
         </p>
       )}
       <Heading
         id={id}
         className={cn(
-          "font-display font-bold",
-          as === "h1" ? "text-4xl leading-[1.08] md:text-5xl lg:text-6xl" : "text-3xl leading-tight md:text-4xl",
-          tone === "dark" ? "text-white" : "text-evergreen",
+          "font-display font-extrabold",
+          as === "h1" ? "text-4xl leading-[1.06] md:text-5xl lg:text-6xl" : "text-3xl leading-tight md:text-4xl",
+          tone === "dark" ? "text-white" : "text-navy",
         )}
       >
         {title}

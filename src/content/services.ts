@@ -1,151 +1,103 @@
-import type { ServiceKey, Solution } from "./types";
-import { images } from "./images";
+import type { ProcessStep, Service } from "./types";
 
-// TODO: confirm service scope wording with Trident Core Energy before launch.
-export const solutions: Solution[] = [
+/** Contracting services listed in the company catalogue. */
+export const services: Service[] = [
   {
-    key: "residential",
-    title: "Residential Solar",
-    summary:
-      "Rooftop systems designed around your home's consumption, roof and budget, installed with care and supported long after commissioning.",
-    bullets: ["Site survey and shading review", "System sizing from your electricity bills", "Clean, safe rooftop installation"],
-    href: "/solutions/residential",
-    image: images.homeRooftop,
-  },
-  {
-    key: "commercial",
-    title: "Commercial Solar",
-    summary:
-      "Rooftop solar for offices, retail, hospitals and institutions, planned to offset daytime demand without disrupting operations.",
-    bullets: ["Load and tariff analysis", "Structural and safety assessment", "Phased installation planning"],
-    href: "/solutions/commercial-industrial",
-    image: images.commercialRoofRows,
-  },
-  {
-    key: "industrial",
-    title: "Industrial Solar",
-    summary:
-      "Larger rooftop and captive systems for factories and warehouses, engineered for high loads, safety compliance and long service life.",
-    bullets: ["Detailed engineering and design", "Grid integration and protection", "Performance monitoring setup"],
-    href: "/solutions/commercial-industrial",
-    image: images.industrialRoof,
-  },
-  {
-    key: "manufacturing",
-    title: "Solar Panel Manufacturing",
-    summary:
-      "In-house module manufacturing with controlled processes and quality inspection, supplying projects and bulk procurement partners.",
-    bullets: ["Module assembly and lamination", "Quality inspection and testing", "Bulk and project supply"],
-    href: "/manufacturing",
-    image: images.technicianModule,
-  },
-  {
-    key: "epc",
-    title: "Solar EPC",
-    summary:
-      "Engineering, procurement and construction under one accountable team, from feasibility to commissioning and handover.",
-    bullets: ["Feasibility and design", "Procurement and logistics", "Construction and commissioning"],
-    href: "/solutions",
-    image: images.engineerUnderArray,
-  },
-  {
-    key: "operationsMaintenance",
-    title: "Operations & Maintenance",
-    summary:
-      "Planned cleaning, inspection and monitoring that help your system keep performing as designed throughout its working life.",
-    bullets: ["Scheduled cleaning and inspection", "Performance monitoring", "Fault diagnosis and repair"],
-    href: "/solutions#operations-maintenance",
-    image: images.panelCleaning,
-  },
-];
-
-export const capabilities: { key: ServiceKey | "design"; label: string; icon: CapabilityIcon }[] = [
-  { key: "manufacturing", label: "Solar Panel Manufacturing", icon: "factory" },
-  { key: "design", label: "System Design & Engineering", icon: "ruler" },
-  { key: "epc", label: "Solar EPC Solutions", icon: "hardhat" },
-  { key: "residential", label: "Residential & Commercial Installation", icon: "home" },
-  { key: "operationsMaintenance", label: "Operations & Maintenance", icon: "wrench" },
-];
-
-export type CapabilityIcon = "factory" | "ruler" | "hardhat" | "home" | "wrench";
-
-export const solarProcess = [
-  {
-    title: "Consultation & Site Assessment",
-    description: "We review your energy use, visit the site and assess roof or land condition, orientation and shading.",
-  },
-  {
-    title: "System Design & Planning",
-    description: "Our engineers size the system, select components and prepare layouts, approvals and an installation plan.",
-  },
-  {
-    title: "Installation & Commissioning",
-    description: "Trained crews install, test and commission the system safely, then walk you through how it works.",
-  },
-  {
-    title: "Monitoring & Maintenance",
-    description: "Ongoing monitoring and scheduled maintenance help keep the system performing as designed.",
-  },
-];
-
-export const principles = [
-  { title: "Sustainability First", description: "Every decision weighs long-term environmental impact alongside performance." },
-  { title: "Engineering Excellence", description: "Careful design, sound components and disciplined execution on every project." },
-  { title: "Long-Term Reliability", description: "Systems built to keep delivering clean energy year after year." },
-];
-
-export const benefits = [
-  {
-    title: "Integrated Solar Capabilities",
-    description: "Manufacturing, engineering, installation and maintenance under one roof, with one point of accountability.",
-    icon: "layers",
-  },
-  {
-    title: "Quality-Focused Engineering",
-    description: "Designs and components chosen for safety, durability and real-world performance.",
-    icon: "shield",
-  },
-  {
-    title: "Solutions Tailored to Your Needs",
-    description: "Every system is sized around your consumption, site conditions and goals.",
-    icon: "sliders",
-  },
-  {
-    title: "Transparent Project Communication",
-    description: "Clear proposals, realistic timelines and regular updates from survey to handover.",
-    icon: "message",
-  },
-  {
-    title: "Reliable Installation Practices",
-    description: "Trained crews following documented safety and installation procedures.",
-    icon: "hardhat",
-  },
-  {
-    title: "Long-Term Service Support",
-    description: "Monitoring and maintenance support that continues well beyond commissioning.",
-    icon: "wrench",
-  },
-] as const;
-
-export const sustainabilityPillars = [
-  {
-    title: "Renewable Energy Adoption",
-    description: "Helping homes, businesses and industries move their daily energy use to clean solar power.",
-    icon: "sun",
-  },
-  {
-    title: "Responsible Resource Management",
-    description: "Using materials carefully in manufacturing and handling waste and packaging responsibly.",
-    icon: "recycle",
-  },
-  {
-    title: "Energy Efficiency",
-    description: "Designing systems that make the most of every square metre of roof or land.",
+    title: "33 kV / 11 kV Substations",
+    description: "Turnkey substation works at 33 kV and 11 kV, from design through erection, testing and commissioning.",
     icon: "zap",
   },
   {
-    title: "Long-Term Environmental Stewardship",
-    description: "Building systems for long service lives and planning for responsible end-of-life handling.",
-    icon: "leaf",
+    title: "HT / LT Cable SITC",
+    description: "Supply, installation, testing and commissioning of HT and LT cabling.",
+    icon: "cable",
+  },
+  {
+    title: "HT / LT Panel Installation",
+    description: "Installation of HT and LT panels on site by our own trained crews.",
+    icon: "layers",
+  },
+  {
+    title: "Electrical Panel SIT",
+    description: "Supply, installation and testing of electrical panels, carried out to the same standards as our factory tests.",
+    icon: "gauge",
+  },
+  {
+    title: "SITC of LT Transformers",
+    description: "Supply, installation, testing and commissioning of LT transformers.",
+    icon: "bolt",
+  },
+  {
+    title: "SITC of VCB Panels & RMU",
+    description: "Supply, installation, testing and commissioning of VCB panels and ring main units.",
+    icon: "cog",
+  },
+  {
+    title: "SITC of Servo Stabilizers",
+    description: "Supply, installation, testing and commissioning of servo voltage stabilizers.",
+    icon: "sliders",
+  },
+  {
+    title: "Bus Duct / Rising Mains Installation",
+    description: "Installation of bus ducts and rising mains in industrial and high-rise buildings.",
+    icon: "plug",
+  },
+  {
+    title: "Cable Tray / Raceway Laying",
+    description: "Laying of cable tray and raceway systems, with all supports and accessories.",
+    icon: "blocks",
+  },
+  {
+    title: "External Lighting Projects",
+    description: "External and area lighting projects for campuses, buildings and infrastructure.",
+    icon: "lightbulb",
+  },
+  {
+    title: "Operation & Maintenance Contracts",
+    description: "Operation and maintenance contracts that keep electrical installations running safely.",
+    icon: "wrench",
+  },
+];
+
+/** The stages named in the catalogue's About Us: design, manufacturing, erection, commissioning and installation. */
+export const deliveryProcess: ProcessStep[] = [
+  { title: "Design", description: "AutoCAD design to the latest Indian electrical and panel standards." },
+  { title: "Manufacturing", description: "In-house CNC fabrication, powder coating and assembly at our Greater Noida plant." },
+  { title: "Inspection & Testing", description: "Insulation, high-voltage, functional and injection testing before dispatch." },
+  { title: "Erection & Installation", description: "Mechanised erection by well-trained, experienced crews." },
+  { title: "Commissioning", description: "Testing and commissioning on site, then handover." },
+];
+
+/** Reasons to choose Trident, each grounded in the catalogue. */
+export const strengths = [
+  {
+    title: "Manufacturing since 2010",
+    description: "More than a decade of building electrical panels for industry, infrastructure and buildings.",
+    icon: "factory",
+  },
+  {
+    title: "ISO 9001:2015 certified",
+    description: "A certified quality management system for the manufacture of electrical panels.",
+    icon: "award",
+  },
+  {
+    title: "In-house CNC & powder coating",
+    description: "Punching, shearing, bending, laser cutting, busbar processing and a 7-tank pre-treatment line under one roof.",
+    icon: "cog",
+  },
+  {
+    title: "Tested before dispatch",
+    description: "Insulation, high-voltage, primary and secondary injection, and switchgear operation tests at the plant.",
+    icon: "gauge",
+  },
+  {
+    title: "Engineers at the helm",
+    description: "Our directors are electrical engineers with extensive experience in the electrical industry.",
+    icon: "hardhat",
+  },
+  {
+    title: "Turnkey delivery",
+    description: "Design, manufacturing, erection, installation and commissioning by one accountable team.",
+    icon: "handshake",
   },
 ] as const;

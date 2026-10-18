@@ -14,10 +14,10 @@ export default function ThankYouPage() {
   return (
     <section className="section">
       <div className="container-site max-w-2xl text-center">
-        <span className="mx-auto inline-flex size-16 items-center justify-center rounded-full bg-mint text-primary">
+        <span className="mx-auto inline-flex size-16 items-center justify-center rounded-full bg-tint text-primary">
           <CircleCheck className="size-9" aria-hidden />
         </span>
-        <h1 className="mt-6 font-display text-4xl font-bold text-evergreen">Thank you. We&apos;ve received your request.</h1>
+        <h1 className="mt-6 font-display text-4xl font-bold text-navy">Thank you. We&apos;ve received your request.</h1>
         <p className="mt-4 text-lg leading-relaxed text-muted">
           Our team will review your details and get in touch using the contact information you provided.
         </p>
@@ -26,8 +26,8 @@ export default function ThankYouPage() {
         </div>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <ButtonLink href="/">Back to Home</ButtonLink>
-          <ButtonLink href="/resources" variant="secondary">
-            Explore Solar Guides
+          <ButtonLink href="/products" variant="secondary">
+            Browse Products
           </ButtonLink>
         </div>
       </div>

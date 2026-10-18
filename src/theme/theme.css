@@ -9,16 +9,17 @@
 @theme inline {
   --color-primary: var(--tc-primary);
   --color-primary-hover: var(--tc-primary-hover);
-  --color-evergreen: var(--tc-evergreen);
-  --color-renew: var(--tc-renew);
-  --color-sun: var(--tc-sun);
-  --color-sun-hover: var(--tc-sun-hover);
+  --color-navy: var(--tc-navy);
+  --color-navy-2: var(--tc-navy-2);
+  --color-accent: var(--tc-accent);
+  --color-accent-hover: var(--tc-accent-hover);
+  --color-accent-soft: var(--tc-accent-soft);
   --color-canvas: var(--tc-canvas);
   --color-surface: var(--tc-surface);
   --color-ink: var(--tc-ink);
   --color-muted: var(--tc-muted);
   --color-line: var(--tc-line);
-  --color-mint: var(--tc-mint);
+  --color-tint: var(--tc-tint);
   --color-danger: var(--tc-danger);
 
   --font-sans: var(--font-body);
@@ -47,7 +48,7 @@
   h3,
   h4 {
     font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
 
@@ -62,8 +63,8 @@
   }
 
   ::selection {
-    background: var(--tc-renew);
-    color: var(--tc-evergreen);
+    background: var(--tc-accent);
+    color: #fff;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -106,7 +107,7 @@
     font-family: var(--font-heading), sans-serif;
     font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
@@ -125,8 +126,40 @@
   }
   .card-interactive:hover {
     box-shadow: var(--tc-shadow-card-hover);
-    transform: translateY(-2px);
-    border-color: color-mix(in srgb, var(--tc-primary) 25%, var(--tc-line));
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--tc-primary) 30%, var(--tc-line));
+  }
+
+  /* Catalogue motif: a red and a blue diagonal slash. */
+  .slash {
+    display: inline-flex;
+    gap: 0.3em;
+    flex-shrink: 0;
+  }
+  .slash::before,
+  .slash::after {
+    content: "";
+    display: block;
+    width: 0.5em;
+    height: 1.1em;
+    transform: skewX(-24deg);
+  }
+  .slash::before {
+    background: var(--tc-accent);
+  }
+  .slash::after {
+    background: var(--tc-primary);
+  }
+  .on-dark .slash::after {
+    background: #6e8fdf;
+  }
+
+  /* Subtle engineering grid used on dark sections. */
+  .grid-lines {
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
   }
 
   .prose-tc {
@@ -185,5 +218,29 @@
       animation-timeline: view();
       animation-range: entry 0% entry 40%;
     }
+  }
+}
+
+/* Client name marquee. Pauses on hover/focus; static for reduced motion. */
+@keyframes tc-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: tc-marquee 60s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto !important;
+  }
+  .marquee-track [data-duplicate] {
+    display: none;
   }
 }

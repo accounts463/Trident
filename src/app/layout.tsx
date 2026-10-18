@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Archivo, Inter } from "next/font/google";
 import { company } from "@/content/company";
 import { ConsentBanner } from "@/components/layout/ConsentBanner";
 import { ContactStrip } from "@/components/layout/ContactStrip";
@@ -9,13 +9,13 @@ import { JsonLd, organizationJsonLd } from "@/lib/jsonld";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const heading = Manrope({ variable: "--font-heading", subsets: ["latin"], display: "swap" });
+const heading = Archivo({ variable: "--font-heading", subsets: ["latin"], display: "swap" });
 const body = Inter({ variable: "--font-body", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${company.name} | Solar Panel Manufacturer & Solar EPC`,
+    default: `${company.name} | Electrical Panel Manufacturer`,
     template: `%s | ${company.name}`,
   },
   description: company.description,
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B2F24",
+  themeColor: "#0D1730",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -35,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-dvh flex-col pb-16 md:pb-0">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-sun focus:px-5 focus:py-3 focus:font-semibold focus:text-evergreen"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accent focus:px-5 focus:py-3 focus:font-semibold focus:text-white"
         >
           Skip to main content
         </a>

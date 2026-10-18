@@ -25,7 +25,7 @@ export function Accordion({ items, className }: { items: Item[]; className?: str
                 aria-expanded={expanded}
                 aria-controls={panelId}
                 onClick={() => setOpen(expanded ? null : i)}
-                className="flex w-full items-center justify-between gap-6 px-5 py-5 text-left font-display text-base font-semibold text-evergreen transition-colors hover:bg-canvas md:px-6"
+                className="flex w-full items-center justify-between gap-6 px-5 py-5 text-left font-display text-base font-semibold text-navy transition-colors hover:bg-canvas md:px-6"
               >
                 {item.question}
                 <ChevronDown

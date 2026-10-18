@@ -6,15 +6,15 @@ type Variant = "primary" | "cta" | "secondary" | "ghost" | "light" | "outline-li
 type Size = "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-tight transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60 aria-disabled:cursor-not-allowed aria-disabled:opacity-60 whitespace-nowrap";
+  "inline-flex items-center justify-center gap-2 rounded-lg font-bold tracking-tight transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60 aria-disabled:cursor-not-allowed aria-disabled:opacity-60 whitespace-nowrap";
 
 const variants: Record<Variant, string> = {
   primary: "bg-primary text-white hover:bg-primary-hover",
-  cta: "bg-sun text-evergreen hover:bg-sun-hover",
-  secondary: "border border-primary/25 bg-white text-primary hover:border-primary hover:bg-mint",
-  ghost: "text-primary hover:bg-mint",
-  light: "bg-white text-evergreen hover:bg-canvas",
-  "outline-light": "border border-white/40 text-white hover:border-white hover:bg-white/10",
+  cta: "bg-accent text-white shadow-[0_8px_20px_-8px_rgb(224_31_38/0.6)] hover:bg-accent-hover",
+  secondary: "border border-primary/25 bg-white text-primary hover:border-primary hover:bg-tint",
+  ghost: "text-primary hover:bg-tint",
+  light: "bg-white text-navy hover:bg-canvas",
+  "outline-light": "border border-white/35 text-white hover:border-white hover:bg-white/10",
 };
 
 const sizes: Record<Size, string> = {

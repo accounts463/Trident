@@ -1,3 +1,4 @@
+import { Award, Mail, MapPin, Phone } from "lucide-react";
 import { company } from "@/content/company";
 import { ButtonLink } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
@@ -11,20 +12,54 @@ export function Header() {
   const contact = getContact();
   return (
     <>
-      <div className="on-dark bg-evergreen text-white/85">
-        <p className="container-site py-2.5 text-center text-xs font-medium tracking-wide md:text-[13px]">{company.announcement}</p>
+      <div className="on-dark bg-navy text-white/80">
+        <div className="container-site flex h-10 items-center justify-between gap-6 text-xs md:text-[13px]">
+          <p className="flex items-center gap-2 font-medium">
+            <Award className="size-4 text-accent-soft" aria-hidden />
+            ISO 9001:2015 certified
+            <span className="hidden sm:inline">· Panel manufacturer since {company.foundedYear}</span>
+          </p>
+          <ul className="hidden items-center gap-6 md:flex">
+            {contact.address && (
+              <li className="hidden items-center gap-1.5 lg:flex">
+                <MapPin className="size-3.5 text-accent-soft" aria-hidden />
+                {contact.address.locality}, {contact.address.region}
+              </li>
+            )}
+            {contact.phoneHref && (
+              <li>
+                <a href={contact.phoneHref} className="flex items-center gap-1.5 hover:text-white">
+                  <Phone className="size-3.5 text-accent-soft" aria-hidden />
+                  {contact.phoneDisplay}
+                </a>
+              </li>
+            )}
+            {contact.email && (
+              <li>
+                <a href={`mailto:${contact.email}`} className="flex items-center gap-1.5 hover:text-white">
+                  <Mail className="size-3.5 text-accent-soft" aria-hidden />
+                  {contact.email}
+                </a>
+              </li>
+            )}
+          </ul>
+        </div>
       </div>
-      <header className="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/80">
-        <div className="container-site flex h-[72px] items-center justify-between gap-6">
-          <Logo />
+      <header className="sticky top-0 z-50 border-b border-line/80 bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/85">
+        <div className="container-site flex h-[76px] items-center justify-between gap-6">
+          <Logo priority />
           <DesktopNav items={nav} />
           <div className="flex items-center gap-2">
-            <ButtonLink href="/request-quote" variant="cta" className="hidden sm:inline-flex">
-              Get a Solar Quote
+            <ButtonLink href="/request-quote" variant="cta" className="max-sm:hidden">
+              Request a Quote
             </ButtonLink>
             <MobileNav items={nav} contactHref={contact.phoneHref} />
           </div>
         </div>
+        <span className="absolute inset-x-0 bottom-[-1px] flex h-[3px]" aria-hidden>
+          <span className="w-2/3 bg-primary" />
+          <span className="w-1/3 bg-accent" />
+        </span>
       </header>
     </>
   );

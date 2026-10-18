@@ -1,20 +1,18 @@
-import { Download } from "lucide-react";
+import { CheckCircle2, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { products } from "@/content/products";
+import { categoryOf } from "@/content/products";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { PageHero } from "@/components/sections/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
+import { ProductCard } from "@/components/ui/cards";
 import { Media } from "@/components/ui/Media";
-import { SampleBadge } from "@/components/ui/SampleBadge";
-import { getProduct, getProducts } from "@/lib/content";
+import { getContact, getProduct, getProducts, getRelatedProducts } from "@/lib/content";
 import { JsonLd, productJsonLd } from "@/lib/jsonld";
 import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
-  const visible = getProducts();
-  // Cache Components requires at least one param; unknown slugs render notFound().
-  return visible.length ? visible.map((p) => ({ slug: p.slug })) : [{ slug: products[0]?.slug ?? "placeholder" }];
+  return getProducts().map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/products/[slug]">): Promise<Metadata> {
@@ -24,18 +22,21 @@ export async function generateMetadata({ params }: PageProps<"/products/[slug]">
     title: product.name,
     description: product.summary,
     path: `/products/${product.slug}`,
-    noIndex: product.status === "sample",
+    image: product.image.src,
   });
 }
 
 export default async function ProductPage({ params }: PageProps<"/products/[slug]">) {
   const product = getProduct((await params).slug);
   if (!product) notFound();
+  const category = categoryOf(product);
+  const related = getRelatedProducts(product.slug);
+  const contact = getContact();
 
   return (
     <>
       <PageHero
-        eyebrow={product.category}
+        eyebrow={category.name}
         title={product.name}
         description={product.summary}
         breadcrumbs={[
@@ -43,67 +44,141 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
           { name: product.name, href: `/products/${product.slug}` },
         ]}
       >
-        <ButtonLink href="/request-quote?type=manufacturing" variant="cta" size="lg">
+        <ButtonLink href={`/request-quote?product=${product.slug}`} variant="cta" size="lg">
           Enquire About This Product
         </ButtonLink>
-        {product.datasheet && (
-          <ButtonLink href={product.datasheet} variant="outline-light" size="lg" download>
-            <Download className="size-4" aria-hidden /> Datasheet
-          </ButtonLink>
+        {contact.phoneHref && (
+          <a
+            href={contact.phoneHref}
+            className="inline-flex h-13 items-center gap-2 rounded-lg border border-white/35 px-7 font-bold text-white transition-colors hover:border-white hover:bg-white/10"
+          >
+            <Phone className="size-4" aria-hidden />
+            {contact.phoneDisplay}
+          </a>
         )}
       </PageHero>
 
       <section className="section">
         <div className="container-site grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <Media image={product.image} priority className="aspect-square rounded-card" sizes="(min-width: 1024px) 40vw, 100vw" />
+          <div className="space-y-4 lg:col-span-5">
+            <figure>
+              <Media
+                image={product.image}
+                priority
+                fit={product.representativeImage ? "cover" : "contain"}
+                className="aspect-square rounded-card border border-line"
+                sizes="(min-width: 1024px) 40vw, 100vw"
+              />
+              {product.representativeImage && (
+                <figcaption className="mt-2 text-xs text-muted">Representative photo of a Trident panel.</figcaption>
+              )}
+            </figure>
+            {product.gallery && product.gallery.length > 0 && (
+              <ul className="grid grid-cols-3 gap-3">
+                {product.gallery.map((img) => (
+                  <li key={img.src}>
+                    <Media image={img} className="aspect-square rounded-lg border border-line" sizes="15vw" />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-          <div className="space-y-8 lg:col-span-7">
-            <SampleBadge status={product.status} />
+
+          <div className="space-y-10 lg:col-span-7">
             <div>
-              <h2 className="font-display text-2xl font-bold text-evergreen">Overview</h2>
-              <p className="mt-3 text-lg leading-relaxed text-muted">{product.description}</p>
+              <h2 className="font-display text-2xl font-extrabold text-navy">Overview</h2>
+              <div className="mt-4 space-y-4 text-lg leading-relaxed text-muted">
+                {product.description.map((p) => (
+                  <p key={p.slice(0, 32)}>{p}</p>
+                ))}
+              </div>
             </div>
-            {product.applications.length > 0 && (
+
+            {product.features.length > 0 && (
               <div>
-                <h2 className="font-display text-xl font-bold text-evergreen">Applications</h2>
-                <ul className="mt-3 flex flex-wrap gap-2">
-                  {product.applications.map((a) => (
-                    <li key={a} className="rounded-full bg-mint px-4 py-1.5 text-sm font-medium text-evergreen">
-                      {a}
+                <h2 className="font-display text-xl font-extrabold text-navy">Key features</h2>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {product.features.map((f) => (
+                    <li key={f} className="flex gap-3 text-ink">
+                      <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-accent" aria-hidden />
+                      {f}
                     </li>
                   ))}
                 </ul>
               </div>
             )}
+
             {product.specs.length > 0 && (
               <div className="card overflow-hidden">
                 <table className="w-full text-left text-sm">
-                  <caption className="border-b border-line bg-canvas px-6 py-4 text-left font-display text-lg font-bold text-evergreen">
+                  <caption className="border-b border-line bg-navy px-6 py-4 text-left font-display text-lg font-bold text-white">
                     Specifications
                   </caption>
                   <tbody>
                     {product.specs.map((s) => (
-                      <tr key={s.label} className="border-b border-line last:border-0">
-                        <th scope="row" className="w-1/2 px-6 py-3 font-medium text-muted">
+                      <tr key={s.label} className="border-b border-line last:border-0 even:bg-canvas">
+                        <th scope="row" className="w-2/5 px-6 py-3.5 align-top font-semibold text-muted">
                           {s.label}
                         </th>
-                        <td className="px-6 py-3 font-semibold text-ink">{s.value}</td>
+                        <td className="px-6 py-3.5 font-semibold text-ink">{s.value}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             )}
+
+            {product.applications.length > 0 && (
+              <div>
+                <h2 className="font-display text-xl font-extrabold text-navy">Applications</h2>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {product.applications.map((a) => (
+                    <li key={a} className="rounded-lg bg-tint px-4 py-2 text-sm font-semibold text-primary">
+                      {a}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
+
+        {product.range && (
+          <div className="container-site mt-16">
+            <h2 className="font-display text-2xl font-extrabold text-navy">{product.range.title}</h2>
+            <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {product.range.items.map((item) => (
+                <li key={item.name} className="card overflow-hidden" data-reveal>
+                  {item.image && (
+                    <Media image={item.image} fit="contain" className="aspect-[4/3] border-b border-line" sizes="(min-width: 1024px) 25vw, 50vw" />
+                  )}
+                  <p className="px-4 py-3 text-sm font-bold text-navy">{item.name}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
+
+      {related.length > 0 && (
+        <section className="section bg-canvas">
+          <div className="container-site">
+            <h2 className="font-display text-3xl font-extrabold text-navy">Related products</h2>
+            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {related.map((p) => (
+                <ProductCard key={p.slug} product={p} categoryName={categoryOf(p).name} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       <CtaBanner
-        title="Need pricing or availability?"
-        description="Tell us your quantity, project location and timeline, and our team will respond."
-        primary={{ label: "Request a Quote", href: "/request-quote?type=manufacturing" }}
+        title={`Get a quotation for ${product.name}`}
+        description="Tell us the rating, quantity and site location. Our engineers will confirm the configuration and send a quotation."
+        primary={{ label: "Request a Quote", href: `/request-quote?product=${product.slug}` }}
       />
-      {product.status === "verified" && <JsonLd data={productJsonLd(product)} />}
+      <JsonLd data={productJsonLd(product, category.name)} />
     </>
   );
 }

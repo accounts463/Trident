@@ -15,13 +15,13 @@ export function IconFeature({ icon, title, description, tone = "light", classNam
       <span
         className={cn(
           "inline-flex size-12 items-center justify-center rounded-2xl",
-          tone === "dark" ? "bg-white/10 text-renew" : "bg-mint text-primary",
+          tone === "dark" ? "bg-white/10 text-accent-soft" : "bg-tint text-primary",
         )}
       >
         <Icon name={icon} className="size-6" />
       </span>
       <div>
-        <h3 className={cn("font-display text-lg font-bold", tone === "dark" ? "text-white" : "text-evergreen")}>{title}</h3>
+        <h3 className={cn("font-display text-lg font-bold", tone === "dark" ? "text-white" : "text-navy")}>{title}</h3>
         <p className={cn("mt-2 leading-relaxed", tone === "dark" ? "text-white/70" : "text-muted")}>{description}</p>
       </div>
     </div>

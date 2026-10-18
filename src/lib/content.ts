@@ -1,56 +1,30 @@
-import { articles } from "@/content/articles";
 import { company } from "@/content/company";
-import { downloads } from "@/content/downloads";
-import { products } from "@/content/products";
-import { projects } from "@/content/projects";
-import { solutions } from "@/content/services";
-import type { ContentStatus } from "@/content/types";
+import { productCategories, products } from "@/content/products";
+import type { ProductCategorySlug } from "@/content/types";
 
-/**
- * Sample content renders in development, or on staging when
- * NEXT_PUBLIC_SHOW_SAMPLE_CONTENT=true. Production builds only show verified entries.
- */
-export const showSampleContent =
-  process.env.NODE_ENV === "development" || process.env.NEXT_PUBLIC_SHOW_SAMPLE_CONTENT === "true";
-
-export function isVisible(item: { status: ContentStatus }) {
-  return item.status === "verified" || showSampleContent;
+export function getCategories() {
+  return productCategories.filter((c) => products.some((p) => p.category === c.slug));
 }
 
-export function getSolutions() {
-  return solutions.filter((s) => company.features[s.key]);
-}
-
-export function getProducts() {
-  return company.features.manufacturing ? products.filter(isVisible) : [];
+export function getProducts(category?: ProductCategorySlug) {
+  return category ? products.filter((p) => p.category === category) : products;
 }
 
 export function getProduct(slug: string) {
-  return getProducts().find((p) => p.slug === slug);
+  return products.find((p) => p.slug === slug);
 }
 
-export function getProjects() {
-  return projects.filter(isVisible);
+export function getFeaturedProducts() {
+  return products.filter((p) => p.featured);
 }
 
-export function getProject(slug: string) {
-  return getProjects().find((p) => p.slug === slug);
+export function getRelatedProducts(slug: string, limit = 3) {
+  const product = getProduct(slug);
+  if (!product) return [];
+  const sameCategory = products.filter((p) => p.category === product.category && p.slug !== slug);
+  const others = products.filter((p) => p.category !== product.category && p.featured);
+  return [...sameCategory, ...others].slice(0, limit);
 }
-
-export function getArticles() {
-  return [...articles].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
-}
-
-export function getArticle(slug: string) {
-  return articles.find((a) => a.slug === slug);
-}
-
-export function getDownloads() {
-  return downloads;
-}
-
-export const calculatorLive = company.calculator !== null;
-export const hasDownloads = downloads.length > 0;
 
 function clean(value: string | null | undefined) {
   const v = value?.trim();
@@ -78,10 +52,4 @@ export type Contact = ReturnType<typeof getContact>;
 
 export function formatAddress(a: NonNullable<Contact["address"]>) {
   return [a.streetAddress, a.locality, `${a.region} ${a.postalCode}`.trim(), a.country].filter(Boolean).join(", ");
-}
-
-export function formatDate(iso: string) {
-  return new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }).format(
-    new Date(`${iso}T00:00:00Z`),
-  );
 }

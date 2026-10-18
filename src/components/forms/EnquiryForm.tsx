@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { Alert } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
 import { Checkbox, describedBy, Field, Honeypot, Input, Select, Textarea } from "@/components/ui/fields";
-import { enquirySchema, propertyTypes, type EnquiryInput } from "@/lib/schemas";
+import { enquirySchema, requirementTypes, type EnquiryInput } from "@/lib/schemas";
 import { Turnstile } from "./Turnstile";
 import { honeypotValue, useLeadSubmit } from "./useLeadSubmit";
 
@@ -19,7 +19,7 @@ export function EnquiryForm({ idPrefix = "enq" }: { idPrefix?: string }) {
     formState: { errors, isSubmitting },
   } = useForm<EnquiryInput>({
     resolver: zodResolver(enquirySchema),
-    defaultValues: { name: "", phone: "", email: "", location: "", energyRequirement: "", details: "", consent: false },
+    defaultValues: { name: "", company: "", phone: "", email: "", location: "", details: "", consent: false },
   });
   const { submit, serverError, errorRef, setTurnstileToken, turnstileReset } = useLeadSubmit("/api/enquiry", setError);
 
@@ -30,12 +30,14 @@ export function EnquiryForm({ idPrefix = "enq" }: { idPrefix?: string }) {
     "aria-describedby": describedBy(id(name), errors[name]?.message, hint),
   });
 
+  const detailsHint = "Ratings, quantities or scope, e.g. 1600 A PCC with 2 incomers, or 300 m cable tray";
+
   return (
     <form
       noValidate
       onSubmit={handleSubmit((values, event) => submit(values, honeypotValue(event)))}
       className="relative space-y-5"
-      aria-label="Solar enquiry form"
+      aria-label="Enquiry form"
     >
       {serverError && (
         <div ref={errorRef} tabIndex={-1} className="focus:outline-none">
@@ -48,6 +50,9 @@ export function EnquiryForm({ idPrefix = "enq" }: { idPrefix?: string }) {
         <Field id={id("name")} label="Name" error={errors.name?.message} required>
           <Input autoComplete="name" {...register("name")} {...aria("name")} />
         </Field>
+        <Field id={id("company")} label="Company" error={errors.company?.message}>
+          <Input autoComplete="organization" {...register("company")} {...aria("company")} />
+        </Field>
         <Field id={id("phone")} label="Phone" error={errors.phone?.message} required>
           <Input type="tel" inputMode="tel" autoComplete="tel" {...register("phone")} {...aria("phone")} />
         </Field>
@@ -57,30 +62,21 @@ export function EnquiryForm({ idPrefix = "enq" }: { idPrefix?: string }) {
         <Field id={id("location")} label="City / project location" error={errors.location?.message} required>
           <Input autoComplete="address-level2" {...register("location")} {...aria("location")} />
         </Field>
-        <Field id={id("propertyType")} label="Property / project type" error={errors.propertyType?.message} required>
-          <Select defaultValue="" {...register("propertyType")} {...aria("propertyType")}>
+        <Field id={id("requirement")} label="What do you need?" error={errors.requirement?.message} required>
+          <Select defaultValue="" {...register("requirement")} {...aria("requirement")}>
             <option value="" disabled>
               Select an option
             </option>
-            {propertyTypes.map((t) => (
-              <option key={t}>{t}</option>
+            {requirementTypes.map((t) => (
+              <option key={t.value} value={t.value}>
+                {t.label}
+              </option>
             ))}
           </Select>
         </Field>
-        <Field
-          id={id("energyRequirement")}
-          label="Monthly bill or energy requirement"
-          hint="For example: ₹4,000 per month, or 500 units per month"
-          error={errors.energyRequirement?.message}
-        >
-          <Input
-            {...register("energyRequirement")}
-            {...aria("energyRequirement", "For example: ₹4,000 per month, or 500 units per month")}
-          />
-        </Field>
       </div>
-      <Field id={id("details")} label="Additional details" error={errors.details?.message}>
-        <Textarea rows={4} {...register("details")} {...aria("details")} />
+      <Field id={id("details")} label="Requirement details" hint={detailsHint} error={errors.details?.message}>
+        <Textarea rows={4} {...register("details")} {...aria("details", detailsHint)} />
       </Field>
       <Checkbox
         id={id("consent")}
@@ -103,7 +99,7 @@ export function EnquiryForm({ idPrefix = "enq" }: { idPrefix?: string }) {
           <Lock className="mt-0.5 size-3.5 shrink-0" aria-hidden />
           Your details are used only to respond to your enquiry. We never sell your information.
         </p>
-        <Button type="submit" size="lg" loading={isSubmitting} loadingText="Sending…">
+        <Button type="submit" size="lg" variant="cta" loading={isSubmitting} loadingText="Sending…">
           Send Enquiry
         </Button>
       </div>
