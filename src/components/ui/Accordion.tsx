@@ -34,7 +34,7 @@ export function Accordion({ items, className }: { items: Item[]; className?: str
                 />
               </button>
             </h3>
-            <div id={panelId} role="region" aria-labelledby={buttonId} hidden={!expanded} className="px-5 pb-6 md:px-6">
+            <div id={panelId} role="region" aria-labelledby={buttonId} hidden={!expanded} className={cn("px-5 pb-6 md:px-6", expanded && "tc-slide-in")}>
               <p className="leading-relaxed text-muted">{item.answer}</p>
             </div>
           </div>

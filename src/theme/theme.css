@@ -123,6 +123,7 @@
   }
 
   .card-interactive {
+    position: relative;
     transition:
       box-shadow 200ms ease,
       transform 200ms ease,
@@ -201,26 +202,95 @@
 }
 
 /*
- * Scroll reveal: pure CSS scroll-driven animation, no JS or DOM mutation.
- * Browsers without view timelines (or with reduced motion) show content as-is.
- * Elements already on screen at load sit past the entry range, so they never flicker.
+ * Scroll reveal, driven by <Interactions />. Nothing is hidden until that script has run
+ * (html.reveal-ready) and marked whatever is already on screen, so content never depends
+ * on JavaScript and the first paint never flickers. Siblings stagger via --reveal-i.
  */
-@keyframes tc-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
+@media (prefers-reduced-motion: no-preference) {
+  /* Uses `translate`, not `transform`, so it never fights hover transforms; the transition
+     is dropped once the entrance ends (data-reveal-done) so hover effects stay snappy. */
+  .reveal-ready [data-reveal]:not([data-reveal-done]) {
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      translate 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(min(var(--reveal-i, 0), 6) * 80ms);
   }
-  to {
-    opacity: 1;
-    transform: none;
+  .reveal-ready [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    translate: 0 28px;
   }
 }
-@supports (animation-timeline: view()) {
+@media print {
+  [data-reveal] {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}
+
+/*
+ * Cards: lift on hover, a soft glow that follows the cursor (--mx/--my from
+ * <Interactions />) and a slow zoom on the card's photo.
+ */
+.card-interactive::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 0%),
+    color-mix(in srgb, var(--tc-primary) 9%, transparent),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.card-interactive:hover::before {
+  opacity: 1;
+}
+.card-interactive img,
+.zoom-on-hover img {
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-interactive:hover img,
+.group:hover > .zoom-on-hover img,
+.group:focus-visible > .zoom-on-hover img {
+  transform: scale(1.05);
+}
+
+/* Orange CTA buttons: a light sweep crosses the button on hover. */
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.35) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+.btn-shine:hover::after {
+  transform: translateX(120%);
+  transition: transform 700ms ease;
+}
+
+/* Reading progress along the bottom of the sticky header (scroll-driven, no JS). */
+.scroll-progress {
+  display: none;
+}
+@keyframes tc-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
-    [data-reveal] {
-      animation: tc-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 40%;
+    .scroll-progress {
+      display: block;
+      transform-origin: 0 50%;
+      animation: tc-progress linear both;
+      animation-timeline: scroll(root);
     }
   }
 }
@@ -276,4 +346,27 @@
 }
 .tc-slide-in {
   animation: tc-slide-in 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Dropdown menus drop in; lightbox photos zoom in. */
+@keyframes tc-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+}
+.tc-pop {
+  animation: tc-pop 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes tc-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+.tc-zoom-in {
+  animation: tc-zoom-in 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lightbox[open] {
+  animation: tc-fade-in 200ms ease-out;
 }

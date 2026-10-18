@@ -13,6 +13,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CategoryCard, CertificateCard, ProductCard, ServiceCard } from "@/components/ui/cards";
 import { Icon } from "@/components/ui/Icon";
 import { IconFeature } from "@/components/ui/IconFeature";
+import { LightboxGallery } from "@/components/ui/LightboxGallery";
 import { Media } from "@/components/ui/Media";
 import { ProcessTimeline } from "@/components/ui/ProcessTimeline";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -459,13 +460,14 @@ export function PanelGallery({ items = images.gallery, title = "From our shop fl
     <section className="section">
       <div className="container-site">
         <SectionHeading eyebrow="Gallery" title={title} />
-        <ul className="mt-12 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3">
-          {items.slice(0, 12).map((img, i) => (
-            <li key={img.src ?? i} className="overflow-hidden rounded-card" data-reveal>
-              <Media image={img} className="aspect-[4/3]" sizes="(min-width: 1024px) 33vw, 50vw" />
-            </li>
-          ))}
-        </ul>
+        <LightboxGallery
+          items={items.slice(0, 12)}
+          listClassName="mt-12 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3"
+          itemClassName="overflow-hidden rounded-card"
+          mediaClassName="aspect-[4/3]"
+          sizes="(min-width: 1024px) 33vw, 50vw"
+          reveal
+        />
       </div>
     </section>
   );

@@ -5,6 +5,8 @@ import { ConsentBanner } from "@/components/layout/ConsentBanner";
 import { ContactStrip } from "@/components/layout/ContactStrip";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { BackToTop } from "@/components/ui/BackToTop";
+import { Interactions } from "@/components/ui/Interactions";
 import { JsonLd, organizationJsonLd } from "@/lib/jsonld";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
@@ -45,7 +47,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <Footer />
         <ContactStrip />
+        <BackToTop />
         <ConsentBanner />
+        <Interactions />
         <JsonLd data={organizationJsonLd()} />
       </body>
     </html>

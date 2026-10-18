@@ -109,7 +109,7 @@ export function DesktopNav({ items }: { items: NavItem[] }) {
                 hidden={!expanded}
                 className="absolute left-1/2 top-full z-50 w-80 -translate-x-1/2"
               >
-                <ul className="card p-2 shadow-card-hover">
+                <ul className={cn("card p-2 shadow-card-hover", expanded && "tc-pop")}>
                   {item.children.map((child) => (
                     <li key={child.href}>
                       <Link

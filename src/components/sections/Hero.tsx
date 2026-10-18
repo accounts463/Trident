@@ -2,13 +2,15 @@ import { Award, Factory, Gauge } from "lucide-react";
 import { clientCount } from "@/content/clients";
 import { company } from "@/content/company";
 import { images } from "@/content/images";
+import { CountUp } from "@/components/ui/CountUp";
 import { HeroCarousel, type HeroSlide } from "./HeroCarousel";
 
+// `count` animates the figure up from zero; a year reads oddly counting, so it stays static.
 const stats = [
-  { value: String(company.foundedYear), label: "Manufacturing panels since" },
-  { value: "4000 kVA", label: "Compact substations up to" },
-  { value: "6000 A", label: "Bus ducts and rising mains up to" },
-  { value: `${Math.floor(clientCount / 10) * 10}+`, label: "Clients across industries" },
+  { value: String(company.foundedYear), label: "Manufacturing panels since", count: false },
+  { value: "4000 kVA", label: "Compact substations up to", count: true },
+  { value: "6000 A", label: "Bus ducts and rising mains up to", count: true },
+  { value: `${Math.floor(clientCount / 10) * 10}+`, label: "Clients across industries", count: true },
 ];
 
 const slides: HeroSlide[] = [
@@ -72,7 +74,9 @@ export function Hero() {
         {stats.map((s) => (
           <div key={s.label} className="flex flex-col-reverse gap-0.5 bg-navy/85 px-4 py-3 backdrop-blur-sm md:gap-1 md:p-5">
             <dt className="text-[0.7rem] font-medium leading-snug text-white/65 md:text-xs">{s.label}</dt>
-            <dd className="font-display text-xl font-black text-white md:text-3xl">{s.value}</dd>
+            <dd className="font-display text-xl font-black text-white md:text-3xl">
+              {s.count ? <CountUp value={s.value} /> : s.value}
+            </dd>
           </div>
         ))}
       </dl>

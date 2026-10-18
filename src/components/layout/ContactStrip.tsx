@@ -19,6 +19,7 @@ export function ContactStrip() {
   ];
 
   // On desktop the header already shows the quote CTA, phone and email; only WhatsApp adds something.
+  // It sits above the back-to-top button.
   const desktopItems = items.filter((i) => i.label === "WhatsApp");
 
   return (
@@ -42,7 +43,7 @@ export function ContactStrip() {
         </ul>
       </nav>
       {desktopItems.length > 0 && (
-        <nav aria-label="Quick contact" className="fixed bottom-6 right-6 z-40 hidden md:block">
+        <nav aria-label="Quick contact" className="fixed bottom-24 right-6 z-40 hidden md:block">
           <ul className="flex flex-col items-end gap-2">
             {desktopItems.map((item) => (
               <li key={item.label}>

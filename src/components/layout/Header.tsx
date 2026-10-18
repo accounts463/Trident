@@ -57,6 +57,7 @@ export function Header() {
           </div>
         </div>
         <span className="absolute inset-x-0 bottom-[-1px] h-[3px] bg-gradient-to-r from-navy via-primary to-accent" aria-hidden />
+        <span className="scroll-progress absolute inset-x-0 bottom-[-1px] h-[3px] bg-accent-soft" aria-hidden />
       </header>
     </>
   );

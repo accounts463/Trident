@@ -6,6 +6,7 @@ import { CtaBanner } from "@/components/sections/CtaBanner";
 import { PageHero } from "@/components/sections/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { ProductCard } from "@/components/ui/cards";
+import { LightboxGallery } from "@/components/ui/LightboxGallery";
 import { Media } from "@/components/ui/Media";
 import { getContact, getProduct, getProducts, getRelatedProducts } from "@/lib/content";
 import { JsonLd, productJsonLd } from "@/lib/jsonld";
@@ -74,13 +75,13 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
               )}
             </figure>
             {product.gallery && product.gallery.length > 0 && (
-              <ul className="grid grid-cols-3 gap-3">
-                {product.gallery.map((img) => (
-                  <li key={img.src}>
-                    <Media image={img} className="aspect-square rounded-lg border border-line" sizes="15vw" />
-                  </li>
-                ))}
-              </ul>
+              <LightboxGallery
+                items={product.gallery}
+                listClassName="grid grid-cols-3 gap-3"
+                itemClassName="overflow-hidden rounded-lg border border-line"
+                mediaClassName="aspect-square"
+                sizes="15vw"
+              />
             )}
           </div>
 
