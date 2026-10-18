@@ -24,11 +24,11 @@ export function PageHero({ eyebrow, title, description, breadcrumbs, image, imag
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -right-24 top-0 hidden h-full w-72 -skew-x-[24deg] bg-accent/90 lg:block"
+        className="pointer-events-none absolute -right-6 top-0 hidden h-full w-20 -skew-x-[24deg] bg-accent/90 lg:block"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute right-40 top-0 hidden h-full w-24 -skew-x-[24deg] bg-primary/70 lg:block"
+        className="pointer-events-none absolute right-24 top-0 hidden h-full w-6 -skew-x-[24deg] bg-primary/70 lg:block"
         aria-hidden
       />
       <div className="container-site relative grid items-center gap-10 py-14 lg:grid-cols-12 lg:py-20">

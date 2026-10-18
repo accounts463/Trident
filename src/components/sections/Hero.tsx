@@ -59,7 +59,7 @@ const badges = [
 export function Hero() {
   return (
     <HeroCarousel slides={slides}>
-      <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+      <ul className="mt-3 hidden flex-wrap gap-x-6 gap-y-2 sm:flex">
         {badges.map(({ label, icon: IconComponent }) => (
           <li key={label} className="flex items-center gap-2 text-sm font-medium text-white/85">
             <IconComponent className="size-4 text-accent-soft" aria-hidden />
@@ -68,11 +68,11 @@ export function Hero() {
         ))}
       </ul>
 
-      <dl className="mt-12 grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-card border border-white/15 bg-white/15 lg:grid-cols-4">
+      <dl className="mt-5 grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-card border border-white/15 bg-white/15 md:mt-8 lg:grid-cols-4">
         {stats.map((s) => (
-          <div key={s.label} className="flex flex-col-reverse gap-1 bg-navy/85 p-5 backdrop-blur-sm">
-            <dt className="text-xs font-medium leading-snug text-white/65">{s.label}</dt>
-            <dd className="font-display text-2xl font-black text-white md:text-3xl">{s.value}</dd>
+          <div key={s.label} className="flex flex-col-reverse gap-0.5 bg-navy/85 px-4 py-3 backdrop-blur-sm md:gap-1 md:p-5">
+            <dt className="text-[0.7rem] font-medium leading-snug text-white/65 md:text-xs">{s.label}</dt>
+            <dd className="font-display text-xl font-black text-white md:text-3xl">{s.value}</dd>
           </div>
         ))}
       </dl>

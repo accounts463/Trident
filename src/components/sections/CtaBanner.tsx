@@ -19,11 +19,11 @@ export function CtaBanner({
       <div className="container-site">
         <div className="on-dark grid-lines relative overflow-hidden rounded-[1.25rem] bg-navy px-6 py-14 md:px-14 md:py-16" data-reveal>
           <div
-            className="pointer-events-none absolute -right-16 top-0 hidden h-full w-56 -skew-x-[24deg] bg-accent md:block"
+            className="pointer-events-none absolute -right-4 top-0 hidden h-full w-16 -skew-x-[24deg] bg-accent md:block"
             aria-hidden
           />
           <div
-            className="pointer-events-none absolute right-36 top-0 hidden h-full w-16 -skew-x-[24deg] bg-primary md:block"
+            className="pointer-events-none absolute right-20 top-0 hidden h-full w-5 -skew-x-[24deg] bg-primary md:block"
             aria-hidden
           />
           <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between lg:pr-48">

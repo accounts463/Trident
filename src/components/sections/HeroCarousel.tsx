@@ -16,7 +16,7 @@ export type HeroSlide = {
   cta: { label: string; href: string };
 };
 
-const INTERVAL_MS = 6000;
+const INTERVAL_MS = 3000;
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
 function subscribeReducedMotion(onChange: () => void) {
@@ -54,7 +54,9 @@ export function HeroCarousel({ slides, children }: { slides: HeroSlide[]; childr
 
   return (
     <section
-      className="on-dark relative isolate overflow-hidden bg-navy"
+      // Fills exactly the screen below the header (top bar 40px + nav 76/84px), less the
+      // 64px quick-contact bar on phones, so the whole hero including stats is visible.
+      className="on-dark relative isolate h-[calc(100svh-116px-4rem)] max-h-[960px] min-h-[440px] overflow-hidden bg-navy md:h-[calc(100svh-116px)] xl:h-[calc(100svh-124px)]"
       aria-roledescription="carousel"
       aria-label="Trident Core Energy highlights"
       onFocus={() => setFocused(true)}
@@ -76,7 +78,7 @@ export function HeroCarousel({ slides, children }: { slides: HeroSlide[]; childr
               priority={i === 0}
               sizes="100vw"
               decorative
-              className={cn("size-full transition-transform duration-[7000ms] ease-out", i === index && "scale-105")}
+              className={cn("size-full transition-transform duration-[3500ms] ease-out", i === index && "scale-105")}
             />
           </div>
         ))}
@@ -90,11 +92,11 @@ export function HeroCarousel({ slides, children }: { slides: HeroSlide[]; childr
         aria-hidden
       />
       <div className="grid-lines absolute inset-0 -z-10 opacity-60" aria-hidden />
-      <div className="absolute -right-10 top-0 -z-10 hidden h-full w-40 -skew-x-[24deg] bg-accent/85 lg:block" aria-hidden />
-      <div className="absolute right-36 top-0 -z-10 hidden h-full w-12 -skew-x-[24deg] bg-primary/80 lg:block" aria-hidden />
+      <div className="absolute -right-4 top-0 -z-10 hidden h-full w-14 -skew-x-[24deg] bg-accent/85 lg:block" aria-hidden />
+      <div className="absolute right-16 top-0 -z-10 hidden h-full w-5 -skew-x-[24deg] bg-primary/80 lg:block" aria-hidden />
 
-      <div className="container-site flex min-h-[calc(100svh-124px)] max-h-[900px] flex-col justify-center py-20 lg:py-24">
-        <div className="grid max-w-3xl" aria-live={autoplay ? "off" : "polite"}>
+      <div className="container-site flex h-full flex-col justify-center py-6 md:py-10">
+        <div className="grid max-w-4xl" aria-live={autoplay ? "off" : "polite"}>
           {slides.map((s, i) => {
             const Heading = i === 0 ? "h1" : "h2";
             const active = i === index;
@@ -112,12 +114,14 @@ export function HeroCarousel({ slides, children }: { slides: HeroSlide[]; childr
                   <span className="slash text-[0.75rem]" aria-hidden />
                   {s.eyebrow}
                 </p>
-                <Heading className="mt-6 font-display text-[2.6rem] font-black leading-[1.02] text-white sm:text-6xl lg:text-[4.4rem]">
+                <Heading className="mt-3 font-display text-[clamp(2rem,5.2vh,2.6rem)] font-black leading-[1.02] text-white sm:text-[clamp(2.4rem,6.2vh,3.75rem)] md:mt-5 lg:text-[clamp(2.8rem,7vh,4.4rem)]">
                   {s.title}
                   <span className="block text-accent-soft">{s.highlight}</span>
                 </Heading>
-                <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/80 md:text-xl">{s.description}</p>
-                <div className="mt-10 flex flex-wrap gap-3">
+                <p className="mt-3 line-clamp-3 max-w-2xl [@media(max-height:700px)]:max-md:hidden text-base leading-relaxed text-white/80 md:mt-5 md:line-clamp-none md:text-lg lg:text-xl">
+                  {s.description}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-3 md:mt-7">
                   <ButtonLink href={s.cta.href} variant="cta" size="lg">
                     {s.cta.label}
                     <ArrowRight className="size-4" aria-hidden />
@@ -132,7 +136,7 @@ export function HeroCarousel({ slides, children }: { slides: HeroSlide[]; childr
         </div>
 
         {count > 1 && (
-          <div className="mt-10 flex items-center gap-3">
+          <div className="mt-4 flex items-center gap-3 md:mt-6">
             <button
               type="button"
               onClick={() => go(index - 1)}
