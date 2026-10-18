@@ -194,7 +194,8 @@ export function SubstationSpotlight() {
 }
 
 export function ManufacturingSection() {
-  const photos = machines.filter((m) => m.image);
+  // Shop-floor photos only; product cut-outs would look out of place in this grid.
+  const photos = machines.filter((m) => m.image && m.fit !== "contain");
   return (
     <section className="section bg-canvas">
       <div className="container-site">

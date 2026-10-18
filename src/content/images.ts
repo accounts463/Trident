@@ -1,13 +1,40 @@
 import type { ImageAsset } from "./types";
 
 /**
- * Photography cropped from the Trident Core Energy company catalogue
- * (public/images/catalog). Alt text describes what is in each photo.
+ * Photography from the Trident Core Energy company catalogue and original
+ * shop-floor photos (public/images/catalog). Alt text describes what is in each photo.
  * To replace a photo, drop a new file in /public/images and update its path here.
  */
 function photo(file: string, alt: string): ImageAsset {
   return { src: `/images/catalog/${file}.jpg`, alt };
 }
+
+/** Original shop-floor photography of Trident panels. */
+const panels = {
+  mccLineupLong: photo("mcc-lineup-long", "Long line-up of motor control panels on the Trident shop floor"),
+  mimicLineupAcb: photo("mimic-lineup-acb", "Panel line-up with red mimic diagram, ACB incomers and indicator lamps"),
+  incomerColourPanels: photo("incomer-colour-panels", "Panels with blue, orange and yellow incomer sections"),
+  pccColourLineup: photo("pcc-colour-lineup", "Colour-coded PCC line-up with green, blue, red and orange sections"),
+  pccColourSections: photo("pcc-colour-sections", "PCC panels with red, blue, yellow and orange incomer doors"),
+  colourFeederDoors: photo("colour-feeder-doors", "Panel fronts with colour-coded feeder doors"),
+  acbFeederPanel: photo("acb-feeder-panel", "ACB incomer and feeder panel with an operator display"),
+  panelRoomColour: photo("panel-room-colour", "Finished panels in a room with orange and yellow sections"),
+  colourLineupPerspective: photo("colour-lineup-perspective", "Long panel line-up with colour-coded incomer sections"),
+  litLineupLong: photo("lit-lineup-long", "Long MCC line-up with indicator lamps lit during testing"),
+  litPanels: photo("lit-panels", "Panels with indicator lamps lit during functional testing"),
+  acbPanelsPair: photo("acb-panels-pair", "Two ACB incomer panels side by side"),
+  panelRowAcb: photo("panel-row-acb", "Row of panels with ACB incomers"),
+  panelLineupShop: photo("panel-lineup-shop", "Panel line-up with metering and selector switches on the shop floor"),
+  panelAisle1: photo("panel-aisle-1", "Aisle between long rows of finished MCC panels"),
+  panelAisle2: photo("panel-aisle-2", "Rows of finished panels ready for dispatch"),
+  panelLineupMeters: photo("panel-lineup-meters", "Tall panel line-up with digital meters"),
+  feederPanelFront: photo("feeder-panel-front", "Front view of a feeder panel with meters and switches"),
+  mccLineupHall: photo("mcc-lineup-hall", "MCC line-up with starter feeders along the shop floor"),
+  multiTierFeeder: photo("multi-tier-feeder", "Multi-tier feeder panel with withdrawable modules"),
+  panelLineupRow: photo("panel-lineup-row", "Panel line-up with meters and indicator lamps"),
+  panelsAssembly: photo("panels-assembly", "Two open floor-standing panels during assembly"),
+  mimicPanelsAssembly: photo("mimic-panels-assembly", "Panels with red mimic diagrams being assembled on the shop floor"),
+};
 
 export const images = {
   // Panels
@@ -22,6 +49,8 @@ export const images = {
   distributionPanel: photo("thumb-distribution-panel", "Compact distribution panel with indicator lamps"),
   busDuct: photo("bus-duct", "Bus duct section with colour-coded busbars and a rising main trunking"),
   compactSubstation: photo("compact-substation", "Trident compact substation enclosure with blue roof on a factory floor"),
+  compactSubstationOpen: photo("compact-substation-open", "Compact substation with doors open showing the HT and LT compartments"),
+  packageSubstation: photo("package-substation", "Package substation enclosure with a red roof on the shop floor"),
 
   // Power conditioning
   transformer: photo("transformer", "Oil-cooled distribution transformer with radiator fins"),
@@ -37,10 +66,14 @@ export const images = {
   variac: photo("thumb-variac", "Variable auto transformers (variacs)"),
 
   // Cable management
-  cableTrayColours: photo("cable-tray-1", "Perforated cable trays powder coated in several colours"),
-  cableTrayStack: photo("cable-tray-2", "Stack of galvanised perforated cable trays"),
+  cableTrayPlant: photo("cable-tray-plant", "Stacks of galvanised perforated cable trays at the Trident plant"),
+  cableTrayStack: photo("cable-tray-stack-gi", "Stack of galvanised perforated cable trays"),
+  cableTrayPerforated: photo("cable-tray-perforated", "Powder-coated perforated cable tray lengths"),
+  cableTrayBatch: photo("cable-tray-batch", "Batch of finished perforated cable trays ready for dispatch"),
+  trayBendPhoto: photo("tray-bend-photo", "Perforated cable tray horizontal bend"),
+  trayTeePhoto: photo("tray-tee-photo", "Perforated cable tray tee"),
+  trayVerticalBendPhoto: photo("tray-vertical-bend-photo", "Perforated cable tray vertical bend"),
   ladderTray: photo("cable-tray-3", "Perforated tray beside a ladder-type cable tray"),
-  cableTrayBundle: photo("cable-tray-4", "Bundle of galvanised cable trays"),
   trayTypes: photo("cable-tray-5", "Wire-mesh, ladder and perforated cable tray types with fittings"),
   trayFittings: photo("cable-tray-6", "Cable tray bends, tees and reducers"),
   raceway1: photo("raceway-1", "Stack of partitioned raceways"),
@@ -84,6 +117,8 @@ export const images = {
   testHv: photo("test-hv", "High-voltage test being carried out on a panel"),
   testIr: photo("test-ir", "Engineers carrying out insulation resistance testing on a panel"),
   testCoating: photo("test-coating", "Inspector checking powder coating thickness on a panel door"),
+  laserCutter: photo("machine-laser", "CNC fibre laser cutting machine"),
+  busbarMachine: photo("machine-busbar", "Busbar bending, cutting and punching machine"),
   testBench: photo("test-bench", "Trident panel testing bench with meters and switches"),
   testEquipment: [
     photo("test-eq-1", "High-voltage test kit"),
@@ -94,26 +129,29 @@ export const images = {
     photo("test-eq-6", "Multifunction installation tester"),
   ],
 
-  // Panel gallery
+  // Panel photos
+  ...panels,
   gallery: [
-    photo("gal-1", "Long line-up of motor control panels on the shop floor"),
-    photo("gal-17", "Colour-coded PCC line-up with orange, yellow, white and blue sections"),
-    photo("gal-2", "Panels with blue, orange and yellow incomer sections"),
-    photo("gal-3", "Two open floor-standing panels during assembly"),
-    photo("gal-16", "Panel line-up with red mimic diagram and ACB incomers"),
-    photo("gal-8", "Rows of finished panels ready for dispatch"),
-    photo("gal-13", "Panel room with overhead cable trays"),
-    photo("gal-10", "MCC line-up with digital meters and indicator lamps"),
-    photo("gal-11", "ACB incomer panel with multiple compartments"),
-    photo("gal-12", "Tall feeder panels with withdrawable modules"),
-    photo("gal-14", "Panel line-up with metering and selector switches"),
-    photo("gal-15", "Front view of a multi-tier feeder panel"),
-    photo("gal-7", "Panel fronts with colour-coded feeder doors"),
-    photo("gal-9", "Panels in an electrical room with an orange section"),
+    panels.mccLineupLong,
+    panels.mimicLineupAcb,
+    panels.incomerColourPanels,
+    panels.pccColourLineup,
+    panels.colourFeederDoors,
+    panels.acbFeederPanel,
+    panels.panelRoomColour,
+    panels.colourLineupPerspective,
+    panels.litPanels,
+    panels.acbPanelsPair,
+    panels.panelRowAcb,
+    panels.panelAisle1,
+    panels.panelLineupShop,
+    panels.pccColourSections,
+    panels.feederPanelFront,
+    panels.mccLineupHall,
   ],
-  panelLineup: photo("gal-17", "Colour-coded PCC line-up with orange, yellow, white and blue sections"),
-  shopFloor: photo("gal-1", "Long line-up of motor control panels on the Trident shop floor"),
-  panelRows: photo("gal-8", "Rows of finished panels ready for dispatch"),
+  panelLineup: panels.mccLineupLong,
+  shopFloor: panels.panelsAssembly,
+  panelRows: panels.panelAisle2,
 
   // Company
   adminBlock: photo("admin-block", "Trident Core Energy admin block in Greater Noida"),

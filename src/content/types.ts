@@ -157,6 +157,7 @@ export type Sector = {
 
 export type ClientGroup = { title: string; clients: string[] };
 
-export type Facility = { title: string; description: string; image?: ImageAsset };
+/** `fit: "contain"` marks a product cut-out on white rather than a site photo. */
+export type Facility = { title: string; description: string; image?: ImageAsset; fit?: "cover" | "contain" };
 
 export type Faq = { question: string; answer: string };

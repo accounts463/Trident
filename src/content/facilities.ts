@@ -23,8 +23,18 @@ export const machines: Facility[] = [
     description: "Spray booth and powder coating oven for a durable, even finish.",
     image: images.powderCoating,
   },
-  { title: "CNC Laser Cutting Machine", description: "Fine, burr-free profiles for complex panel parts." },
-  { title: "Busbar Bending, Cutting & Punching Machine", description: "Busbars processed in-house to the exact design." },
+  {
+    title: "CNC Laser Cutting Machine",
+    description: "Fine, burr-free profiles for complex panel parts.",
+    image: images.laserCutter,
+    fit: "contain",
+  },
+  {
+    title: "Busbar Bending, Cutting & Punching Machine",
+    description: "Busbars processed in-house to the exact design.",
+    image: images.busbarMachine,
+    fit: "contain",
+  },
   { title: "Cable Tray Perforation Line", description: "In-house perforation of cable trays in a range of sizes." },
   { title: "7-Tank Chemical Pre-Treatment Plant", description: "Surface treatment before powder coating for long-lasting adhesion." },
 ];

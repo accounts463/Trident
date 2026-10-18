@@ -70,7 +70,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
                 sizes="(min-width: 1024px) 40vw, 100vw"
               />
               {product.representativeImage && (
-                <figcaption className="mt-2 text-xs text-muted">Representative photo of a Trident panel.</figcaption>
+                <figcaption className="mt-2 text-xs text-muted">Representative photo from the Trident plant.</figcaption>
               )}
             </figure>
             {product.gallery && product.gallery.length > 0 && (

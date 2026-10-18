@@ -35,10 +35,10 @@ export default function ManufacturingPage() {
             title="CNC fabrication and powder coating"
             description="Our own machinery gives us control over accuracy, finish and lead time."
           />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {withPhotos.map((m) => (
               <figure key={m.title} className="card overflow-hidden" data-reveal>
-                <Media image={m.image!} className="aspect-[4/3] sm:aspect-[4/5]" sizes="(min-width: 1024px) 25vw, 50vw" />
+                <Media image={m.image!} fit={m.fit} className="aspect-[4/3]" sizes="(min-width: 1024px) 33vw, 50vw" />
                 <figcaption className="p-5">
                   <span className="block font-display text-lg font-bold text-navy">{m.title}</span>
                   <span className="mt-1 block text-sm leading-relaxed text-muted">{m.description}</span>

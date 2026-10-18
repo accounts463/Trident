@@ -34,7 +34,7 @@ export const productCategories: ProductCategory[] = [
     slug: "cable-management",
     name: "Cable Trays & Raceways",
     summary: "Perforated, ladder and wire-mesh cable trays, partitioned raceways, fittings and junction boxes.",
-    image: images.cableTrayColours,
+    image: images.cableTrayPlant,
     icon: "cable",
   },
   {
@@ -117,9 +117,9 @@ export const products: Product[] = [
       { label: "Test standard", value: "IS 8623 (Part 1)" },
     ],
     applications: ["Large industries", "Commercial complexes", "Infrastructure projects"],
-    image: images.panelLineup,
+    image: images.pccColourLineup,
     representativeImage: true,
-    gallery: [images.gallery[2], images.gallery[4]],
+    gallery: [images.incomerColourPanels, images.pccColourSections, images.colourFeederDoors],
     featured: true,
   },
   {
@@ -145,7 +145,7 @@ export const products: Product[] = [
     ],
     applications: ["Process plants", "Water and effluent treatment", "Manufacturing lines"],
     image: images.mccPccPanel,
-    gallery: [images.gallery[7], images.gallery[0]],
+    gallery: [images.mccLineupLong, images.mccLineupHall, images.litLineupLong],
     featured: true,
   },
   {
@@ -272,7 +272,7 @@ export const products: Product[] = [
     features: ["PLC panels", "VFD panels", "PLC-based automatic load management LT panels"],
     specs: [],
     applications: ["Industrial automation", "Pumps, fans and conveyors", "Load management"],
-    image: images.gallery[9],
+    image: images.litPanels,
     representativeImage: true,
   },
   {
@@ -284,7 +284,7 @@ export const products: Product[] = [
     features: ["CIP panels", "Cup filling panels", "Pasteurizer panels"],
     specs: [],
     applications: ["Dairy plants", "Food & beverage processing"],
-    image: images.gallery[10],
+    image: images.multiTierFeeder,
     representativeImage: true,
   },
   {
@@ -296,7 +296,7 @@ export const products: Product[] = [
     features: ["Sewage treatment plant panels", "Effluent treatment plant panels", "Water treatment plant panels"],
     specs: [],
     applications: ["Water treatment plants", "Residential complexes", "Industries"],
-    image: images.gallery[11],
+    image: images.panelLineupRow,
     representativeImage: true,
   },
 
@@ -334,6 +334,7 @@ export const products: Product[] = [
       "Infrastructure projects",
     ],
     image: images.compactSubstation,
+    gallery: [images.compactSubstationOpen, images.packageSubstation],
     featured: true,
   },
   {
@@ -380,8 +381,9 @@ export const products: Product[] = [
       ],
     },
     applications: ["Industrial plants", "Commercial buildings", "Infrastructure projects", "Data and communication cabling"],
-    image: images.cableTrayColours,
-    gallery: [images.trayTypes, images.ladderTray, images.cableTrayStack],
+    image: images.cableTrayPlant,
+    representativeImage: true,
+    gallery: [images.cableTrayStack, images.cableTrayPerforated, images.cableTrayBatch, images.trayBendPhoto, images.trayTeePhoto, images.trayVerticalBendPhoto],
     featured: true,
   },
   {
