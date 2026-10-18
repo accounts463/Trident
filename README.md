@@ -2,7 +2,7 @@
 
 Marketing and lead-generation website for Trident Core Energy, an ISO 9001:2015 certified manufacturer of LT electrical panels, compact substations, bus ducts, cable trays and earthing systems in Greater Noida, and an electrical contractor (substations, HT/LT installation, O&M).
 
-All copy, specifications, client names and photography come from the company catalogue (`TRIDENT.pdf`).
+All copy, specifications and client names come from the company catalogue (`TRIDENT.pdf`); photography comes from the catalogue and original shop-floor photos.
 
 **Stack:** Next.js 16 (App Router, Cache Components, Turbopack) · React 19 · TypeScript (strict) · Tailwind CSS v4 · React Hook Form + Zod · Lucide icons · Resend.
 
@@ -60,7 +60,7 @@ In production, if neither email nor CRM is configured, the API returns an error 
 | `src/theme/theme.css` | Base theme: maps semantic Tailwind tokens (`bg-primary`, `bg-navy`, `text-accent`, `rounded-card`, …) to CSS variables, plus component classes (`.container-site`, `.section`, `.card`, `.eyebrow`, `.slash`, `.grid-lines`, marquee). |
 | `src/theme/theme-overrides.css` | Brand values only. Re-skinning = editing this file. |
 
-**Tokens (sampled from the logo):** Trident Blue `#2D4E9E` (primary) · Deep Navy `#0D1730` (top bar, footer, dark sections) · Signal Red `#E01F26` (CTAs, highlights) · Soft Red `#FF6B70` (small text on navy) · Canvas `#F3F5F9` · Charcoal `#161D2B`. The red/blue diagonal "slash" motif comes from the catalogue.
+**Tokens (sampled from the logo):** Trident Blue `#0077C8` (primary; logo blue `#0089E0`) · Deep Navy `#0B1628` (top bar, footer, dark sections) · Trident Orange `#D93800` (CTAs, highlights; logo orange `#EA3D00`) · Soft Orange `#FF7A45` (small text on navy) · Canvas `#F3F6F9` · Charcoal `#1A1D23`. The orange/blue diagonal "slash" motif comes from the catalogue.
 
 **Fonts:** Archivo (headings) and Inter (body) via `next/font`.
 
