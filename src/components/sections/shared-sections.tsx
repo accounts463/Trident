@@ -1,4 +1,4 @@
-import { ArrowRight, Check, CheckCircle2, Mail, Phone, Quote } from "lucide-react";
+import { ArrowRight, Check, CheckCircle2, Mail, Phone, Quote, Trophy } from "lucide-react";
 import Link from "next/link";
 import { applicationAreas, clientCount, featuredClients, sectors } from "@/content/clients";
 import { company } from "@/content/company";
@@ -333,6 +333,73 @@ export function CertificationsSection({ heading = true }: { heading?: boolean })
         <div className={cn("grid gap-6 md:grid-cols-3", heading && "mt-12")}>
           {company.certifications.map((c) => (
             <CertificateCard key={c.slug} certification={c} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Homepage teaser for the awards, linking to the full section on the About page. */
+export function AwardsSection() {
+  return (
+    <section className="on-dark section grid-lines bg-navy">
+      <div className="container-site grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
+        <div className="lg:col-span-5">
+          <SectionHeading
+            tone="dark"
+            eyebrow="Awards & Recognition"
+            title="Recognised for business excellence and social contribution"
+            description="Our work has been recognised beyond the shop floor, for how we run our business and for what we give back to the community."
+          />
+          <ButtonLink href="/about#awards" variant="outline-light" className="mt-8">
+            Read about our awards <ArrowRight className="size-4" aria-hidden />
+          </ButtonLink>
+        </div>
+        <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
+          {company.awards.map((a) => (
+            <li key={a.title} className="overflow-hidden rounded-card bg-navy-2 ring-1 ring-white/10" data-reveal>
+              <Media image={a.image} className="aspect-[4/5]" sizes="(min-width: 1024px) 28vw, (min-width: 640px) 50vw, 100vw" />
+              <div className="flex gap-3 p-5">
+                <Trophy className="mt-0.5 size-5 shrink-0 text-accent-soft" aria-hidden />
+                <div>
+                  <h3 className="font-display text-lg font-bold leading-snug text-white">{a.title}</h3>
+                  <p className="mt-1 text-sm text-white/70">{a.presentedBy}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/** Full awards section for the About page, with the story behind each award. */
+export function AwardsDetail() {
+  return (
+    <section id="awards" className="section scroll-mt-28">
+      <div className="container-site">
+        <SectionHeading
+          eyebrow="Awards & Recognition"
+          title="Honoured for excellence in business and service to society"
+          description="Recognition received by Trident Core Energy, accepted on the company's behalf by our director."
+        />
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:gap-8">
+          {company.awards.map((a) => (
+            <article key={a.title} className="card flex flex-col overflow-hidden" data-reveal>
+              <Media image={a.image} className="aspect-[4/5] sm:aspect-[5/6]" sizes="(min-width: 768px) 45vw, 100vw" />
+              <div className="flex flex-1 gap-4 p-6 md:p-8">
+                <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg bg-accent text-white">
+                  <Trophy className="size-5" aria-hidden />
+                </span>
+                <div>
+                  <h3 className="font-display text-xl font-extrabold text-navy md:text-2xl">{a.title}</h3>
+                  <p className="mt-1 font-semibold text-primary">{a.presentedBy}</p>
+                  <p className="mt-4 leading-relaxed text-muted">{a.description}</p>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </div>

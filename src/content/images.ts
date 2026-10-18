@@ -157,6 +157,16 @@ export const images = {
   adminBlock: photo("admin-block", "Trident Core Energy admin block in Greater Noida"),
   adminOffice: photo("admin-office", "Open-plan office inside the Trident Core Energy admin block"),
 
+  // Awards
+  awardBusinessExcellence: photo(
+    "award-business-excellence",
+    "Director Pramod Kumar receiving the business excellence award trophy from Cabinet Minister Chirag Paswan",
+  ),
+  awardSocialWelfare: photo(
+    "award-social-welfare",
+    "Director Pramod Kumar receiving a Rotary Club of Greater Noida certificate for contributions to social welfare",
+  ),
+
   // Certificates
   certIso: photo("cert-iso", "ISO 9001:2015 certificate of registration for Trident Core Energy"),
   certCe: photo("cert-ce", "CE certificate of compliance"),

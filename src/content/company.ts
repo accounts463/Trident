@@ -93,6 +93,22 @@ export const company: Company = {
   // TODO: add official social profiles, e.g. { label: "LinkedIn", href: "https://..." }
   socials: [],
   serviceAreas: [],
+  awards: [
+    {
+      title: "Business Excellence Award",
+      presentedBy: "Presented by Cabinet Minister Shri Chirag Paswan",
+      description:
+        "Trident Core Energy was honoured with a business excellence award, presented by Cabinet Minister Shri Chirag Paswan. Our director, Mr. Pramod Kumar, received the award on behalf of the company.",
+      image: images.awardBusinessExcellence,
+    },
+    {
+      title: "Recognition for Social Welfare",
+      presentedBy: "Rotary Club of Greater Noida",
+      description:
+        "Trident Core Energy received an award in recognition of its contributions to social welfare. Mr. Pramod Kumar accepted the award on behalf of the organisation.",
+      image: images.awardSocialWelfare,
+    },
+  ],
   certifications: [
     {
       slug: "iso-9001",

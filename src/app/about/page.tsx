@@ -3,7 +3,7 @@ import { company } from "@/content/company";
 import { images } from "@/content/images";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { PageHero } from "@/components/sections/PageHero";
-import { CertificationsSection, DeliveryProcess, ValuesSection } from "@/components/sections/shared-sections";
+import { AwardsDetail, CertificationsSection, DeliveryProcess, ValuesSection } from "@/components/sections/shared-sections";
 import { Media } from "@/components/ui/Media";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { pageMetadata } from "@/lib/seo";
@@ -64,6 +64,8 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
+
+      <AwardsDetail />
 
       <ValuesSection />
 

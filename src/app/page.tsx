@@ -4,6 +4,7 @@ import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Hero } from "@/components/sections/Hero";
 import {
   AboutIntro,
+  AwardsSection,
   CategoriesSection,
   CertificationsSection,
   ClientMarquee,
@@ -38,6 +39,7 @@ export default function HomePage() {
       <DeliveryProcess tone="dark" />
       <StrengthsSection />
       <SectorsSection showReferences={false} />
+      <AwardsSection />
       <CertificationsSection />
       <FaqSection />
       <CtaBanner />

@@ -61,6 +61,14 @@ export type Certification = {
   image: ImageAsset;
 };
 
+export type Award = {
+  title: string;
+  /** Who presented or conferred the award. */
+  presentedBy: string;
+  description: string;
+  image: ImageAsset;
+};
+
 export type Value = { title: string; description: string; icon: IconKey };
 
 export type Company = {
@@ -101,6 +109,7 @@ export type Company = {
   /** Cities/regions actually served. Used for location keywords only when filled. */
   serviceAreas: string[];
   certifications: Certification[];
+  awards: Award[];
 };
 
 export type ProductCategorySlug =
