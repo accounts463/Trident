@@ -26,6 +26,9 @@ export function getRelatedProducts(slug: string, limit = 3) {
   return [...sameCategory, ...others].slice(0, limit);
 }
 
+/** Pre-filled first message when a visitor opens a WhatsApp chat. */
+const WHATSAPP_GREETING = `Hello ${company.name}, I'd like to enquire about your products and services.`;
+
 function clean(value: string | null | undefined) {
   const v = value?.trim();
   return v ? v : null;
@@ -42,7 +45,7 @@ export function getContact() {
     phoneHref: phone ? `tel:${phone.replace(/[^\d+]/g, "")}` : null,
     altPhoneDisplay: clean(c.altPhoneDisplay) ?? clean(c.altPhone),
     altPhoneHref: clean(c.altPhone) ? `tel:${c.altPhone!.replace(/[^\d+]/g, "")}` : null,
-    whatsappHref: whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, "")}` : null,
+    whatsappHref: whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(WHATSAPP_GREETING)}` : null,
     email: clean(c.email) ?? clean(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
     address: c.address,
     hours: clean(c.hours),

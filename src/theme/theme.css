@@ -370,3 +370,23 @@
 .lightbox[open] {
   animation: tc-fade-in 200ms ease-out;
 }
+
+/* Floating WhatsApp button: a soft ring pulses outward (off for reduced motion). */
+@keyframes tc-wa-pulse {
+  from {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+.wa-pulse {
+  animation: tc-wa-pulse 2.2s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-pulse {
+    display: none;
+  }
+}

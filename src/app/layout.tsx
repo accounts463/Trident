@@ -5,6 +5,7 @@ import { ConsentBanner } from "@/components/layout/ConsentBanner";
 import { ContactStrip } from "@/components/layout/ContactStrip";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { Interactions } from "@/components/ui/Interactions";
 import { JsonLd, organizationJsonLd } from "@/lib/jsonld";
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <Footer />
         <ContactStrip />
+        <WhatsAppButton />
         <BackToTop />
         <ConsentBanner />
         <Interactions />

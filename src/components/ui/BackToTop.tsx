@@ -44,7 +44,8 @@ export function BackToTop() {
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}
       className={cn(
-        "group fixed bottom-20 right-4 z-40 inline-flex size-12 items-center justify-center rounded-full bg-navy text-white shadow-lg transition-all duration-300 hover:bg-primary md:bottom-6 md:right-6",
+        // Stacked above the WhatsApp button (56px, bottom-20 / md:bottom-6).
+        "group fixed bottom-[9.5rem] right-5 z-40 inline-flex size-12 items-center justify-center rounded-full bg-navy text-white shadow-lg transition-all duration-300 hover:bg-primary md:bottom-24 md:right-7",
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0",
       )}
     >
