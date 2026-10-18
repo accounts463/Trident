@@ -64,7 +64,7 @@ In production, if neither email nor CRM is configured, the API returns an error 
 
 **Fonts:** Archivo (headings) and Inter (body) via `next/font`.
 
-**Logo:** `src/assets/logo-mark.png` (and a reversed `logo-mark-light.png` for dark backgrounds) is cut from the official logo; the wordmark is live text. The full stacked logo is `public/images/logo.png` (used in JSON-LD). `src/app/icon.png`, `apple-icon.png` and `opengraph-image.jpg` are generated from the same artwork. Replace them with vector originals when available.
+**Logo:** the Trident mark is an inline SVG traced from the official artwork (`LogoMark` in `src/components/ui/Logo.tsx`); the wordmark is live text. Logo colours live in `src/theme/theme-overrides.css` as `--tc-brand-*`. The full stacked logo is `public/images/logo.png` (used in JSON-LD). `src/app/icon.png`, `apple-icon.png` and `opengraph-image.jpg` are generated from the same artwork. Replace them with vector originals when available.
 
 ## Content
 

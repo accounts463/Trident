@@ -40,6 +40,8 @@ export function getContact() {
     phone,
     phoneDisplay: clean(c.phoneDisplay) ?? clean(process.env.NEXT_PUBLIC_CONTACT_PHONE_DISPLAY) ?? phone,
     phoneHref: phone ? `tel:${phone.replace(/[^\d+]/g, "")}` : null,
+    altPhoneDisplay: clean(c.altPhoneDisplay) ?? clean(c.altPhone),
+    altPhoneHref: clean(c.altPhone) ? `tel:${c.altPhone!.replace(/[^\d+]/g, "")}` : null,
     whatsappHref: whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, "")}` : null,
     email: clean(c.email) ?? clean(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
     address: c.address,

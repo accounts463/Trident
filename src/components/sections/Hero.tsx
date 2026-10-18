@@ -28,7 +28,7 @@ export function Hero() {
         className="absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(100deg, rgb(13 23 48 / 0.97) 0%, rgb(13 23 48 / 0.9) 42%, rgb(13 23 48 / 0.45) 75%, rgb(13 23 48 / 0.2) 100%)",
+            "linear-gradient(100deg, rgb(11 22 40 / 0.97) 0%, rgb(11 22 40 / 0.9) 42%, rgb(11 22 40 / 0.45) 75%, rgb(11 22 40 / 0.2) 100%)",
         }}
         aria-hidden
       />

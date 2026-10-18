@@ -7,6 +7,10 @@
  */
 
 @theme inline {
+  --color-brand-blue: var(--tc-brand-blue);
+  --color-brand-blue-soft: var(--tc-brand-blue-soft);
+  --color-brand-orange: var(--tc-brand-orange);
+  --color-brand-dark: var(--tc-brand-dark);
   --color-primary: var(--tc-primary);
   --color-primary-hover: var(--tc-primary-hover);
   --color-navy: var(--tc-navy);

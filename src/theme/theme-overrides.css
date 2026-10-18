@@ -7,28 +7,35 @@
  */
 
 :root {
-  --tc-primary: #2d4e9e; /* Trident Blue (logo wordmark, deepened for AA text contrast) */
-  --tc-primary-hover: #213d82;
-  --tc-navy: #0d1730; /* Deep Navy: header bar, footer, dark sections */
-  --tc-navy-2: #15244a; /* Raised surfaces on navy */
-  --tc-accent: #e01f26; /* Signal Red (logo mark): CTAs and highlights */
-  --tc-accent-hover: #c0161c;
-  --tc-accent-soft: #ff6b70; /* Red tuned for small text on navy */
-  --tc-canvas: #f3f5f9;
+  /* Exact logo colours (from the official business-card artwork). */
+  --tc-brand-blue: #0089e0; /* Wordmark blue */
+  --tc-brand-blue-soft: #5bb8f5; /* Wordmark blue on navy */
+  --tc-brand-orange: #ea3d00; /* Mark orange */
+  --tc-brand-dark: #231f20; /* Mark charcoal */
+
+  /* UI tokens: logo hues, deepened where needed for AA text contrast on white. */
+  --tc-primary: #0077c8; /* Trident Blue */
+  --tc-primary-hover: #00609f;
+  --tc-navy: #0b1628; /* Deep Navy: header bar, footer, dark sections */
+  --tc-navy-2: #13233d; /* Raised surfaces on navy */
+  --tc-accent: #d93800; /* Trident Orange: CTAs and highlights */
+  --tc-accent-hover: #b82f00;
+  --tc-accent-soft: #ff7a45; /* Orange tuned for small text on navy */
+  --tc-canvas: #f3f6f9;
   --tc-surface: #ffffff;
-  --tc-ink: #161d2b; /* Charcoal */
+  --tc-ink: #1a1d23; /* Charcoal */
   --tc-muted: #566074;
-  --tc-line: #e1e5ee;
-  --tc-tint: #eaf0fb; /* Light blue wash */
+  --tc-line: #e1e6ed;
+  --tc-tint: #e8f4fc; /* Light blue wash */
   --tc-danger: #b42318;
-  --tc-focus: #2d4e9e;
+  --tc-focus: #0077c8;
 
   --tc-radius-card: 0.875rem;
-  --tc-shadow-card: 0 1px 2px rgb(13 23 48 / 0.05), 0 1px 1px rgb(13 23 48 / 0.03);
-  --tc-shadow-card-hover: 0 18px 40px -18px rgb(13 23 48 / 0.28);
+  --tc-shadow-card: 0 1px 2px rgb(11 22 40 / 0.05), 0 1px 1px rgb(11 22 40 / 0.03);
+  --tc-shadow-card-hover: 0 18px 40px -18px rgb(11 22 40 / 0.28);
 }
 
-/* On dark sections, the focus ring switches to the soft red for contrast. */
+/* On dark sections, the focus ring switches to the soft orange for contrast. */
 .on-dark {
-  --tc-focus: #ff6b70;
+  --tc-focus: #ff7a45;
 }

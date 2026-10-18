@@ -47,7 +47,7 @@ export function Header() {
       </div>
       <header className="sticky top-0 z-50 border-b border-line/80 bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/85">
         <div className="container-site flex h-[76px] items-center justify-between gap-6">
-          <Logo priority />
+          <Logo />
           <DesktopNav items={nav} />
           <div className="flex items-center gap-2">
             <ButtonLink href="/request-quote" variant="cta" className="max-sm:hidden">

@@ -16,6 +16,7 @@ export default function ContactPage() {
   const c = getContact();
   const details = [
     c.phoneHref && { icon: Phone, label: "Call us", value: c.phoneDisplay, href: c.phoneHref },
+    c.altPhoneHref && { icon: Phone, label: "Call us (alternate)", value: c.altPhoneDisplay, href: c.altPhoneHref },
     c.whatsappHref && { icon: MessageCircle, label: "WhatsApp", value: "Chat with our team", href: c.whatsappHref },
     c.email && { icon: Mail, label: "Email", value: c.email, href: `mailto:${c.email}` },
     c.address && { icon: MapPin, label: "Address", value: formatAddress(c.address) },

@@ -85,6 +85,9 @@ export type Company = {
     /** E.164 format, e.g. +919800000000 */
     phone: string | null;
     phoneDisplay: string | null;
+    /** Second number listed on the business card, same formats as above. */
+    altPhone: string | null;
+    altPhoneDisplay: string | null;
     /** E.164 digits used for wa.me links. */
     whatsapp: string | null;
     email: string | null;
