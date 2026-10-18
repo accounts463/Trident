@@ -1,17 +1,33 @@
 "use client";
 
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Mail, Menu, Phone, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { buttonClasses } from "@/components/ui/Button";
+import { Logo } from "@/components/ui/Logo";
 import type { NavItem } from "@/lib/navigation";
 import { cn } from "@/lib/cn";
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
-/** Hamburger + focus-trapped drawer for screens below xl. */
-export function MobileNav({ items, contactHref }: { items: NavItem[]; contactHref: string | null }) {
+type Props = {
+  items: NavItem[];
+  contact: { phoneHref: string | null; phoneDisplay: string | null; email: string | null };
+};
+
+function isActive(pathname: string, href: string) {
+  const path = href.split(/[?#]/)[0];
+  return path === "/" ? pathname === "/" : pathname === path || pathname.startsWith(`${path}/`);
+}
+
+/**
+ * Hamburger + focus-trapped drawer for screens below xl.
+ * The drawer is portalled to <body>: the sticky header uses backdrop-filter,
+ * which would otherwise clip a position:fixed child to the header's box.
+ */
+export function MobileNav({ items, contact }: Props) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -50,103 +66,154 @@ export function MobileNav({ items, contactHref }: { items: NavItem[]; contactHre
         first.focus();
       }
     };
+    const onResize = () => {
+      if (window.matchMedia("(min-width: 1280px)").matches) setOpen(false);
+    };
     document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
     return () => {
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
       document.body.style.overflow = previousOverflow;
-      trigger?.focus();
+      trigger?.focus({ preventScroll: true });
     };
   }, [open]);
+
+  function openDrawer() {
+    // Start with the section for the current page expanded.
+    setExpanded(items.find((i) => i.children?.some((c) => isActive(pathname, c.href)))?.label ?? null);
+    setOpen(true);
+  }
+
+  // Links close the drawer themselves: same-page and #hash links don't change the pathname.
+  const close = () => setOpen(false);
+
+  const drawer = (
+    <div className="fixed inset-0 z-[70] xl:hidden">
+      <div className="tc-fade-in absolute inset-0 bg-navy/60 backdrop-blur-sm" onClick={close} aria-hidden />
+      <div
+        ref={panelRef}
+        id="mobile-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
+        className="tc-drawer-in absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-2xl"
+      >
+        <div className="flex h-[76px] shrink-0 items-center justify-between border-b border-line px-4">
+          <Logo />
+          <button
+            type="button"
+            onClick={close}
+            className="inline-flex size-11 items-center justify-center rounded-lg text-navy hover:bg-canvas"
+          >
+            <X className="size-6" aria-hidden />
+            <span className="sr-only">Close menu</span>
+          </button>
+        </div>
+        <span className="flex h-[3px] shrink-0" aria-hidden>
+          <span className="w-2/3 bg-primary" />
+          <span className="w-1/3 bg-accent" />
+        </span>
+
+        <nav aria-label="Mobile" className="flex-1 overflow-y-auto overscroll-contain px-3 py-4">
+          <ul className="space-y-1">
+            {items.map((item) => {
+              const active = isActive(pathname, item.href) || item.children?.some((c) => isActive(pathname, c.href));
+              if (!item.children?.length) {
+                return (
+                  <li key={item.label}>
+                    <Link
+                      href={item.href}
+                      onClick={close}
+                      aria-current={pathname === item.href ? "page" : undefined}
+                      className={cn(
+                        "flex items-center rounded-lg px-4 py-3 text-base font-semibold hover:bg-canvas",
+                        active ? "bg-tint text-primary" : "text-navy",
+                      )}
+                    >
+                      {active && <span className="mr-3 h-5 w-1 rounded-full bg-accent" aria-hidden />}
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              }
+              const isOpen = expanded === item.label;
+              const panelId = `mobile-sub-${item.label.toLowerCase().replace(/\W+/g, "-")}`;
+              return (
+                <li key={item.label}>
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => setExpanded(isOpen ? null : item.label)}
+                    className={cn(
+                      "flex w-full items-center rounded-lg px-4 py-3 text-left text-base font-semibold hover:bg-canvas",
+                      active ? "text-primary" : "text-navy",
+                    )}
+                  >
+                    {active && <span className="mr-3 h-5 w-1 rounded-full bg-accent" aria-hidden />}
+                    {item.label}
+                    <ChevronDown className={cn("ml-auto size-5 transition-transform", isOpen && "rotate-180")} aria-hidden />
+                  </button>
+                  <ul id={panelId} hidden={!isOpen} className="mb-2 ml-5 border-l-2 border-line pl-2">
+                    {item.children.map((child) => (
+                      <li key={child.href}>
+                        <Link
+                          href={child.href}
+                          onClick={close}
+                          className="block rounded-lg px-4 py-2.5 text-sm font-medium text-ink hover:bg-canvas hover:text-primary"
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <div className="shrink-0 space-y-3 border-t border-line bg-canvas p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+          <Link href="/request-quote" onClick={close} className={buttonClasses("cta", "lg", "w-full")}>
+            Request a Quote
+          </Link>
+          {(contact.phoneHref || contact.email) && (
+            <div className="grid grid-cols-2 gap-3">
+              {contact.phoneHref && (
+                <a href={contact.phoneHref} className={buttonClasses("secondary", "md", "w-full")}>
+                  <Phone className="size-4" aria-hidden />
+                  Call
+                </a>
+              )}
+              {contact.email && (
+                <a href={`mailto:${contact.email}`} className={buttonClasses("secondary", "md", "w-full")}>
+                  <Mail className="size-4" aria-hidden />
+                  Email
+                </a>
+              )}
+            </div>
+          )}
+          {contact.phoneDisplay && <p className="text-center text-xs text-muted">{contact.phoneDisplay}</p>}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="xl:hidden">
       <button
         ref={triggerRef}
         type="button"
-        className="inline-flex size-11 items-center justify-center rounded-full text-navy hover:bg-canvas"
+        className="inline-flex size-11 items-center justify-center rounded-lg text-navy hover:bg-canvas"
         aria-expanded={open}
         aria-controls="mobile-drawer"
-        onClick={() => setOpen(true)}
+        onClick={openDrawer}
       >
         <Menu className="size-6" aria-hidden />
         <span className="sr-only">Open menu</span>
       </button>
-
-      {open && (
-        <div className="fixed inset-0 z-[60]">
-          <div className="absolute inset-0 bg-navy/50 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden />
-          <div
-            ref={panelRef}
-            id="mobile-drawer"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Site menu"
-            className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col overflow-y-auto bg-white shadow-2xl"
-          >
-            <div className="flex items-center justify-between border-b border-line px-5 py-4">
-              <span className="font-display font-bold text-navy">Menu</span>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="inline-flex size-11 items-center justify-center rounded-full hover:bg-canvas"
-              >
-                <X className="size-6" aria-hidden />
-                <span className="sr-only">Close menu</span>
-              </button>
-            </div>
-            <nav aria-label="Mobile" className="flex-1 px-3 py-4">
-              <ul className="space-y-1">
-                {items.map((item) =>
-                  item.children?.length ? (
-                    <li key={item.label}>
-                      <button
-                        type="button"
-                        className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-base font-semibold text-navy hover:bg-canvas"
-                        aria-expanded={expanded === item.label}
-                        onClick={() => setExpanded(expanded === item.label ? null : item.label)}
-                      >
-                        {item.label}
-                        <ChevronDown className={cn("size-5 transition-transform", expanded === item.label && "rotate-180")} aria-hidden />
-                      </button>
-                      {expanded === item.label && (
-                        <ul className="mb-2 ml-4 border-l border-line pl-2">
-                          {item.children.map((child) => (
-                            <li key={child.href}>
-                              <Link href={child.href} className="block rounded-lg px-4 py-2.5 text-sm text-ink hover:bg-canvas">
-                                {child.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ) : (
-                    <li key={item.label}>
-                      <Link
-                        href={item.href}
-                        className="block rounded-xl px-4 py-3 text-base font-semibold text-navy hover:bg-canvas"
-                        aria-current={pathname === item.href ? "page" : undefined}
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  ),
-                )}
-              </ul>
-            </nav>
-            <div className="space-y-3 border-t border-line p-5">
-              <Link href="/request-quote" className={buttonClasses("cta", "lg", "w-full")}>
-                Request a Quote
-              </Link>
-              {contactHref && (
-                <a href={contactHref} className={buttonClasses("secondary", "lg", "w-full")}>
-                  Call Us
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {open && createPortal(drawer, document.body)}
     </div>
   );
 }

@@ -244,3 +244,21 @@
     display: none;
   }
 }
+
+/* Mobile drawer entrance (disabled by the global reduced-motion rule). */
+@keyframes tc-drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes tc-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.tc-drawer-in {
+  animation: tc-drawer-in 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.tc-fade-in {
+  animation: tc-fade-in 200ms ease-out;
+}

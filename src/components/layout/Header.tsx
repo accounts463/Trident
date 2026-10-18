@@ -53,7 +53,7 @@ export function Header() {
             <ButtonLink href="/request-quote" variant="cta" className="max-sm:hidden">
               Request a Quote
             </ButtonLink>
-            <MobileNav items={nav} contactHref={contact.phoneHref} />
+            <MobileNav items={nav} contact={{ phoneHref: contact.phoneHref, phoneDisplay: contact.phoneDisplay, email: contact.email }} />
           </div>
         </div>
         <span className="absolute inset-x-0 bottom-[-1px] flex h-[3px]" aria-hidden>
