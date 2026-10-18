@@ -1,0 +1,33 @@
+/*
+ * Trident Core Energy brand overrides.
+ *
+ * This is the only file that sets brand values. The base theme (theme.css)
+ * reads these variables, so changing a value here restyles the whole site.
+ */
+
+:root {
+  --tc-primary: #14532d; /* Forest Green */
+  --tc-primary-hover: #0f4425;
+  --tc-evergreen: #0b2f24; /* Deep Evergreen */
+  --tc-renew: #22c55e; /* Renewable Green: accents, never small text on white */
+  --tc-sun: #facc15; /* Solar Yellow: highlights and CTAs, used sparingly */
+  --tc-sun-hover: #eab308;
+  --tc-canvas: #f4f8f3; /* Soft Background */
+  --tc-surface: #ffffff;
+  --tc-ink: #1f2937; /* Charcoal */
+  /* Muted Grey #64748B, darkened slightly so it passes WCAG AA on the soft background too. */
+  --tc-muted: #5b6779;
+  --tc-line: #e2e9e1;
+  --tc-mint: #e6f2e7;
+  --tc-danger: #b42318;
+  --tc-focus: #15803d;
+
+  --tc-radius-card: 1.25rem;
+  --tc-shadow-card: 0 1px 2px rgb(11 47 36 / 0.04), 0 1px 1px rgb(11 47 36 / 0.03);
+  --tc-shadow-card-hover: 0 12px 32px -12px rgb(11 47 36 / 0.18);
+}
+
+/* On dark sections, the focus ring switches to the solar accent for contrast. */
+.on-dark {
+  --tc-focus: #facc15;
+}
