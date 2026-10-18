@@ -23,15 +23,25 @@ export function LogoMark({ tone = "dark", className }: { tone?: "dark" | "light"
  * Horizontal lockup: the Trident mark beside a live-text wordmark set in the
  * logo's blue, with the orange notch inside the "N" from the official artwork.
  */
-export function Logo({ tone = "dark", className }: { tone?: "dark" | "light"; className?: string }) {
+export function Logo({
+  tone = "dark",
+  size = "md",
+  className,
+}: {
+  tone?: "dark" | "light";
+  size?: "md" | "lg";
+  className?: string;
+}) {
   const light = tone === "light";
+  const lg = size === "lg";
   return (
     <Link href="/" className={cn("inline-flex items-center gap-2.5", className)} aria-label={`${company.name}, home`}>
-      <LogoMark tone={tone} className="h-10 w-auto shrink-0" />
+      <LogoMark tone={tone} className={cn("w-auto shrink-0", lg ? "h-12" : "h-10")} />
       <span className="flex flex-col leading-none" aria-hidden>
         <span
           className={cn(
-            "font-display text-[1.5rem] font-black uppercase tracking-[-0.01em]",
+            "font-display font-black uppercase tracking-[-0.01em]",
+            lg ? "text-[1.85rem]" : "text-[1.5rem]",
             light ? "text-white" : "text-brand-blue",
           )}
         >
@@ -44,7 +54,8 @@ export function Logo({ tone = "dark", className }: { tone?: "dark" | "light"; cl
         </span>
         <span
           className={cn(
-            "mt-1 text-[0.6rem] font-bold uppercase tracking-[0.36em]",
+            "mt-1 font-bold uppercase tracking-[0.36em]",
+            lg ? "text-[0.72rem]" : "text-[0.6rem]",
             light ? "text-brand-blue-soft" : "text-brand-blue",
           )}
         >

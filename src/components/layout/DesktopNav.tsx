@@ -57,12 +57,14 @@ export function DesktopNav({ items }: { items: NavItem[] }) {
 
   return (
     <nav ref={navRef} aria-label="Main" className="hidden xl:block">
-      <ul className="flex items-center gap-1">
+      <ul className="flex items-center gap-0.5 2xl:gap-2">
         {items.map((item) => {
           const active = isActive(pathname, item.href) || item.children?.some((c) => isActive(pathname, c.href));
+          // Uppercase, bold items with an accent bar under the current section.
           const linkClass = cn(
-            "inline-flex h-10 items-center gap-1 rounded-lg px-3 text-sm font-semibold transition-colors",
-            active ? "text-primary" : "text-ink hover:bg-canvas hover:text-primary",
+            "relative inline-flex h-[84px] items-center px-3 font-display text-[0.9rem] font-bold uppercase tracking-[0.04em] transition-colors",
+            "after:absolute after:inset-x-3 after:bottom-0 after:h-[3px] after:origin-left after:bg-accent after:transition-transform",
+            active ? "text-primary after:scale-x-100" : "text-navy after:scale-x-0 hover:text-primary hover:after:scale-x-100",
           );
 
           if (!item.children?.length) {
@@ -96,12 +98,16 @@ export function DesktopNav({ items }: { items: NavItem[] }) {
                 onClick={() => setOpen(expanded ? null : item.label)}
               >
                 {item.label}
-                <ChevronDown className={cn("size-4 transition-transform", expanded && "rotate-180")} aria-hidden />
+                {/* Caret under the label, as in the reference layout. */}
+                <ChevronDown
+                  className={cn("absolute bottom-3 left-1/2 size-4 -translate-x-1/2 text-muted transition-transform", expanded && "rotate-180 text-accent")}
+                  aria-hidden
+                />
               </button>
               <div
                 id={menuId}
                 hidden={!expanded}
-                className="absolute left-1/2 top-full z-50 w-80 -translate-x-1/2 pt-3"
+                className="absolute left-1/2 top-full z-50 w-80 -translate-x-1/2"
               >
                 <ul className="card p-2 shadow-card-hover">
                   {item.children.map((child) => (
