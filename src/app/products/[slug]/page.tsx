@@ -67,7 +67,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
               <Media
                 image={product.image}
                 priority
-                fit={product.representativeImage ? "cover" : "contain"}
+                fit={product.representativeImage || product.photoImages ? "cover" : "contain"}
                 className="aspect-square rounded-card border border-line"
                 sizes="(min-width: 1024px) 40vw, 100vw"
               />
@@ -164,7 +164,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
               {product.range.items.map((item) => (
                 <li key={item.name} className="card overflow-hidden" data-reveal>
                   {item.image && (
-                    <Media image={item.image} fit="contain" className="aspect-[4/3] border-b border-line" sizes="(min-width: 1024px) 25vw, 50vw" />
+                    <Media image={item.image} fit={product.photoImages ? "cover" : "contain"} className={cn("border-b border-line", product.photoImages ? "aspect-square" : "aspect-[4/3]")} sizes="(min-width: 1024px) 25vw, 50vw" />
                   )}
                   <p className="px-4 py-3 text-sm font-bold text-navy">{item.name}</p>
                 </li>

@@ -87,10 +87,10 @@ export const images = {
   trayPerforatedBend: photo("tray-acc-6", "Horizontal perforated tray bends"),
 
   // Earthing
-  earthing: photo("earthing-hero", "Copper earthing electrode installed in soil with cable connections"),
-  earthingGi: photo("earthing-gi", "Trident G.I. earthing electrodes in four sizes"),
-  earthingCompound: photo("earthing-compound", "Bag of Trident earthing compound"),
-  earthingCopper: photo("earthing-copper", "Trident copper earthing electrodes in four sizes"),
+  earthing: photo("earthing-substation-rod", "Copper earthing rod driven into the soil at an electrical substation, with an earth cable clamped to its head"),
+  earthingGi: photo("earthing-gi-electrode", "Trident G.I. earthing electrodes in four sizes"),
+  earthingCompound: photo("earthing-compound-bag", "Bag of Trident earthing compound with a scoop of compound beside it"),
+  earthingCopper: photo("earthing-copper-electrode", "Trident copper earthing electrodes in four sizes"),
   stripCopper: photo("strip-copper", "Coil of copper earthing strip"),
   stripGi: photo("strip-gi", "Galvanised iron earthing strip"),
 

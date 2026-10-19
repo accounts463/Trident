@@ -11,7 +11,7 @@ export function ProductCard({ product, categoryName }: { product: Product; categ
     <article className="card card-interactive group relative flex flex-col overflow-hidden" data-reveal>
       <Media
         image={product.image}
-        fit={product.representativeImage ? "cover" : "contain"}
+        fit={product.representativeImage || product.photoImages ? "cover" : "contain"}
         className="aspect-[4/3] border-b border-line"
         sizes={cardSizes}
       />

@@ -150,6 +150,8 @@ export type Product = {
   image: ImageAsset;
   /** The photo shows a Trident panel of a similar type, not this exact product. */
   representativeImage?: boolean;
+  /** The images are full photographs (not cut-outs on white), so they fill their frame. */
+  photoImages?: boolean;
   gallery?: ImageAsset[];
   /** Featured on the home page. */
   featured?: boolean;

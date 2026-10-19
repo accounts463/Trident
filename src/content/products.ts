@@ -447,6 +447,7 @@ export const products: Product[] = [
       ],
     },
     applications: ["Substations", "Industrial plants", "Commercial buildings", "Solar plants"],
+    photoImages: true,
     image: images.earthing,
     featured: true,
   },
@@ -463,6 +464,7 @@ export const products: Product[] = [
     features: ["Reduces local soil resistivity", "Improves grounding performance", "For use with Trident earthing electrodes"],
     specs: [],
     applications: ["Rocky or dry soils", "New and existing earth pits"],
+    photoImages: true,
     image: images.earthingCompound,
   },
 
