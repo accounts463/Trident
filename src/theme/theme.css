@@ -7,6 +7,9 @@
  */
 
 @theme inline {
+  --color-logo-red: var(--tc-logo-red);
+  --color-logo-ink: var(--tc-logo-ink);
+  --font-logo: var(--font-logo-face);
   --color-brand-blue: var(--tc-brand-blue);
   --color-brand-blue-soft: var(--tc-brand-blue-soft);
   --color-brand-orange: var(--tc-brand-orange);

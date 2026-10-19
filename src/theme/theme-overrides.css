@@ -7,7 +7,13 @@
  */
 
 :root {
-  /* Exact logo colours (from the official business-card artwork). */
+  /* Logo artwork colours (official red/charcoal logo). */
+  --tc-logo-red: #d42a1c;
+  --tc-logo-red-dark: #b8231a; /* Lower end of the mark's gradient */
+  --tc-logo-charcoal: #2b2b2b;
+  --tc-logo-ink: #111111; /* Wordmark */
+
+  /* Business-card colours, used for the site palette below. */
   --tc-brand-blue: #0089e0; /* Wordmark blue */
   --tc-brand-blue-soft: #5bb8f5; /* Wordmark blue on navy */
   --tc-brand-orange: #ea3d00; /* Mark orange */

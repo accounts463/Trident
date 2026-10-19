@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Inter } from "next/font/google";
+import { Archivo, Inter, Montserrat } from "next/font/google";
 import { company } from "@/content/company";
 import { ConsentBanner } from "@/components/layout/ConsentBanner";
 import { ContactStrip } from "@/components/layout/ContactStrip";
@@ -14,6 +14,8 @@ import "./globals.css";
 
 const heading = Archivo({ variable: "--font-heading", subsets: ["latin"], display: "swap" });
 const body = Inter({ variable: "--font-body", subsets: ["latin"], display: "swap" });
+// Geometric face matching the logo's wordmark; used only by <Logo />.
+const logoFace = Montserrat({ variable: "--font-logo-face", subsets: ["latin"], weight: ["500", "700"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -34,7 +36,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-IN" className={`${heading.variable} ${body.variable} antialiased`}>
+    <html lang="en-IN" className={`${heading.variable} ${body.variable} ${logoFace.variable} antialiased`}>
       <body className="flex min-h-dvh flex-col pb-16 md:pb-0">
         <a
           href="#main"
