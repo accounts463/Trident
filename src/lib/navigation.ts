@@ -21,6 +21,7 @@ export function getMainNav(): NavItem[] {
       href: "/manufacturing",
       children: [
         { label: "Manufacturing & Testing", href: "/manufacturing", description: "CNC plant, powder coating and test bay" },
+        { label: "Machinery", href: "/machinery", description: "CNC cutting, bending, busbar and coating lines" },
         { label: "Certifications", href: "/certifications", description: "ISO 9001:2015, CE and CPRI" },
       ],
     },
@@ -37,6 +38,7 @@ export function getFooterGroups() {
       links: [
         { label: "About Us", href: "/about" },
         { label: "Manufacturing & Testing", href: "/manufacturing" },
+        { label: "Machinery", href: "/machinery" },
         { label: "Certifications", href: "/certifications" },
         { label: "Industries", href: "/industries" },
         { label: "Clients", href: "/clients" },

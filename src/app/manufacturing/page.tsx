@@ -1,9 +1,9 @@
-import { CheckCircle2, Wrench } from "lucide-react";
-import { machines, testEquipment, testingActivities, testPhotos } from "@/content/facilities";
+import { CheckCircle2 } from "lucide-react";
+import { testEquipment, testingActivities, testPhotos } from "@/content/facilities";
 import { images } from "@/content/images";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { PageHero } from "@/components/sections/PageHero";
-import { CertificationsSection, PanelGallery } from "@/components/sections/shared-sections";
+import { CertificationsSection, MachinerySection, PanelGallery } from "@/components/sections/shared-sections";
 import { Media } from "@/components/ui/Media";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { pageMetadata } from "@/lib/seo";
@@ -16,8 +16,6 @@ export const metadata = pageMetadata({
 });
 
 export default function ManufacturingPage() {
-  const withPhotos = machines.filter((m) => m.image);
-  const withoutPhotos = machines.filter((m) => !m.image);
   return (
     <>
       <PageHero
@@ -28,37 +26,7 @@ export default function ManufacturingPage() {
         image={images.shopFloor}
       />
 
-      <section className="section">
-        <div className="container-site">
-          <SectionHeading
-            eyebrow="Machinery"
-            title="CNC fabrication and powder coating"
-            description="Our own machinery gives us control over accuracy, finish and lead time."
-          />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {withPhotos.map((m) => (
-              <figure key={m.title} className="card overflow-hidden" data-reveal>
-                <Media image={m.image!} fit={m.fit} className="aspect-[4/3]" sizes="(min-width: 1024px) 33vw, 50vw" />
-                <figcaption className="p-5">
-                  <span className="block font-display text-lg font-bold text-navy">{m.title}</span>
-                  <span className="mt-1 block text-sm leading-relaxed text-muted">{m.description}</span>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {withoutPhotos.map((m) => (
-              <li key={m.title} className="flex gap-4 rounded-card border border-line bg-canvas p-5" data-reveal>
-                <Wrench className="mt-0.5 size-5 shrink-0 text-accent" aria-hidden />
-                <span>
-                  <span className="block font-bold text-navy">{m.title}</span>
-                  <span className="mt-1 block text-sm leading-relaxed text-muted">{m.description}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <MachinerySection />
 
       <section className="on-dark section grid-lines bg-navy">
         <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-16">

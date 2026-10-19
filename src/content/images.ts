@@ -117,8 +117,6 @@ export const images = {
   testHv: photo("test-hv", "High-voltage test being carried out on a panel"),
   testIr: photo("test-ir", "Engineers carrying out insulation resistance testing on a panel"),
   testCoating: photo("test-coating", "Inspector checking powder coating thickness on a panel door"),
-  laserCutter: photo("machine-laser", "CNC fibre laser cutting machine"),
-  busbarMachine: photo("machine-busbar", "Busbar bending, cutting and punching machine"),
   testBench: photo("test-bench", "Trident panel testing bench with meters and switches"),
   testEquipment: [
     photo("test-eq-1", "High-voltage test kit"),
@@ -167,9 +165,29 @@ export const images = {
     "Director Pramod Kumar receiving a Rotary Club of Greater Noida certificate for contributions to social welfare",
   ),
 
+  // Machinery
+  machineLaser: photo("machine-cnc-laser", "CNC fibre laser cutting machine cutting a steel sheet"),
+  machinePunching: photo("machine-cnc-punching", "CNC turret punching machine with its sheet table extended"),
+  machineShearing: photo("machine-cnc-shearing", "CNC shearing machine with a touchscreen controller and foot pedal"),
+  machineBending: photo("machine-cnc-bending", "CNC bending machine (press brake) with a full-length tool set and touchscreen controller"),
+  machineBusbar: photo("machine-busbar-processing", "Busbar bending, cutting and punching machine processing a copper busbar"),
+  machineCableTray: photo("machine-cable-tray-perforation", "Cable tray perforation press punching a galvanised steel strip"),
+  machinePretreatment: photo("machine-pretreatment-plant", "7-tank chemical pre-treatment plant with an overhead crane carrying parts between tanks"),
+  machineOven: photo("machine-powder-coating-oven", "Walk-in powder coating curing oven with its doors open"),
+
   // Certificates
   certIso: photo("cert-iso", "ISO 9001:2015 certificate of registration for Trident Core Energy"),
   certCe: photo("cert-ce", "CE certificate of compliance"),
   certCpri: photo("cert-cpri", "CPRI provisional short-circuit test report for a Trident PCC panel"),
   certApproval: photo("cert-approval", "Approval letter issued to Trident Core Energy, in Hindi"),
+
+  // Justdial
+  justdialUsersChoice: photo(
+    "justdial-users-choice-2026",
+    "Justdial Users' Choice 2026 badge with a five-star rating for Trident Core Energy, Surajpur",
+  ),
+  justdialTrusted: photo(
+    "justdial-trusted-business",
+    "Justdial Trusted Business certificate and Genuine Business trust medal for Trident Core Energy, Surajpur: verified business, reliable service, quality products, customer focused",
+  ),
 } as const;

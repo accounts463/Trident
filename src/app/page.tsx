@@ -11,6 +11,8 @@ import {
   DeliveryProcess,
   FaqSection,
   FeaturedProducts,
+  JustdialBanners,
+  MachinerySection,
   ManufacturingSection,
   SectorsSection,
   ServicesSection,
@@ -35,12 +37,14 @@ export default function HomePage() {
       <FeaturedProducts />
       <SubstationSpotlight />
       <ManufacturingSection />
+      <MachinerySection />
       <ServicesSection limit={8} />
       <DeliveryProcess tone="dark" />
       <StrengthsSection />
       <SectorsSection showReferences={false} />
       <AwardsSection />
       <CertificationsSection />
+      <JustdialBanners />
       <FaqSection />
       <CtaBanner />
     </>

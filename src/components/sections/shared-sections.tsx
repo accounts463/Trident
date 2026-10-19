@@ -3,7 +3,7 @@ import Link from "next/link";
 import { applicationAreas, clientCount, featuredClients, sectors } from "@/content/clients";
 import { company } from "@/content/company";
 import { faqs as allFaqs } from "@/content/faqs";
-import { machines, testingActivities } from "@/content/facilities";
+import { machines, shopFloorPhotos, testingActivities } from "@/content/facilities";
 import { images } from "@/content/images";
 import { deliveryProcess, services, strengths } from "@/content/services";
 import type { Faq, ImageAsset } from "@/content/types";
@@ -196,8 +196,6 @@ export function SubstationSpotlight() {
 }
 
 export function ManufacturingSection() {
-  // Shop-floor photos only; product cut-outs would look out of place in this grid.
-  const photos = machines.filter((m) => m.image && m.fit !== "contain");
   return (
     <section className="section bg-canvas">
       <div className="container-site">
@@ -221,7 +219,7 @@ export function ManufacturingSection() {
             </ButtonLink>
           </div>
           <div className="grid grid-cols-2 gap-4 lg:col-span-7">
-            {photos.map((m) => (
+            {shopFloorPhotos.map((m) => (
               <figure key={m.title} className="group relative overflow-hidden rounded-card" data-reveal>
                 <Media image={m.image!} className="aspect-[4/5]" sizes="(min-width: 1024px) 28vw, 50vw" />
                 <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/90 to-transparent p-4 pt-10 text-sm font-bold text-white">
@@ -231,6 +229,44 @@ export function ManufacturingSection() {
             ))}
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/** Grid of our machines, each linking to its entry on the Machinery page. */
+export function MachinerySection({ heading = true, tone = "white" }: { heading?: boolean; tone?: "white" | "canvas" }) {
+  return (
+    <section className={cn("section", tone === "canvas" && "bg-canvas")}>
+      <div className="container-site">
+        {heading && (
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <SectionHeading
+              eyebrow="Our Machinery"
+              title="CNC machines for every stage of fabrication"
+              description="Cutting, forming, busbar processing, pre-treatment and powder coating all run on our own machines at the Greater Noida plant."
+            />
+            <ButtonLink href="/machinery" variant="secondary" className="shrink-0">
+              View all machinery <ArrowRight className="size-4" aria-hidden />
+            </ButtonLink>
+          </div>
+        )}
+        <ul className={cn("grid gap-6 sm:grid-cols-2 lg:grid-cols-4", heading && "mt-12")}>
+          {machines.map((m) => (
+            <li key={m.slug} className="card card-interactive group relative flex flex-col overflow-hidden" data-reveal>
+              <Media image={m.image} className="aspect-video border-b border-line bg-white" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" />
+              <div className="flex flex-1 flex-col p-5">
+                <p className="eyebrow text-accent">{m.stage}</p>
+                <h3 className="mt-2 font-display text-lg font-bold leading-snug text-navy">
+                  <Link href={`/machinery#${m.slug}`} className="after:absolute after:inset-0 after:content-['']">
+                    {m.title}
+                  </Link>
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{m.summary}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -336,6 +372,36 @@ export function CertificationsSection({ heading = true }: { heading?: boolean })
           {company.certifications.map((c) => (
             <CertificateCard key={c.slug} certification={c} />
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Justdial recognition banners. On desktop the columns are sized 3:4 to match
+ * the banners' 2:1 and 8:3 aspect ratios, so both render at the same height.
+ */
+export function JustdialBanners() {
+  return (
+    <section className="section pt-0">
+      <div className="container-site">
+        <SectionHeading
+          eyebrow="Justdial Recognition"
+          title="Users' Choice 2026 and a Trusted Business on Justdial"
+          description="Rated five stars and verified as a genuine business by customers on Justdial."
+        />
+        <div className="mt-12 grid gap-6 lg:grid-cols-7">
+          <Media
+            image={images.justdialUsersChoice}
+            className="aspect-[2/1] rounded-card border border-line lg:col-span-3"
+            sizes="(min-width: 1024px) 40vw, 100vw"
+          />
+          <Media
+            image={images.justdialTrusted}
+            className="aspect-[8/3] rounded-card border border-line lg:col-span-4"
+            sizes="(min-width: 1024px) 55vw, 100vw"
+          />
         </div>
       </div>
     </section>

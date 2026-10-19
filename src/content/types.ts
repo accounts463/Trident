@@ -172,4 +172,15 @@ export type ClientGroup = { title: string; clients: string[] };
 /** `fit: "contain"` marks a product cut-out on white rather than a site photo. */
 export type Facility = { title: string; description: string; image?: ImageAsset; fit?: "cover" | "contain" };
 
+export type Machine = {
+  slug: string;
+  title: string;
+  /** Production stage the machine belongs to, e.g. "Cutting". */
+  stage: string;
+  summary: string;
+  description: string;
+  capabilities: string[];
+  image: ImageAsset;
+};
+
 export type Faq = { question: string; answer: string };
