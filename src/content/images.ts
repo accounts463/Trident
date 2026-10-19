@@ -155,7 +155,7 @@ export const images = {
 
   // Company
   adminBlock: photo("admin-block", "Trident Core Energy admin block in Greater Noida"),
-  adminOffice: photo("admin-office", "Open-plan office inside the Trident Core Energy admin block"),
+  adminOffice: photo("office-open-plan", "Open-plan office with engineers working at their desks and a glass-walled meeting room"),
 
   // Awards
   awardBusinessExcellence: photo(
