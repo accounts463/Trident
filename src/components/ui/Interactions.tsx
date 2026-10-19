@@ -3,46 +3,47 @@
 import { useEffect } from "react";
 
 const REVEAL = "[data-reveal]";
+const REVEAL_KEYFRAMES: Keyframe[] = [
+  { opacity: 0, translate: "0 28px" },
+  { opacity: 1, translate: "0 0" },
+];
+
+/**
+ * React stamps hydrated DOM nodes with a `__reactFiber$…` key. Writing attributes (even
+ * inline style) to a node React has not hydrated yet causes a hydration mismatch, so DOM
+ * writes below are limited to nodes that pass this check.
+ */
+function isHydrated(el: Element) {
+  return Object.keys(el).some((k) => k.startsWith("__reactFiber$"));
+}
 
 /**
  * Site-wide interaction layer, mounted once in the root layout. Renders nothing.
  *
  * - Scroll reveal: [data-reveal] elements fade and rise in as they enter the viewport,
- *   staggered within a group of siblings. Anything already on screen when the page loads
- *   is shown immediately, and nothing is hidden until this script runs, so content never
- *   depends on JavaScript to appear. New elements (route changes, client renders) are
- *   picked up by a MutationObserver.
- * - Cursor spotlight: .card-interactive and [data-spotlight] elements get --mx/--my set to
- *   the pointer position, which the CSS glow follows.
+ *   staggered within a group of siblings. It runs entirely through the Web Animations API
+ *   and never writes attributes, so it cannot cause hydration mismatches. Elements on
+ *   screen at load are left alone; the rest are held at the first keyframe by a paused
+ *   animation and played on entry. Once an animation finishes it leaves no trace, so hover
+ *   transforms are unaffected. New elements (route changes) are found by a MutationObserver.
+ * - Cursor spotlight: hydrated .card-interactive / [data-spotlight] elements get --mx/--my
+ *   set to the pointer position, which the CSS glow follows.
  *
- * Both are skipped for reduced motion; the CSS also guards every effect.
+ * Both are skipped for reduced motion.
  */
 export function Interactions() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const root = document.documentElement;
     const seen = new WeakSet<Element>();
-
-    const reveal = (el: Element, animate: boolean) => {
-      el.setAttribute("data-revealed", "");
-      if (!animate) {
-        el.setAttribute("data-reveal-done", "");
-        return;
-      }
-      const done = (e: Event) => {
-        if (e.target !== el || (e as TransitionEvent).propertyName !== "opacity") return;
-        el.setAttribute("data-reveal-done", "");
-        el.removeEventListener("transitionend", done);
-      };
-      el.addEventListener("transitionend", done);
-    };
+    const pending = new Map<Element, Animation>();
 
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
-          reveal(entry.target, true);
           io.unobserve(entry.target);
+          pending.get(entry.target)?.play();
+          pending.delete(entry.target);
         }
       },
       { rootMargin: "0px 0px -6% 0px", threshold: 0.06 },
@@ -52,16 +53,22 @@ export function Interactions() {
       for (const el of document.querySelectorAll<HTMLElement>(REVEAL)) {
         if (seen.has(el)) continue;
         seen.add(el);
-        const group = el.parentElement ? Array.from(el.parentElement.children).filter((c) => c.matches(REVEAL)) : [el];
-        el.style.setProperty("--reveal-i", String(Math.max(0, group.indexOf(el))));
         const r = el.getBoundingClientRect();
-        if (initial && r.top < window.innerHeight && r.bottom > 0) reveal(el, false);
-        else io.observe(el);
+        if (initial && r.top < window.innerHeight && r.bottom > 0) continue;
+        const group = el.parentElement ? Array.from(el.parentElement.children).filter((c) => c.matches(REVEAL)) : [el];
+        const animation = el.animate(REVEAL_KEYFRAMES, {
+          duration: 700,
+          delay: Math.min(Math.max(0, group.indexOf(el)), 6) * 80,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          fill: "backwards",
+        });
+        animation.pause();
+        pending.set(el, animation);
+        io.observe(el);
       }
     };
 
     scan(true);
-    root.classList.add("reveal-ready");
 
     let frame = 0;
     const mo = new MutationObserver(() => {
@@ -77,7 +84,7 @@ export function Interactions() {
       io.disconnect();
       mo.disconnect();
       cancelAnimationFrame(frame);
-      root.classList.remove("reveal-ready");
+      for (const animation of pending.values()) animation.cancel();
     };
   }, []);
 
@@ -90,7 +97,7 @@ export function Interactions() {
     const onMove = (e: PointerEvent) => {
       if (e.pointerType !== "mouse") return;
       target = (e.target as Element | null)?.closest<HTMLElement>(".card-interactive, [data-spotlight]") ?? null;
-      if (!target) return;
+      if (!target || !isHydrated(target)) return;
       x = e.clientX;
       y = e.clientY;
       if (frame) return;
