@@ -61,14 +61,6 @@ export function Footer() {
                   </a>
                 </li>
               )}
-              {contact.altPhoneHref && (
-                <li>
-                  <a href={contact.altPhoneHref} className="inline-flex items-center gap-2.5 hover:text-white">
-                    <Phone className="size-4 text-accent-soft" aria-hidden />
-                    {contact.altPhoneDisplay}
-                  </a>
-                </li>
-              )}
               {contact.email && (
                 <li>
                   <a href={`mailto:${contact.email}`} className="inline-flex items-center gap-2.5 hover:text-white">

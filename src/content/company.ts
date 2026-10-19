@@ -72,8 +72,6 @@ export const company: Company = {
   contact: {
     phone: "+919999982280",
     phoneDisplay: "+91 99999 82280",
-    altPhone: "+919810243219",
-    altPhoneDisplay: "+91 98102 43219",
     whatsapp: "+919999982280",
     email: "info@tridentcoreenergy.com",
     address: {
