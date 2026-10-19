@@ -3,12 +3,14 @@ import { CtaBanner } from "@/components/sections/CtaBanner";
 import { PageHero } from "@/components/sections/PageHero";
 import { DeliveryProcess, LeadFormSection, ServicesSection } from "@/components/sections/shared-sections";
 import { ButtonLink } from "@/components/ui/Button";
+import { services } from "@/content/services";
+import { JsonLd, servicesJsonLd } from "@/lib/jsonld";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Electrical Contracting Services",
+  title: "Electrical Contracting & O&M Services",
   description:
-    "33 kV / 11 kV substations, HT/LT cable SITC, panel installation, bus duct and cable tray installation, transformer, VCB and RMU SITC, external lighting and O&M contracts.",
+    "Turnkey 33 kV / 11 kV substations, HT/LT panel installation, cabling, bus ducts and O&M contracts from Trident Core Energy, an ISO 9001:2015 certified company.",
   path: "/services",
 });
 
@@ -33,6 +35,7 @@ export default function ServicesPage() {
         description="Share the scope, location and timeline. Our engineers will plan the work and send a proposal."
       />
       <CtaBanner />
+      <JsonLd data={servicesJsonLd(services)} />
     </>
   );
 }

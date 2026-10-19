@@ -4,8 +4,9 @@ import { PageHero } from "@/components/sections/PageHero";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Request a Quote",
-  description: "Request a quote for LT panels, compact substations, bus ducts, cable trays, earthing, stabilizers or electrical contracting from Trident Core Energy.",
+  title: "Request a Quote for Electrical Panels",
+  description:
+    "Get a quote for LT, PCC, MCC and APFC panels, compact substations, bus ducts, cable trays, earthing or electrical contracting from our Greater Noida plant.",
   path: "/request-quote",
 });
 

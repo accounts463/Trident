@@ -1,6 +1,6 @@
 import { company } from "@/content/company";
-import type { Faq, Product } from "@/content/types";
-import { getContact } from "@/lib/content";
+import type { Faq, Product, Service } from "@/content/types";
+import { getCategories, getContact } from "@/lib/content";
 import { absoluteUrl, siteUrl } from "@/lib/site";
 
 type JsonLdObject = Record<string, unknown>;
@@ -13,6 +13,19 @@ export function JsonLd({ data }: { data: JsonLdObject | JsonLdObject[] }) {
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
+}
+
+/** WebSite entity, so search engines associate the site name with the domain. */
+export function websiteJsonLd(): JsonLdObject {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
+    name: company.name,
+    url: siteUrl,
+    inLanguage: "en-IN",
+    publisher: { "@id": `${siteUrl}/#organization` },
+  };
 }
 
 export function organizationJsonLd(): JsonLdObject[] {
@@ -32,6 +45,8 @@ export function organizationJsonLd(): JsonLdObject[] {
     ...(contact.email ? { email: contact.email } : {}),
     ...(contact.phone ? { telephone: contact.phone } : {}),
     ...(sameAs.length ? { sameAs } : {}),
+    // Product lines, so the company is associated with what it makes.
+    knowsAbout: getCategories().map((c) => c.name),
   };
 
   // LocalBusiness only when a verified address exists.
@@ -49,15 +64,28 @@ export function organizationJsonLd(): JsonLdObject[] {
       parentOrganization: { "@id": `${siteUrl}/#organization` },
       ...(contact.phone ? { telephone: contact.phone } : {}),
       ...(contact.email ? { email: contact.email } : {}),
+      description: company.description,
       address: {
         "@type": "PostalAddress",
         streetAddress: a.streetAddress,
         addressLocality: a.locality,
         addressRegion: a.region,
         postalCode: a.postalCode,
-        addressCountry: a.country,
+        addressCountry: "IN",
       },
-      ...(company.serviceAreas.length ? { areaServed: company.serviceAreas } : {}),
+      hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+        [a.streetAddress, a.locality, a.region, a.postalCode].join(", "),
+      )}`,
+      areaServed: company.serviceAreas.length ? company.serviceAreas : { "@type": "Country", name: "India" },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Electrical products and services",
+        itemListElement: getCategories().map((c) => ({
+          "@type": "OfferCatalog",
+          name: c.name,
+          url: absoluteUrl(`/products#${c.slug}`),
+        })),
+      },
     },
   ];
 }
@@ -104,4 +132,18 @@ export function productJsonLd(product: Product, categoryName: string): JsonLdObj
         }
       : {}),
   };
+}
+
+/** Contracting services, each provided by the organization. */
+export function servicesJsonLd(services: Service[]): JsonLdObject[] {
+  return services.map((s) => ({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: s.title,
+    description: s.description,
+    serviceType: s.title,
+    provider: { "@id": `${siteUrl}/#organization` },
+    areaServed: company.serviceAreas.length ? company.serviceAreas : { "@type": "Country", name: "India" },
+    url: absoluteUrl("/services"),
+  }));
 }

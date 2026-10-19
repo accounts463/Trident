@@ -5,9 +5,9 @@ import { CertificationsSection } from "@/components/sections/shared-sections";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Certifications",
+  title: "ISO 9001, CE & CPRI Certifications",
   description:
-    "Trident Core Energy is ISO 9001:2015 certified for the manufacture of electrical panels, holds a CE certificate of compliance, and has a PCC panel design short-circuit tested at CPRI.",
+    "ISO 9001:2015 certified, CE compliant, with a PCC panel short-circuit tested at CPRI Bhopal (415 V, 4000 A, 50 kA for 1 s). View our certificates.",
   path: "/certifications",
 });
 

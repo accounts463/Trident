@@ -10,9 +10,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Industries & Projects",
+  title: "Industries & Projects We Power",
   description:
-    "Turnkey electrical projects for industries, residential and commercial developments, schools and colleges, and hospitals, with references including Samsung, Honda, IOCL and Max Healthcare.",
+    "Electrical panels and power distribution for manufacturing, infrastructure, hospitals, schools, food and retail, with projects for Samsung, Honda and IOCL.",
   path: "/industries",
 });
 

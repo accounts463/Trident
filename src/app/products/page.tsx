@@ -9,9 +9,9 @@ import { getCategories, getProducts } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Products",
+  title: "Electrical Panels, Bus Ducts & Cable Trays",
   description:
-    "LT panels, PCC, MCC, APFC, AHF/SVG, AMF and synchronization panels, compact substations, bus ducts, cable trays, earthing electrodes, servo stabilizers and transformers from Trident Core Energy.",
+    "LT, PCC, MCC, APFC and AMF panels, compact substations, bus ducts, cable trays, earthing and stabilizers, made and tested at our Greater Noida plant.",
   path: "/products",
 });
 
@@ -21,7 +21,7 @@ export default function ProductsPage() {
     <>
       <PageHero
         eyebrow="Our Manufacturing Range"
-        title="Products"
+        title="Electrical panels & power distribution products"
         description="Electrical panels, power distribution, cable management, earthing and power conditioning, custom-built and tested at our Greater Noida plant."
         breadcrumbs={[{ name: "Products", href: "/products" }]}
         image={images.ltPanel}

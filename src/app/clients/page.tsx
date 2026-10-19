@@ -5,9 +5,9 @@ import { PageHero } from "@/components/sections/PageHero";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Our Clients",
+  title: "Our Clients: 170+ Companies Served",
   description:
-    "Trident Core Energy serves industries, infrastructure developers, hospitals, schools, food and beverage brands and retailers across India, including Samsung, Honda, NTPC, Indian Oil, Nestlé and Max Healthcare.",
+    "170+ clients trust Trident Core Energy, including Samsung, Honda, NTPC, Indian Oil, Nestlé, Max Healthcare and Jaypee Group, across industry and infrastructure.",
   path: "/clients",
 });
 

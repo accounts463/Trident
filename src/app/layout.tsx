@@ -8,7 +8,7 @@ import { Header } from "@/components/layout/Header";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { Interactions } from "@/components/ui/Interactions";
-import { JsonLd, organizationJsonLd } from "@/lib/jsonld";
+import { JsonLd, organizationJsonLd, websiteJsonLd } from "@/lib/jsonld";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -28,6 +28,10 @@ export const metadata: Metadata = {
   openGraph: { siteName: company.name, locale: "en_IN", type: "website" },
   twitter: { card: "summary_large_image" },
   formatDetection: { telephone: false },
+  // Google Search Console ownership check; set NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION in Vercel.
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export const viewport: Viewport = {
@@ -54,7 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <BackToTop />
         <ConsentBanner />
         <Interactions />
-        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={[websiteJsonLd(), ...organizationJsonLd()]} />
       </body>
     </html>
   );

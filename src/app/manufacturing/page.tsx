@@ -9,9 +9,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Manufacturing & Testing",
+  title: "Panel Manufacturing & Testing Plant",
   description:
-    "In-house CNC punching, shearing, bending and laser cutting, busbar processing, 7-tank pre-treatment and powder coating, plus full panel testing at our Greater Noida plant.",
+    "In-house CNC punching, bending and laser cutting, busbar processing, 7-tank pre-treatment, powder coating and full panel testing in Greater Noida.",
   path: "/manufacturing",
 });
 

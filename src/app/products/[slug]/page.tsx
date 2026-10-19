@@ -11,7 +11,7 @@ import { Media } from "@/components/ui/Media";
 import { getContact, getProduct, getProducts, getRelatedProducts } from "@/lib/content";
 import { JsonLd, productJsonLd } from "@/lib/jsonld";
 import { cn } from "@/lib/cn";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata, productSeoDescription, productSeoTitle } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getProducts().map((p) => ({ slug: p.slug }));
@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: PageProps<"/products/[slug]">
   const product = getProduct((await params).slug);
   if (!product) return { title: "Product not found", robots: { index: false } };
   return pageMetadata({
-    title: product.name,
-    description: product.summary,
+    title: productSeoTitle(product),
+    description: productSeoDescription(product),
     path: `/products/${product.slug}`,
     image: product.image.src,
   });

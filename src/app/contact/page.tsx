@@ -7,8 +7,9 @@ import { formatAddress, getContact } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Contact Us",
-  description: "Contact Trident Core Energy in Greater Noida about LT panels, compact substations, bus ducts, cable trays, earthing or electrical contracting.",
+  title: "Contact Us in Greater Noida",
+  description:
+    "Call +91 99999 82280 or visit our plant at Ecotech-3, Greater Noida for LT panels, compact substations, bus ducts, cable trays, earthing and electrical works.",
   path: "/contact",
 });
 

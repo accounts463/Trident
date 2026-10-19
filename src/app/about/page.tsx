@@ -9,9 +9,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "About Us",
+  title: "About Us: Panel Manufacturer Since 2010",
   description:
-    "Trident Core Energy has manufactured electrical panels in Greater Noida since 2010. Meet the company, our mission and vision, values and the engineers behind it.",
+    "Trident Core Energy has manufactured LT electrical panels in Greater Noida since 2010. ISO 9001:2015 certified, with in-house CNC fabrication and testing.",
   path: "/about",
 });
 
