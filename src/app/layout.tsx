@@ -15,7 +15,7 @@ import "./globals.css";
 const heading = Archivo({ variable: "--font-heading", subsets: ["latin"], display: "swap" });
 const body = Inter({ variable: "--font-body", subsets: ["latin"], display: "swap" });
 // Geometric face matching the logo's wordmark; used only by <Logo />.
-const logoFace = Montserrat({ variable: "--font-logo-face", subsets: ["latin"], weight: ["500", "700"], display: "swap" });
+const logoFace = Montserrat({ variable: "--font-logo-face", subsets: ["latin"], weight: ["500", "800"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
