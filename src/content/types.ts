@@ -140,6 +140,10 @@ export type Product = {
   description: string[];
   features: string[];
   specs: ProductSpec[];
+  /** Short strapline shown above the overview, e.g. "Stable System · Reliable Power · Safe Ground". */
+  tagline?: string;
+  /** A standard the product is built to, quoted in its own panel. */
+  standard?: { title: string; reference: string; text: string };
   /** Variants or items in the range, e.g. bends and reducers for cable trays. */
   range?: { title: string; items: { name: string; image?: ImageAsset }[] };
   applications: string[];

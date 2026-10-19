@@ -1,4 +1,4 @@
-import { CheckCircle2, Phone } from "lucide-react";
+import { CheckCircle2, Phone, ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { categoryOf } from "@/content/products";
@@ -10,6 +10,7 @@ import { LightboxGallery } from "@/components/ui/LightboxGallery";
 import { Media } from "@/components/ui/Media";
 import { getContact, getProduct, getProducts, getRelatedProducts } from "@/lib/content";
 import { JsonLd, productJsonLd } from "@/lib/jsonld";
+import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -87,6 +88,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
 
           <div className="space-y-10 lg:col-span-7">
             <div>
+              {product.tagline && <p className="eyebrow mb-3 text-accent">{product.tagline}</p>}
               <h2 className="font-display text-2xl font-extrabold text-navy">Overview</h2>
               <div className="mt-4 space-y-4 text-lg leading-relaxed text-muted">
                 {product.description.map((p) => (
@@ -107,6 +109,17 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
                   ))}
                 </ul>
               </div>
+            )}
+
+            {product.standard && (
+              <aside className="rounded-card border-l-4 border-primary bg-tint p-6">
+                <h2 className="flex items-center gap-2.5 font-display text-xl font-extrabold text-navy">
+                  <ShieldCheck className="size-5 text-primary" aria-hidden />
+                  {product.standard.title}
+                </h2>
+                <p className="mt-1 text-sm font-bold text-primary">{product.standard.reference} states:</p>
+                <blockquote className="mt-3 leading-relaxed text-ink">{product.standard.text}</blockquote>
+              </aside>
             )}
 
             {product.specs.length > 0 && (
@@ -147,7 +160,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         {product.range && (
           <div className="container-site mt-16">
             <h2 className="font-display text-2xl font-extrabold text-navy">{product.range.title}</h2>
-            <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            <ul className={cn("mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3", product.range.items.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4")}>
               {product.range.items.map((item) => (
                 <li key={item.name} className="card overflow-hidden" data-reveal>
                   {item.image && (
