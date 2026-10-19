@@ -1,5 +1,6 @@
 import { clientCount, clientGroups } from "@/content/clients";
 import { CtaBanner } from "@/components/sections/CtaBanner";
+import { ClientLogo } from "@/components/ui/ClientLogo";
 import { PageHero } from "@/components/sections/PageHero";
 import { pageMetadata } from "@/lib/seo";
 
@@ -51,9 +52,10 @@ export default function ClientsPage() {
               {g.clients.map((c) => (
                 <li
                   key={c}
-                  className="flex min-h-20 items-center justify-center rounded-lg border border-line bg-white px-4 py-5 text-center font-display text-sm font-bold text-navy shadow-card"
+                  className="card-interactive flex items-center justify-center rounded-lg border border-line bg-white p-4 shadow-card"
+                  data-reveal
                 >
-                  {c}
+                  <ClientLogo name={c} className="h-20 w-full" sizes="(min-width: 1024px) 220px, (min-width: 640px) 30vw, 45vw" />
                 </li>
               ))}
             </ul>
@@ -62,7 +64,7 @@ export default function ClientsPage() {
       ))}
 
       <p className="container-site pb-4 text-sm text-muted">
-        Client names are listed for reference. All trademarks belong to their respective owners.
+        Client logos are shown for reference only. All trademarks and logos belong to their respective owners.
       </p>
       <CtaBanner />
     </>

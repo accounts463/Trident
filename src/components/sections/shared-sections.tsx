@@ -11,6 +11,7 @@ import { EnquiryForm } from "@/components/forms/EnquiryForm";
 import { Accordion } from "@/components/ui/Accordion";
 import { ButtonLink } from "@/components/ui/Button";
 import { CategoryCard, CertificateCard, ProductCard, ServiceCard } from "@/components/ui/cards";
+import { ClientLogo } from "@/components/ui/ClientLogo";
 import { Icon } from "@/components/ui/Icon";
 import { IconFeature } from "@/components/ui/IconFeature";
 import { LightboxGallery } from "@/components/ui/LightboxGallery";
@@ -21,7 +22,7 @@ import { getCategories, getContact, getFeaturedProducts, getProduct, getProducts
 import { faqJsonLd, JsonLd } from "@/lib/jsonld";
 import { cn } from "@/lib/cn";
 
-/** Scrolling strip of client names. Names, not logos: no third-party marks are reproduced. */
+/** Scrolling strip of client logos (from the catalogue), pausing on hover or focus. */
 export function ClientMarquee() {
   const names = featuredClients;
   return (
@@ -31,15 +32,15 @@ export function ClientMarquee() {
           Trusted by {Math.floor(clientCount / 10) * 10}+ clients
         </h2>
         <div className="marquee relative min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
-          <ul className="marquee-track flex w-max gap-3" tabIndex={0} aria-label="Selected clients">
+          <ul className="marquee-track flex w-max items-center gap-3" tabIndex={0} aria-label="Selected clients">
             {[...names, ...names].map((name, i) => (
               <li
                 key={`${name}-${i}`}
                 data-duplicate={i >= names.length || undefined}
                 aria-hidden={i >= names.length || undefined}
-                className="whitespace-nowrap rounded-lg border border-line bg-canvas px-4 py-2 font-display text-sm font-bold text-navy/80"
+                className="rounded-lg border border-line bg-white px-4 py-2.5 transition-shadow hover:shadow-card-hover"
               >
-                {name}
+                <ClientLogo name={name} className="h-12 w-32" sizes="128px" />
               </li>
             ))}
           </ul>
