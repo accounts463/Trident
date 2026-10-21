@@ -4,12 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ArrowRight, Cable, Check, Gauge, HardHat, Layers, Shapes, ShieldCheck, Zap } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { products } from "@/content/products";
 import type { ProductCategorySlug } from "@/content/types";
 import { Alert } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
-import { Checkbox, describedBy, Field, Honeypot, Input, Select, Textarea } from "@/components/ui/fields";
+import { Combobox, Select } from "@/components/ui/Dropdown";
+import { Checkbox, describedBy, Field, Honeypot, Input, Textarea } from "@/components/ui/fields";
 import {
   contactMethods,
   quoteSchema,
@@ -23,6 +24,7 @@ import { Turnstile } from "./Turnstile";
 import { honeypotValue, useLeadSubmit } from "./useLeadSubmit";
 
 const steps = ["Requirement", "Details", "Contact"];
+const productNames = products.map((p) => p.name);
 const typeIcons = {
   panels: Layers,
   distribution: Zap,
@@ -209,12 +211,13 @@ export function QuoteForm() {
         {step === 1 && (
           <div className="grid gap-5 md:grid-cols-2">
             <Field id="q-product" label="Product or service" error={errors.product?.message} className="md:col-span-2">
-              <Input list="q-product-options" placeholder="e.g. APFC Panel" {...register("product")} {...aria("product")} />
-              <datalist id="q-product-options">
-                {products.map((p) => (
-                  <option key={p.slug} value={p.name} />
-                ))}
-              </datalist>
+              <Controller
+                control={control}
+                name="product"
+                render={({ field }) => (
+                  <Combobox options={productNames} placeholder="e.g. APFC Panel" {...field} value={field.value ?? ""} {...aria("product")} />
+                )}
+              />
             </Field>
             <Field id="q-rating" label="Rating, quantity or scope" hint={ratingHint} error={errors.rating?.message} className="md:col-span-2">
               <Input {...register("rating")} {...aria("rating", ratingHint)} />
@@ -223,14 +226,11 @@ export function QuoteForm() {
               <Input autoComplete="address-level2" placeholder="City, State" {...register("location")} {...aria("location")} />
             </Field>
             <Field id="q-timeline" label="When do you need it?" error={errors.timeline?.message} required>
-              <Select defaultValue="" {...register("timeline")} {...aria("timeline")}>
-                <option value="" disabled>
-                  Select an option
-                </option>
-                {timelines.map((t) => (
-                  <option key={t}>{t}</option>
-                ))}
-              </Select>
+              <Controller
+                control={control}
+                name="timeline"
+                render={({ field }) => <Select options={timelines} {...field} {...aria("timeline")} />}
+              />
             </Field>
           </div>
         )}
@@ -251,14 +251,11 @@ export function QuoteForm() {
                 <Input type="email" autoComplete="email" {...register("email")} {...aria("email")} />
               </Field>
               <Field id="q-contactMethod" label="Preferred contact method" error={errors.contactMethod?.message} required>
-                <Select defaultValue="" {...register("contactMethod")} {...aria("contactMethod")}>
-                  <option value="" disabled>
-                    Select an option
-                  </option>
-                  {contactMethods.map((m) => (
-                    <option key={m}>{m}</option>
-                  ))}
-                </Select>
+                <Controller
+                  control={control}
+                  name="contactMethod"
+                  render={({ field }) => <Select options={contactMethods} {...field} {...aria("contactMethod")} />}
+                />
               </Field>
             </div>
             <Field id="q-requirements" label="Anything else we should know?" error={errors.requirements?.message}>

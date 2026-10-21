@@ -58,22 +58,6 @@ export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
   return <textarea className={cn(control, "min-h-32 border-line", className)} {...props} />;
 }
 
-export function Select({ className, children, ...props }: ComponentProps<"select">) {
-  return (
-    <select
-      className={cn(
-        control,
-        "appearance-none border-line bg-[length:1rem] bg-[right_1rem_center] bg-no-repeat pr-10",
-        "bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230077c8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")]",
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </select>
-  );
-}
-
 export function Checkbox({ id, label, error, ...props }: ComponentProps<"input"> & { id: string; label: ReactNode; error?: string }) {
   return (
     <div className="flex flex-col gap-2">

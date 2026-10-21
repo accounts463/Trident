@@ -3,10 +3,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Lock } from "lucide-react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Alert } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
-import { Checkbox, describedBy, Field, Honeypot, Input, Select, Textarea } from "@/components/ui/fields";
+import { Select } from "@/components/ui/Dropdown";
+import { Checkbox, describedBy, Field, Honeypot, Input, Textarea } from "@/components/ui/fields";
 import { enquirySchema, requirementTypes, type EnquiryInput } from "@/lib/schemas";
 import { Turnstile } from "./Turnstile";
 import { honeypotValue, useLeadSubmit } from "./useLeadSubmit";
@@ -16,6 +17,7 @@ export function EnquiryForm({ idPrefix = "enq" }: { idPrefix?: string }) {
     register,
     handleSubmit,
     setError,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<EnquiryInput>({
     resolver: zodResolver(enquirySchema),
@@ -63,16 +65,11 @@ export function EnquiryForm({ idPrefix = "enq" }: { idPrefix?: string }) {
           <Input autoComplete="address-level2" {...register("location")} {...aria("location")} />
         </Field>
         <Field id={id("requirement")} label="What do you need?" error={errors.requirement?.message} required>
-          <Select defaultValue="" {...register("requirement")} {...aria("requirement")}>
-            <option value="" disabled>
-              Select an option
-            </option>
-            {requirementTypes.map((t) => (
-              <option key={t.value} value={t.value}>
-                {t.label}
-              </option>
-            ))}
-          </Select>
+          <Controller
+            control={control}
+            name="requirement"
+            render={({ field }) => <Select options={requirementTypes} {...field} {...aria("requirement")} />}
+          />
         </Field>
       </div>
       <Field id={id("details")} label="Requirement details" hint={detailsHint} error={errors.details?.message}>
