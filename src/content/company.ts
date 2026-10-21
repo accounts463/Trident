@@ -16,7 +16,7 @@ export const company: Company = {
   foundedYear: 2010,
   director: {
     name: "Mr. Pramod Kumar",
-    note: "Our directors are electrical engineers with extensive knowledge and experience in the electrical industry.",
+    note: "Our director is an electrical engineer with extensive knowledge and experience in the electrical industry.",
   },
   story: [
     "Trident Core Energy has manufactured electrical panels since 2010. We keep growing on the strength of our quality and our customers' satisfaction, and we aim to become a leading panel manufacturer in India. We believe success comes from teamwork, customer satisfaction, innovation and ethical behaviour.",

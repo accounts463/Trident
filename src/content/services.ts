@@ -92,7 +92,7 @@ export const strengths = [
   },
   {
     title: "Engineers at the helm",
-    description: "Our directors are electrical engineers with extensive experience in the electrical industry.",
+    description: "Our director is an electrical engineer with extensive experience in the electrical industry.",
     icon: "hardhat",
   },
   {
