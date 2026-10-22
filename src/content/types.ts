@@ -113,6 +113,11 @@ export type Company = {
     hours: OpeningHours | null;
     /** Map pin for the office. Drives the embed, directions link and schema geo. */
     geo: { latitude: number; longitude: number } | null;
+    /**
+     * Verified Google Business Profile links. Fill in only after Google verifies the profile.
+     * profileUrl: the profile's share link (Maps → Share). reviewUrl: "Ask for reviews" link from the profile.
+     */
+    googleBusiness: { profileUrl: string | null; reviewUrl: string | null };
   };
   website: string;
   socials: SocialLink[];

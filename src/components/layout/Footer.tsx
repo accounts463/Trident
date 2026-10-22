@@ -1,9 +1,9 @@
-import { Award, Mail, MapPin, Phone, ShieldAlert } from "lucide-react";
+import { Award, Clock, Mail, MapPin, Phone, ShieldAlert } from "lucide-react";
 import { cacheLife } from "next/cache";
 import Link from "next/link";
 import { company } from "@/content/company";
 import { Logo } from "@/components/ui/Logo";
-import { formatAddress, getContact } from "@/lib/content";
+import { formatAddress, formatHours, getContact } from "@/lib/content";
 import { getFooterGroups } from "@/lib/navigation";
 import { CookieSettingsButton } from "./ConsentBanner";
 
@@ -72,7 +72,29 @@ export function Footer() {
               {contact.address && (
                 <li className="flex items-start gap-2.5">
                   <MapPin className="mt-0.5 size-4 shrink-0 text-accent-soft" aria-hidden />
-                  <address className="not-italic">{formatAddress(contact.address)}</address>
+                  <div>
+                    <address className="not-italic">{formatAddress(contact.address)}</address>
+                    {contact.directionsHref && (
+                      <a
+                        href={contact.directionsHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1 inline-block font-semibold text-accent-soft hover:text-white hover:underline"
+                      >
+                        Get directions
+                        <span className="sr-only"> (opens Google Maps in a new tab)</span>
+                      </a>
+                    )}
+                  </div>
+                </li>
+              )}
+              {contact.hours && (
+                <li className="flex items-start gap-2.5">
+                  <Clock className="mt-0.5 size-4 shrink-0 text-accent-soft" aria-hidden />
+                  <span>
+                    {contact.hours.days}, {formatHours(contact.hours)}
+                    {contact.hours.closedDays && <span className="block text-white/60">{contact.hours.closedDays} closed</span>}
+                  </span>
                 </li>
               )}
             </ul>

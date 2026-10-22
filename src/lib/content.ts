@@ -49,6 +49,8 @@ export function getContact() {
     address: c.address,
     hours: c.hours,
     geo: c.geo,
+    googleProfileHref: clean(c.googleBusiness.profileUrl),
+    googleReviewHref: clean(c.googleBusiness.reviewUrl),
     // Keyless Google Maps embed; loaded only after consent.
     mapEmbedUrl: point ? `https://www.google.com/maps?q=${point}&z=16&hl=en&output=embed` : null,
     mapsHref: point ? `https://www.google.com/maps/search/?api=1&query=${point}` : null,

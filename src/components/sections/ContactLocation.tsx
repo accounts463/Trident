@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, Navigation, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Navigation, Phone, Star } from "lucide-react";
 import type { ReactNode } from "react";
 import { company } from "@/content/company";
 import { MapEmbed } from "@/components/sections/MapEmbed";
@@ -112,6 +112,24 @@ export function ContactLocation() {
                 </a>
               )}
             </div>
+
+            {(c.googleProfileHref || c.googleReviewHref) && (
+              <p className="-mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                {c.googleProfileHref && (
+                  <a href={c.googleProfileHref} {...external} className="font-semibold text-primary hover:underline">
+                    See us on Google
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                )}
+                {c.googleReviewHref && (
+                  <a href={c.googleReviewHref} {...external} className="inline-flex items-center gap-1.5 font-semibold text-primary hover:underline">
+                    <Star className="size-4" aria-hidden />
+                    Worked with us? Leave a Google review
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                )}
+              </p>
+            )}
           </div>
         </div>
       </div>

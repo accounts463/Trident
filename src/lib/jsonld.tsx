@@ -1,4 +1,5 @@
 import { company } from "@/content/company";
+import { images } from "@/content/images";
 import type { Faq, Product, Service } from "@/content/types";
 import { getCategories, getContact } from "@/lib/content";
 import { absoluteUrl, siteUrl } from "@/lib/site";
@@ -30,7 +31,17 @@ export function websiteJsonLd(): JsonLdObject {
 
 export function organizationJsonLd(): JsonLdObject[] {
   const contact = getContact();
-  const sameAs = company.socials.map((s) => s.href);
+  // The verified Google Business Profile ties the site to the Maps listing.
+  const sameAs = [...company.socials.map((s) => s.href), contact.googleProfileHref].filter((s): s is string => !!s);
+  const a = contact.address;
+  const postalAddress = a && {
+    "@type": "PostalAddress",
+    streetAddress: a.streetAddress,
+    addressLocality: a.locality,
+    addressRegion: a.region,
+    postalCode: a.postalCode,
+    addressCountry: "IN",
+  };
   const org: JsonLdObject = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -44,14 +55,25 @@ export function organizationJsonLd(): JsonLdObject[] {
     logo: absoluteUrl("/images/logo.png"),
     ...(contact.email ? { email: contact.email } : {}),
     ...(contact.phone ? { telephone: contact.phone } : {}),
+    ...(postalAddress ? { address: postalAddress } : {}),
+    ...(contact.phone || contact.email
+      ? {
+          contactPoint: {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            areaServed: "IN",
+            ...(contact.phone ? { telephone: contact.phone } : {}),
+            ...(contact.email ? { email: contact.email } : {}),
+          },
+        }
+      : {}),
     ...(sameAs.length ? { sameAs } : {}),
     // Product lines, so the company is associated with what it makes.
     knowsAbout: getCategories().map((c) => c.name),
   };
 
   // LocalBusiness only when a verified address exists.
-  if (!contact.address) return [org];
-  const a = contact.address;
+  if (!a || !postalAddress) return [org];
   return [
     org,
     {
@@ -60,19 +82,15 @@ export function organizationJsonLd(): JsonLdObject[] {
       "@id": `${siteUrl}/#localbusiness`,
       name: company.name,
       url: siteUrl,
-      image: absoluteUrl("/images/logo.png"),
+      // Real plant and office photos; Google uses these for the business entity.
+      image: [images.adminBlock, images.adminOffice, images.panelLineup, images.bending].map((img) => absoluteUrl(img.src)),
+      logo: absoluteUrl("/images/logo.png"),
       parentOrganization: { "@id": `${siteUrl}/#organization` },
       ...(contact.phone ? { telephone: contact.phone } : {}),
       ...(contact.email ? { email: contact.email } : {}),
       description: company.description,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: a.streetAddress,
-        addressLocality: a.locality,
-        addressRegion: a.region,
-        postalCode: a.postalCode,
-        addressCountry: "IN",
-      },
+      address: postalAddress,
+      ...(sameAs.length ? { sameAs } : {}),
       ...(contact.geo
         ? {
             geo: { "@type": "GeoCoordinates", latitude: contact.geo.latitude, longitude: contact.geo.longitude },

@@ -89,6 +89,8 @@ export const company: Company = {
       closedDays: "Sunday",
     },
     geo: { latitude: 28.530863, longitude: 77.46801 },
+    // TODO: add after the Google Business Profile is verified. Both stay hidden while null.
+    googleBusiness: { profileUrl: null, reviewUrl: null },
   },
   website: "https://www.tridentcoreenergy.com",
   // TODO: add official social profiles, e.g. { label: "LinkedIn", href: "https://..." }
