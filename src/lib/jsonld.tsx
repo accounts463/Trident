@@ -73,9 +73,26 @@ export function organizationJsonLd(): JsonLdObject[] {
         postalCode: a.postalCode,
         addressCountry: "IN",
       },
-      hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-        [a.streetAddress, a.locality, a.region, a.postalCode].join(", "),
-      )}`,
+      ...(contact.geo
+        ? {
+            geo: { "@type": "GeoCoordinates", latitude: contact.geo.latitude, longitude: contact.geo.longitude },
+            hasMap: `https://www.google.com/maps/search/?api=1&query=${contact.geo.latitude},${contact.geo.longitude}`,
+          }
+        : {
+            hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+              [a.streetAddress, a.locality, a.region, a.postalCode].join(", "),
+            )}`,
+          }),
+      ...(contact.hours
+        ? {
+            openingHoursSpecification: {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: contact.hours.dayOfWeek,
+              opens: contact.hours.opens,
+              closes: contact.hours.closes,
+            },
+          }
+        : {}),
       areaServed: company.serviceAreas.length ? company.serviceAreas : { "@type": "Country", name: "India" },
       hasOfferCatalog: {
         "@type": "OfferCatalog",

@@ -71,6 +71,18 @@ export type Award = {
 
 export type Value = { title: string; description: string; icon: IconKey };
 
+export type OpeningHours = {
+  /** Display label for the open days, e.g. "Monday – Saturday". */
+  days: string;
+  /** schema.org day names, e.g. ["Monday", "Tuesday"]. */
+  dayOfWeek: string[];
+  /** 24-hour "HH:MM". */
+  opens: string;
+  closes: string;
+  /** Display label for closed days, e.g. "Sunday". */
+  closedDays?: string;
+};
+
 export type Company = {
   name: string;
   legalName: string | null;
@@ -97,9 +109,10 @@ export type Company = {
     whatsapp: string | null;
     email: string | null;
     address: PostalAddress | null;
-    hours: string | null;
-    /** Google Maps embed URL; loaded only after consent. */
-    mapEmbedUrl: string | null;
+    /** Published opening hours. Also emitted as openingHoursSpecification. */
+    hours: OpeningHours | null;
+    /** Map pin for the office. Drives the embed, directions link and schema geo. */
+    geo: { latitude: number; longitude: number } | null;
   };
   website: string;
   socials: SocialLink[];

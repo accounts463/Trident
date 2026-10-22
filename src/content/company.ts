@@ -81,10 +81,14 @@ export const company: Company = {
       postalCode: "201306",
       country: "India",
     },
-    // TODO: add working hours if they should be published.
-    hours: null,
-    mapEmbedUrl:
-      "https://www.google.com/maps?q=Plot+No+456,+Udyog+Kendra+2,+Ecotech+3,+Greater+Noida,+Uttar+Pradesh+201306&output=embed",
+    hours: {
+      days: "Monday – Saturday",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "09:00",
+      closes: "18:00",
+      closedDays: "Sunday",
+    },
+    geo: { latitude: 28.530863, longitude: 77.46801 },
   },
   website: "https://www.tridentcoreenergy.com",
   // TODO: add official social profiles, e.g. { label: "LinkedIn", href: "https://..." }

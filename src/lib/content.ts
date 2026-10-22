@@ -37,6 +37,7 @@ function clean(value: string | null | undefined) {
 /** Contact details from company.ts, falling back to public env vars. Null means "do not render". */
 export function getContact() {
   const c = company.contact;
+  const point = c.geo ? `${c.geo.latitude},${c.geo.longitude}` : null;
   const phone = clean(c.phone) ?? clean(process.env.NEXT_PUBLIC_CONTACT_PHONE);
   const whatsapp = clean(c.whatsapp) ?? clean(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER);
   return {
@@ -46,8 +47,12 @@ export function getContact() {
     whatsappHref: whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(WHATSAPP_GREETING)}` : null,
     email: clean(c.email) ?? clean(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
     address: c.address,
-    hours: clean(c.hours),
-    mapEmbedUrl: clean(c.mapEmbedUrl),
+    hours: c.hours,
+    geo: c.geo,
+    // Keyless Google Maps embed; loaded only after consent.
+    mapEmbedUrl: point ? `https://www.google.com/maps?q=${point}&z=16&hl=en&output=embed` : null,
+    mapsHref: point ? `https://www.google.com/maps/search/?api=1&query=${point}` : null,
+    directionsHref: point ? `https://www.google.com/maps/dir/?api=1&destination=${point}` : null,
   };
 }
 
@@ -55,4 +60,14 @@ export type Contact = ReturnType<typeof getContact>;
 
 export function formatAddress(a: NonNullable<Contact["address"]>) {
   return [a.streetAddress, a.locality, `${a.region} ${a.postalCode}`.trim(), a.country].filter(Boolean).join(", ");
+}
+
+/** "09:00" -> "9:00 AM" */
+function formatTime(hhmm: string) {
+  const [h, m] = hhmm.split(":").map(Number);
+  return `${h % 12 || 12}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`;
+}
+
+export function formatHours(h: NonNullable<Contact["hours"]>) {
+  return `${formatTime(h.opens)} – ${formatTime(h.closes)}`;
 }

@@ -1,9 +1,9 @@
-import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Mail, MessageCircle, Phone } from "lucide-react";
 import { EnquiryForm } from "@/components/forms/EnquiryForm";
 import { FraudNotice } from "@/components/layout/Footer";
-import { MapEmbed } from "@/components/sections/MapEmbed";
+import { ContactLocation } from "@/components/sections/ContactLocation";
 import { PageHero } from "@/components/sections/PageHero";
-import { formatAddress, getContact } from "@/lib/content";
+import { getContact } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -19,8 +19,6 @@ export default function ContactPage() {
     c.phoneHref && { icon: Phone, label: "Call us", value: c.phoneDisplay, href: c.phoneHref },
     c.whatsappHref && { icon: MessageCircle, label: "WhatsApp", value: "Chat with our team", href: c.whatsappHref },
     c.email && { icon: Mail, label: "Email", value: c.email, href: `mailto:${c.email}` },
-    c.address && { icon: MapPin, label: "Address", value: formatAddress(c.address) },
-    c.hours && { icon: Clock, label: "Hours", value: c.hours },
   ].filter(Boolean) as { icon: typeof Phone; label: string; value: string; href?: string }[];
 
   return (
@@ -61,11 +59,11 @@ export default function ContactPage() {
                 ))}
               </ul>
             )}
-            {c.mapEmbedUrl && <MapEmbed src={c.mapEmbedUrl} title="Trident Core Energy location map" />}
             <FraudNotice tone="light" />
           </aside>
         </div>
       </section>
+      <ContactLocation />
     </>
   );
 }
