@@ -121,6 +121,37 @@ export const products: Product[] = [
     representativeImage: true,
     gallery: [images.incomerColourPanels, images.pccColourSections, images.colourFeederDoors],
     featured: true,
+    seo: {
+      title: "PCC Panel Manufacturer, Greater Noida",
+      description: "PCC panel manufacturer in Greater Noida. Our 415 V, 4000 A power control centre was short-circuit tested at CPRI Bhopal: 50 kA for 1 s. ISO 9001:2015.",
+    },
+    faqs: [
+      {
+        question: "What is a PCC panel?",
+        answer:
+          "A Power Control Centre (PCC), also written power control center, is a modular, structured electrical panel that controls and distributes power to heavy machinery, motors and transformers in large industries and commercial units.",
+      },
+      {
+        question: "What is the difference between a PCC and an MCC?",
+        answer:
+          "A PCC (power control centre) controls the power supplied to large loads such as heavy machinery, transformers and motors. An MCC (motor control centre) groups MCCBs, contactors, overload relays and MPCBs to control individual motors, and can include VFDs, PLCs and metering.",
+      },
+      {
+        question: "Has your PCC been short-circuit tested?",
+        answer:
+          "Yes. A Trident PCC rated 415 V, 4000 A was short-circuit tested at the Central Power Research Institute (CPRI), Bhopal, to IS 8623 (Part 1). It withstood 50 kA for 1 second with a 105 kA peak and no abnormality, then passed a 2.5 kV high-voltage test for one minute (provisional report S2121204).",
+      },
+      {
+        question: "Are panels tested before dispatch?",
+        answer:
+          "Yes. Every panel is inspected and tested at our Greater Noida plant: insulation testing up to 1000 megohms, a 2.5 kV high-voltage test, functional testing, primary injection up to 4000 A, secondary injection and switchgear operation checks.",
+      },
+      {
+        question: "Can a PCC be built to our requirements?",
+        answer:
+          "Yes. Every PCC is built to the site's requirements and designed in AutoCAD to the latest Indian electrical and panel standards. Enclosures are available with IP42, IP54 or IP65 protection. Send us your single-line diagram or BOQ for a quotation.",
+      },
+    ],
   },
   {
     slug: "motor-control-centre",
@@ -147,6 +178,37 @@ export const products: Product[] = [
     image: images.mccPccPanel,
     gallery: [images.mccLineupLong, images.mccLineupHall, images.litLineupLong],
     featured: true,
+    seo: {
+      title: "MCC Panel Manufacturer, Greater Noida",
+      description: "Motor control centre (MCC) panels with MCCBs, contactors, overload relays and MPCBs, including intelligent and PLC-based MCCs. Made in Greater Noida.",
+    },
+    faqs: [
+      {
+        question: "What is an MCC panel?",
+        answer:
+          "A Motor Control Centre (MCC), also written motor control center, is an assembly of one or more sections containing MCCBs, contactors, overload relays and MPCBs that control motors. It can also include variable frequency drives, programmable controllers and metering.",
+      },
+      {
+        question: "What is an intelligent MCC (iMCC)?",
+        answer:
+          "An iMCC adds programmable controllers, drives and metering so the panel works as an intelligent controller. We also build PLC-based MCC panels for real-time monitoring, fault detection and centralised control.",
+      },
+      {
+        question: "What is the difference between a PCC and an MCC?",
+        answer:
+          "A PCC (power control centre) controls the power supplied to large loads such as heavy machinery, transformers and motors. An MCC (motor control centre) groups MCCBs, contactors, overload relays and MPCBs to control individual motors, and can include VFDs, PLCs and metering.",
+      },
+      {
+        question: "Which standards are your MCC panels built to?",
+        answer:
+          "Our MCC panels are designed and manufactured to IEC and Indian standards, and designed in AutoCAD to the latest Indian electrical and panel standards.",
+      },
+      {
+        question: "Are panels tested before dispatch?",
+        answer:
+          "Yes. Every panel is inspected and tested at our Greater Noida plant: insulation testing up to 1000 megohms, a 2.5 kV high-voltage test, functional testing, primary injection up to 4000 A, secondary injection and switchgear operation checks.",
+      },
+    ],
   },
   {
     slug: "draw-out-panel",
@@ -230,6 +292,37 @@ export const products: Product[] = [
     applications: ["Office complexes", "Industrial installations", "Plants with motors and drives"],
     image: images.apfcPanel,
     featured: true,
+    seo: {
+      title: "APFC Panel Manufacturer, Greater Noida",
+      description: "Automatic power factor correction (APFC) panels that switch capacitors with the load to avoid wasted energy and penalties. Made in Greater Noida.",
+    },
+    faqs: [
+      {
+        question: "What does an APFC panel do?",
+        answer:
+          "An Automatic Power Factor Correction (APFC) panel switches capacitors in and out as the load changes. It keeps the power factor high without constant manual intervention.",
+      },
+      {
+        question: "Why does a low power factor matter?",
+        answer:
+          "Large inductive loads such as motors, machines, air conditioners and drives cause a lagging power factor. That wastes energy and attracts heavy penalties from electricity boards.",
+      },
+      {
+        question: "When do we need an APFC panel instead of fixed capacitors?",
+        answer:
+          "With fixed loads, capacitors can be switched manually. When loads change quickly or are spread out, manual switching cannot keep the power factor high, and an APFC panel is the practical choice.",
+      },
+      {
+        question: "Do you make harmonic filter panels?",
+        answer:
+          "Yes. For better power quality we manufacture active harmonic filter (AHF) based APFC panels that include a static VAR generator (SVG).",
+      },
+      {
+        question: "Are panels tested before dispatch?",
+        answer:
+          "Yes. Every panel is inspected and tested at our Greater Noida plant: insulation testing up to 1000 megohms, a 2.5 kV high-voltage test, functional testing, primary injection up to 4000 A, secondary injection and switchgear operation checks.",
+      },
+    ],
   },
   {
     slug: "ahf-svg-panel",
@@ -336,6 +429,32 @@ export const products: Product[] = [
     image: images.compactSubstation,
     gallery: [images.compactSubstationOpen, images.packageSubstation],
     featured: true,
+    seo: {
+      title: "Compact Substation Manufacturer, 11 & 33 kV",
+      description: "Factory-built compact substations, 11 kV and 33 kV, up to 4000 kVA: MV switchgear, transformer and LV panel in one enclosure. Made in Greater Noida.",
+    },
+    faqs: [
+      {
+        question: "What is a compact substation?",
+        answer:
+          "A Compact Substation (CSS) is a factory-assembled, self-contained substation that houses MV switchgear, a distribution transformer and an LV panel in one enclosure, and steps medium voltage down to low voltage in a safe, space-saving way.",
+      },
+      {
+        question: "Which compact substation ratings are available?",
+        answer:
+          "11 kV or 33 kV, 50 Hz, rated up to 4000 kVA, with IP23 or IP54 protection to IEC 60529.",
+      },
+      {
+        question: "Which standards apply to your compact substations?",
+        answer:
+          "MV switchgear to IEC 62271-200, the transformer to IEC 60076 / IS 1180, the LV panel to IEC 61439-1 & 2, and the complete assembly to IEC 62271-202 / IS 14786. Units are routine and type tested as per IEC standards.",
+      },
+      {
+        question: "Where are compact substations used?",
+        answer:
+          "Residential complexes, commercial buildings and smart cities, industries, transportation and metro, renewable energy plants and other infrastructure projects.",
+      },
+    ],
   },
   {
     slug: "bus-duct-rising-mains",
@@ -354,6 +473,27 @@ export const products: Product[] = [
     applications: ["High-rise buildings", "Industrial plants", "Commercial complexes"],
     image: images.busDuct,
     featured: true,
+    seo: {
+      title: "Bus Duct and Rising Mains Manufacturer",
+      description: "Aluminium and copper bus ducts and rising mains from 100 A to 6000 A for plants, commercial complexes and high-rise buildings, made in Greater Noida.",
+    },
+    faqs: [
+      {
+        question: "What ratings do your bus ducts cover?",
+        answer:
+          "We manufacture bus ducts and rising mains rated from 100 A to 6000 A.",
+      },
+      {
+        question: "Aluminium or copper?",
+        answer:
+          "Both. Conductors are aluminium or copper, as the customer requires.",
+      },
+      {
+        question: "Do you install bus ducts on site?",
+        answer:
+          "Yes. Our contracting team installs bus ducts and rising mains in industrial and high-rise buildings.",
+      },
+    ],
   },
 
   // Cable management
@@ -385,6 +525,27 @@ export const products: Product[] = [
     representativeImage: true,
     gallery: [images.cableTrayStack, images.cableTrayPerforated, images.cableTrayBatch, images.trayBendPhoto, images.trayTeePhoto, images.trayVerticalBendPhoto],
     featured: true,
+    seo: {
+      title: "Cable Tray Manufacturer, Greater Noida",
+      description: "Perforated, ladder and wire-mesh cable trays with bends, tees and reducers, perforated in-house on our own line in Greater Noida. Request a quote.",
+    },
+    faqs: [
+      {
+        question: "Which types of cable tray do you make?",
+        answer:
+          "Perforated, ladder and wire-mesh cable trays, in various sizes, designs and finishes, with bends, tees and reducers.",
+      },
+      {
+        question: "Are the trays made in-house?",
+        answer:
+          "Yes. Trays are perforated in-house on our own perforation line at the Greater Noida plant.",
+      },
+      {
+        question: "Do you also lay cable trays on site?",
+        answer:
+          "Yes. Our contracting team lays cable tray and raceway systems, with all supports and accessories.",
+      },
+    ],
   },
   {
     slug: "raceway",

@@ -1,9 +1,14 @@
 import { company } from "@/content/company";
 import { productCategories, products } from "@/content/products";
-import type { ProductCategorySlug } from "@/content/types";
+import { services } from "@/content/services";
+import type { ProductCategorySlug, Service } from "@/content/types";
 
 export function getCategories() {
   return productCategories.filter((c) => products.some((p) => p.category === c.slug));
+}
+
+export function getCategory(slug: string) {
+  return getCategories().find((c) => c.slug === slug);
 }
 
 export function getProducts(category?: ProductCategorySlug) {
@@ -24,6 +29,21 @@ export function getRelatedProducts(slug: string, limit = 3) {
   const sameCategory = products.filter((p) => p.category === product.category && p.slug !== slug);
   const others = products.filter((p) => p.category !== product.category && p.featured);
   return [...sameCategory, ...others].slice(0, limit);
+}
+
+export type ServiceWithPage = Service & { page: NonNullable<Service["page"]> };
+
+/** Services that have their own page under /services/[slug]. */
+export function getServicePages() {
+  return services.filter((s): s is ServiceWithPage => !!s.page);
+}
+
+export function getServicePage(slug: string) {
+  return getServicePages().find((s) => s.page.slug === slug);
+}
+
+export function serviceHref(service: Service) {
+  return service.page ? `/services/${service.page.slug}` : "/services";
 }
 
 /** Pre-filled first message when a visitor opens a WhatsApp chat. */

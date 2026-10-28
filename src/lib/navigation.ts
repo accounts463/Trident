@@ -1,4 +1,4 @@
-import { getCategories } from "@/lib/content";
+import { getCategories, getServicePages } from "@/lib/content";
 
 export type NavLink = { label: string; href: string; description?: string };
 export type NavItem = NavLink & { children?: NavLink[] };
@@ -12,10 +12,17 @@ export function getMainNav(): NavItem[] {
       href: "/products",
       children: [
         { label: "All Products", href: "/products", description: "The complete Trident range" },
-        ...getCategories().map((c) => ({ label: c.name, href: `/products#${c.slug}` })),
+        ...getCategories().map((c) => ({ label: c.name, href: `/products/${c.slug}` })),
       ],
     },
-    { label: "Services", href: "/services" },
+    {
+      label: "Services",
+      href: "/services",
+      children: [
+        { label: "All Services", href: "/services", description: "Contracting, installation and O&M" },
+        ...getServicePages().map((s) => ({ label: s.title, href: `/services/${s.page.slug}` })),
+      ],
+    },
     {
       label: "Infrastructure",
       href: "/manufacturing",
@@ -47,15 +54,13 @@ export function getFooterGroups() {
     },
     {
       title: "Products",
-      links: getCategories().map((c) => ({ label: c.name, href: `/products#${c.slug}` })),
+      links: getCategories().map((c) => ({ label: c.name, href: `/products/${c.slug}` })),
     },
     {
       title: "Services",
       links: [
-        { label: "Substations (33 / 11 kV)", href: "/services" },
-        { label: "HT / LT Panel Installation", href: "/services" },
-        { label: "Cable & Bus Duct Installation", href: "/services" },
-        { label: "O&M Contracts", href: "/services" },
+        ...getServicePages().map((s) => ({ label: s.title, href: `/services/${s.page.slug}` })),
+        { label: "All Services", href: "/services" },
         { label: "Request a Quote", href: "/request-quote" },
       ],
     },

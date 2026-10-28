@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { company } from "@/content/company";
-import type { Product, ProductCategorySlug } from "@/content/types";
+import type { Product, ProductCategory, ProductCategorySlug } from "@/content/types";
 
 type PageMeta = {
   title: string;
@@ -50,6 +50,7 @@ const TITLE_SUFFIX = ` | ${company.name}`;
 
 /** "Power Control Centre (PCC) Manufacturer", when that keyword fits in a ~65-character title. */
 export function productSeoTitle(product: Product) {
+  if (product.seo) return product.seo.title;
   const keyword = `${product.name} Manufacturer`;
   const fits = (keyword + TITLE_SUFFIX).length <= 65;
   return MANUFACTURED.includes(product.category) && fits ? keyword : product.name;
@@ -57,9 +58,23 @@ export function productSeoTitle(product: Product) {
 
 /** The product summary plus the location, kept within the ~160 characters search results show. */
 export function productSeoDescription(product: Product) {
+  if (product.seo) return product.seo.description;
   const where = MANUFACTURED.includes(product.category)
     ? " Made and tested in Greater Noida."
     : " From Trident Core Energy, Greater Noida.";
   const full = product.summary + where;
   return full.length <= 160 ? full : product.summary;
+}
+
+/** "LT Panels & Switchboards Manufacturer in Greater Noida", shortened until it fits. */
+export function categorySeoTitle(category: ProductCategory) {
+  if (!MANUFACTURED.includes(category.slug)) return category.name;
+  const options = [`${category.name} Manufacturer in Greater Noida`, `${category.name} Manufacturer`];
+  return options.find((t) => (t + TITLE_SUFFIX).length <= 65) ?? category.name;
+}
+
+export function categorySeoDescription(category: ProductCategory) {
+  const where = MANUFACTURED.includes(category.slug) ? " Made and tested in Greater Noida." : " From Trident Core Energy, Greater Noida.";
+  const full = category.summary + where;
+  return full.length <= 160 ? full : category.summary;
 }

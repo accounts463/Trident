@@ -1,7 +1,7 @@
 import { company } from "@/content/company";
 import { images } from "@/content/images";
 import type { Faq, Product, Service } from "@/content/types";
-import { getCategories, getContact } from "@/lib/content";
+import { getCategories, getContact, serviceHref } from "@/lib/content";
 import { absoluteUrl, siteUrl } from "@/lib/site";
 
 type JsonLdObject = Record<string, unknown>;
@@ -118,7 +118,7 @@ export function organizationJsonLd(): JsonLdObject[] {
         itemListElement: getCategories().map((c) => ({
           "@type": "OfferCatalog",
           name: c.name,
-          url: absoluteUrl(`/products#${c.slug}`),
+          url: absoluteUrl(`/products/${c.slug}`),
         })),
       },
     },
@@ -147,6 +147,27 @@ export function faqJsonLd(faqs: Faq[]): JsonLdObject {
       name: f.question,
       acceptedAnswer: { "@type": "Answer", text: f.answer },
     })),
+  };
+}
+
+/** A category page and the products listed on it. */
+export function categoryJsonLd(category: { name: string; slug: string; summary: string }, products: Product[]): JsonLdObject {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: category.name,
+    description: category.summary,
+    url: absoluteUrl(`/products/${category.slug}`),
+    isPartOf: { "@id": `${siteUrl}/#website` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: products.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: p.name,
+        url: absoluteUrl(`/products/${p.slug}`),
+      })),
+    },
   };
 }
 
@@ -179,6 +200,6 @@ export function servicesJsonLd(services: Service[]): JsonLdObject[] {
     serviceType: s.title,
     provider: { "@id": `${siteUrl}/#organization` },
     areaServed: company.serviceAreas.length ? company.serviceAreas : { "@type": "Country", name: "India" },
-    url: absoluteUrl("/services"),
+    url: absoluteUrl(serviceHref(s)),
   }));
 }

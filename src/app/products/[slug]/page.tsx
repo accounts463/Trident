@@ -1,24 +1,44 @@
 import { CheckCircle2, Phone, ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { categoryOf } from "@/content/products";
+import type { Product, ProductCategory } from "@/content/types";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { PageHero } from "@/components/sections/PageHero";
+import { FaqSection } from "@/components/sections/shared-sections";
 import { ButtonLink } from "@/components/ui/Button";
 import { ProductCard } from "@/components/ui/cards";
 import { LightboxGallery } from "@/components/ui/LightboxGallery";
 import { Media } from "@/components/ui/Media";
-import { getContact, getProduct, getProducts, getRelatedProducts } from "@/lib/content";
-import { JsonLd, productJsonLd } from "@/lib/jsonld";
+import { getCategories, getCategory, getContact, getProduct, getProducts, getRelatedProducts } from "@/lib/content";
+import { categoryJsonLd, JsonLd, productJsonLd } from "@/lib/jsonld";
 import { cn } from "@/lib/cn";
-import { pageMetadata, productSeoDescription, productSeoTitle } from "@/lib/seo";
+import {
+  categorySeoDescription,
+  categorySeoTitle,
+  pageMetadata,
+  productSeoDescription,
+  productSeoTitle,
+} from "@/lib/seo";
 
+// Category and product slugs share /products/[slug]; they never collide.
 export function generateStaticParams() {
-  return getProducts().map((p) => ({ slug: p.slug }));
+  return [...getCategories(), ...getProducts()].map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/products/[slug]">): Promise<Metadata> {
-  const product = getProduct((await params).slug);
+  const slug = (await params).slug;
+  const category = getCategory(slug);
+  if (category) {
+    return pageMetadata({
+      title: categorySeoTitle(category),
+      description: categorySeoDescription(category),
+      path: `/products/${category.slug}`,
+      image: category.image.src,
+    });
+  }
+  const product = getProduct(slug);
   if (!product) return { title: "Product not found", robots: { index: false } };
   return pageMetadata({
     title: productSeoTitle(product),
@@ -28,9 +48,79 @@ export async function generateMetadata({ params }: PageProps<"/products/[slug]">
   });
 }
 
-export default async function ProductPage({ params }: PageProps<"/products/[slug]">) {
-  const product = getProduct((await params).slug);
+export default async function ProductOrCategoryPage({ params }: PageProps<"/products/[slug]">) {
+  const slug = (await params).slug;
+  const category = getCategory(slug);
+  if (category) return <CategoryView category={category} />;
+  const product = getProduct(slug);
   if (!product) notFound();
+  return <ProductView product={product} />;
+}
+
+function CategoryView({ category }: { category: ProductCategory }) {
+  const list = getProducts(category.slug);
+  const faqs = list.flatMap((p) => p.faqs ?? []).filter((f, i, all) => all.findIndex((x) => x.question === f.question) === i);
+  const others = getCategories().filter((c) => c.slug !== category.slug);
+  return (
+    <>
+      <PageHero
+        eyebrow="Products"
+        title={category.name}
+        description={category.summary}
+        breadcrumbs={[
+          { name: "Products", href: "/products" },
+          { name: category.name, href: `/products/${category.slug}` },
+        ]}
+        image={category.image}
+      >
+        <ButtonLink href="/request-quote" variant="cta" size="lg">
+          Request a Quote
+        </ButtonLink>
+      </PageHero>
+
+      <section className="section">
+        <div className="container-site">
+          <h2 className="font-display text-3xl font-extrabold text-navy">
+            {list.length} {list.length === 1 ? "product" : "products"} in {category.name}
+          </h2>
+          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {list.map((p) => (
+              <ProductCard key={p.slug} product={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {faqs.length > 0 && <FaqSection faqs={faqs} title={`${category.name}: common questions`} />}
+
+      <section className="section">
+        <div className="container-site">
+          <h2 className="font-display text-2xl font-extrabold text-navy">Other product ranges</h2>
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {others.map((c) => (
+              <li key={c.slug}>
+                <Link
+                  href={`/products/${c.slug}`}
+                  className="inline-flex h-9 items-center rounded-lg border border-line px-3.5 text-sm font-semibold text-navy transition-colors hover:border-primary hover:text-primary"
+                >
+                  {c.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <CtaBanner
+        title={`Get a quotation for ${category.name}`}
+        description="Send us your single-line diagram, BOQ or load list. Our engineers will confirm the configuration and send a quotation."
+      />
+      <JsonLd data={categoryJsonLd(category, list)} />
+    </>
+  );
+}
+
+function ProductView({ product }: { product: Product }) {
   const category = categoryOf(product);
   const related = getRelatedProducts(product.slug);
   const contact = getContact();
@@ -43,6 +133,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         description={product.summary}
         breadcrumbs={[
           { name: "Products", href: "/products" },
+          { name: category.name, href: `/products/${category.slug}` },
           { name: product.name, href: `/products/${product.slug}` },
         ]}
       >
@@ -174,8 +265,10 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         )}
       </section>
 
+      {product.faqs && product.faqs.length > 0 && <FaqSection faqs={product.faqs} title={`${product.name}: common questions`} />}
+
       {related.length > 0 && (
-        <section className="section bg-canvas">
+        <section className={cn("section", !product.faqs?.length && "bg-canvas")}>
           <div className="container-site">
             <h2 className="font-display text-3xl font-extrabold text-navy">Related products</h2>
             <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

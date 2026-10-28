@@ -1,6 +1,7 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import type { Certification, Product, ProductCategory, Service } from "@/content/types";
+import { cn } from "@/lib/cn";
 import { Icon } from "./Icon";
 import { Media } from "./Media";
 
@@ -44,7 +45,7 @@ export function CategoryCard({ category, count }: { category: ProductCategory; c
         <h3 className="font-display text-lg font-bold text-navy">{category.name}</h3>
         <p className="text-sm leading-relaxed text-muted">{category.summary}</p>
         <Link
-          href={`/products#${category.slug}`}
+          href={`/products/${category.slug}`}
           className="mt-auto inline-flex items-center gap-1.5 pt-3 text-sm font-bold text-primary after:absolute after:inset-0 after:content-['']"
         >
           {count} {count === 1 ? "product" : "products"}
@@ -58,7 +59,7 @@ export function CategoryCard({ category, count }: { category: ProductCategory; c
 
 export function ServiceCard({ service, index }: { service: Service; index: number }) {
   return (
-    <article className="card group relative flex flex-col gap-4 overflow-hidden p-6" data-reveal>
+    <article className={cn("card group relative flex flex-col gap-4 overflow-hidden p-6", service.page && "card-interactive")} data-reveal>
       <span
         className="absolute right-5 top-4 font-display text-4xl font-black text-line transition-colors group-hover:text-tint"
         aria-hidden
@@ -72,6 +73,15 @@ export function ServiceCard({ service, index }: { service: Service; index: numbe
         <h3 className="font-display text-lg font-bold text-navy">{service.title}</h3>
         <p className="mt-2 text-sm leading-relaxed text-muted">{service.description}</p>
       </div>
+      {service.page && (
+        <Link
+          href={`/services/${service.page.slug}`}
+          className="mt-auto inline-flex items-center gap-1.5 text-sm font-bold text-primary after:absolute after:inset-0 after:content-['']"
+        >
+          Learn more<span className="sr-only">: {service.title}</span>
+          <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+        </Link>
+      )}
     </article>
   );
 }

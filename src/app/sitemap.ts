@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getProducts } from "@/lib/content";
+import { getCategories, getProducts, getServicePages } from "@/lib/content";
 import { absoluteUrl } from "@/lib/site";
 
 // Build time: content only changes with a deploy.
@@ -28,6 +28,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "monthly" as const,
       priority: p === "/" ? 1 : p === "/privacy-policy" || p === "/terms" ? 0.3 : 0.7,
+    })),
+    ...getCategories().map((c) => ({
+      url: absoluteUrl(`/products/${c.slug}`),
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
+    ...getServicePages().map((s) => ({
+      url: absoluteUrl(`/services/${s.page.slug}`),
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
     })),
     ...getProducts().map((p) => ({
       url: absoluteUrl(`/products/${p.slug}`),

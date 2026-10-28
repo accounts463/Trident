@@ -65,6 +65,9 @@ export default function ProductsPage() {
                     </h2>
                     <p className="mt-3 text-lg leading-relaxed text-muted">{c.summary}</p>
                   </div>
+                  <ButtonLink href={`/products/${c.slug}`} variant="secondary" className="shrink-0">
+                    View range<span className="sr-only">: {c.name}</span>
+                  </ButtonLink>
                 </div>
                 <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {list.map((p) => (

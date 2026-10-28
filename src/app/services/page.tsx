@@ -8,9 +8,9 @@ import { JsonLd, servicesJsonLd } from "@/lib/jsonld";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Electrical Contracting & O&M Services",
+  title: "33 / 11 kV Substation & Electrical Contractor",
   description:
-    "Turnkey 33 kV / 11 kV substations, HT/LT panel installation, cabling, bus ducts and O&M contracts from Trident Core Energy, an ISO 9001:2015 certified company.",
+    "Turnkey 33 kV / 11 kV substations, HT/LT panel and cable installation, bus duct installation and O&M contracts by Trident Core Energy, Greater Noida.",
   path: "/services",
 });
 

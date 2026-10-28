@@ -170,9 +170,29 @@ export type Product = {
   gallery?: ImageAsset[];
   /** Featured on the home page. */
   featured?: boolean;
+  /** Hand-written search title and description; otherwise derived from name and summary. */
+  seo?: { title: string; description: string };
+  /** Product-specific questions, shown on the product page. */
+  faqs?: Faq[];
 };
 
-export type Service = { title: string; description: string; icon: IconKey };
+export type Service = {
+  title: string;
+  description: string;
+  icon: IconKey;
+  /** Services with their own page under /services/[slug]. */
+  page?: {
+    slug: string;
+    seo: { title: string; description: string };
+    /** Opening paragraphs, limited to catalogue facts. */
+    intro: string[];
+    /** What the work covers, in the order it is carried out. */
+    scope: string[];
+    /** Products we make that this service installs or maintains. */
+    relatedProducts: string[];
+    faqs?: Faq[];
+  };
+};
 
 export type ProcessStep = { title: string; description: string };
 
